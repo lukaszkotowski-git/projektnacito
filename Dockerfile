@@ -1,8 +1,9 @@
 # Build stage
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm install --silent
+COPY package.json ./
+# create lockfile inside the image (host may not have npm) then install reproducibly
+RUN npm install --package-lock-only --silent && npm ci --silent
 COPY . ./
 RUN npm run build
 
