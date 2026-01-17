@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
-const { initDb } = require('./db');
+
 const submissionsRouter = require('./routes/submissions');
 const rateLimiter = require('./middleware/rateLimiter');
 
@@ -37,9 +37,9 @@ app.use((err, req, res, next) => {
 
 async function start() {
     try {
-        await initDb();
-        console.log('Database initialized');
-        
+        // Skipping local DB initialization; using remote DATABASE_URL
+        console.log('Skipping local DB initialization (using remote DATABASE_URL)');
+
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         });
