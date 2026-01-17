@@ -2,11 +2,11 @@
   "name": "projekt-na-cito",
   "version": "1.0.0",
   "description": "Konfigurator projektów wnętrz - Projekt na Cito",
-  "main": "server/index.js",
+  "main": "public/index.html",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node --watch server/index.js",
-    "migrate": "node server/db/migrate.js"
+    "start": "serve -s public",
+    "dev": "serve -s public",
+    "migrate": "echo \"migrations removed\""
   },
   "engines": {
     "node": ">=18.0.0"
