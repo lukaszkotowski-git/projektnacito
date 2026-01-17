@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #FDFBF7;
+  color: #33302E;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-choice {
+  transition: all 0.3s ease;
+  border: 1px solid #E5DED4;
+  background-color: white;
+}
+
+.card-choice:hover {
+  border-color: #8C7E6A;
+  background-color: #F7F2EB;
+}
+
+.card-choice.active {
+  border-color: #8C7E6A;
+  background-color: #F2EBE1;
+}
+
+.btn-primary {
+  background-color: #33302E;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #000;
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+  background-color: #A0A0A0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

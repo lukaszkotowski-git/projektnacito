@@ -1,0 +1,110 @@
+import { useState, FormEvent } from 'react'
+import { useAppContext } from '../context/AppContext'
+import { API_URL } from '../constants'
+
+export function ConsultConfigurator() {
+  const { setCurrentView, resetState } = useAppContext()
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [file, setFile] = useState<File | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const goToMain = () => {
+    resetState()
+    setCurrentView('main')
+  }
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    const data = {
+      packageType: 'consult',
+      userName: name,
+      userPhone: phone,
+      rate: "200 zł / h"
+    }
+
+    const formData = new FormData()
+    formData.append('data', JSON.stringify(data))
+    if (file) formData.append('attachment', file)
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: formData
+      })
+      const result = await response.json()
+
+      if (response.ok) {
+        alert("Sukces! Zgłoszenie zostało wysłane.")
+        goToMain()
+      } else {
+        const errorMsg = result.details ? result.details.join(', ') : result.error
+        alert("Błąd: " + errorMsg)
+      }
+    } catch {
+      alert("Nie udało się połączyć z serwerem. Spróbuj ponownie później.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <main className="pt-32 pb-24 px-6">
+      <div className="max-w-4xl mx-auto">
+        <button onClick={goToMain} className="text-[10px] uppercase tracking-widest font-bold flex items-center mb-8 hover:text-[#8C7E6A] transition">
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Wróć do wyboru
+        </button>
+        <div className="bg-white p-10 rounded-[2.5rem] border border-[#E5DED4] text-center max-w-2xl mx-auto">
+          <h2 className="text-4xl font-serif mb-4">Umów Konsultację</h2>
+          <div className="inline-block bg-[#F2EBE1] text-[#8C7E6A] px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs mb-6">Koszt: 200 zł / h</div>
+          <p className="text-gray-600 mb-8 leading-relaxed text-sm">Odezwiemy się, wszystko wyjaśnimy i wspólnie wybierzemy odpowiedni termin.</p>
+          <form onSubmit={handleSubmit} className="text-left space-y-6">
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Imię i nazwisko</label>
+              <input 
+                type="text" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required 
+                placeholder="np. Anna Nowak" 
+                className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Numer telefonu</label>
+              <input 
+                type="tel" 
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required 
+                placeholder="+48 000 000 000" 
+                className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Załącz rzut / zdjęcia (opcjonalnie)</label>
+              <div className="border-2 border-dashed border-[#E5DED4] rounded-2xl p-8 text-center hover:bg-[#FDFBF7] transition-colors relative">
+                <input 
+                  type="file" 
+                  onChange={(e) => setFile(e.target.files?.[0] || null)}
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                />
+                <svg className="w-8 h-8 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeWidth="2" strokeLinecap="round"/></svg>
+                <span className="text-xs text-gray-400">{file?.name || "Kliknij lub przeciągnij plik tutaj"}</span>
+              </div>
+            </div>
+            <button 
+              type="submit" 
+              disabled={isSubmitting}
+              className="w-full btn-primary py-5 rounded-full font-bold uppercase tracking-widest text-xs mt-4"
+            >
+              {isSubmitting ? "Wysyłanie..." : "Poproś o termin"}
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  )
+}

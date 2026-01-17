@@ -1,0 +1,126 @@
+import { useState, FormEvent } from 'react'
+import { useAppContext } from '../context/AppContext'
+import { API_URL } from '../constants'
+
+export function FinalStep() {
+  const {
+    setCurrentView, resetState,
+    currentPackage, currentPrice,
+    getCitoDetails, getPremiumDetails
+  } = useAppContext()
+
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [file, setFile] = useState<File | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const goBack = () => {
+    setCurrentView(currentPackage === 'cito' ? 'cito-config' : 'premium-config')
+  }
+
+  const goToMain = () => {
+    resetState()
+    setCurrentView('main')
+  }
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    const data = {
+      packageType: currentPackage,
+      userName: name,
+      userPhone: phone,
+      estimatedPrice: currentPrice,
+      details: currentPackage === 'cito' ? getCitoDetails() : getPremiumDetails()
+    }
+
+    const formData = new FormData()
+    formData.append('data', JSON.stringify(data))
+    if (file) formData.append('attachment', file)
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: formData
+      })
+      const result = await response.json()
+
+      if (response.ok) {
+        alert("Sukces! Zgłoszenie zostało wysłane.")
+        goToMain()
+      } else {
+        const errorMsg = result.details ? result.details.join(', ') : result.error
+        alert("Błąd: " + errorMsg)
+      }
+    } catch {
+      alert("Nie udało się połączyć z serwerem. Spróbuj ponownie później.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const packageName = currentPackage === 'cito' ? 'Pakiet na Cito' : 'Pakiet Premium'
+
+  return (
+    <main className="pt-32 pb-24 px-6">
+      <div className="max-w-4xl mx-auto">
+        <button onClick={goBack} className="text-[10px] uppercase tracking-widest font-bold flex items-center mb-8 hover:text-[#8C7E6A] transition">
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Wróć do konfiguracji
+        </button>
+        <div className="bg-white p-10 rounded-[2.5rem] border border-[#E5DED4] text-center max-w-2xl mx-auto">
+          <h3 className="text-3xl font-serif mb-6">Prawie gotowe!</h3>
+          <p className="text-gray-600 mb-8 leading-relaxed text-sm">Zostaw dane dla pakietu <span className="font-bold">{packageName}</span>.</p>
+          <form onSubmit={handleSubmit} className="text-left space-y-6">
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Imię i nazwisko</label>
+              <input 
+                type="text" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required 
+                placeholder="np. Jan Kowalski" 
+                className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Numer telefonu</label>
+              <input 
+                type="tel" 
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required 
+                placeholder="+48 000 000 000" 
+                className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Załącz rzut / rysunek</label>
+              <div className="border-2 border-dashed border-[#E5DED4] rounded-2xl p-8 text-center hover:bg-[#FDFBF7] transition-colors relative">
+                <input 
+                  type="file" 
+                  required
+                  onChange={(e) => setFile(e.target.files?.[0] || null)}
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                />
+                <svg className="w-8 h-8 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeWidth="2" strokeLinecap="round"/></svg>
+                <span className="text-xs text-gray-400">{file?.name || "Wymagany rzut nieruchomości"}</span>
+              </div>
+            </div>
+            <div className="bg-[#FDFBF7] p-6 rounded-2xl border border-[#E5DED4] mb-4">
+              <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Wyliczona kwota</span>
+              <div className="text-xl font-semibold">{currentPrice.toLocaleString()} zł netto</div>
+            </div>
+            <button 
+              type="submit" 
+              disabled={isSubmitting}
+              className="w-full btn-primary py-5 rounded-full font-bold uppercase tracking-widest text-xs mt-4"
+            >
+              {isSubmitting ? "Wysyłanie..." : "Wyślij zgłoszenie"}
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  )
+}
