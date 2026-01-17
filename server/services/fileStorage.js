@@ -26,7 +26,12 @@ const storage = multer.diskStorage({
         const destPath = path.join(UPLOAD_DIR, dateFolder);
         
         if (!fs.existsSync(destPath)) {
-            fs.mkdirSync(destPath, { recursive: true });
+            try {
+                fs.mkdirSync(destPath, { recursive: true });
+            } catch (err) {
+                console.error('Failed to create upload directory:', err);
+                return cb(new Error('Nie można utworzyć katalogu upload (uprawnienia).'));
+            }
         }
         
         cb(null, destPath);

@@ -8,7 +8,7 @@ RUN npm ci --only=production
 
 COPY . .
 
-RUN mkdir -p /app/uploads && chown -R node:node /app
+RUN mkdir -p /app/uploads && chown -R node:node /app/uploads && chown -R node:node /app
 
 USER node
 
