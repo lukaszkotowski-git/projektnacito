@@ -9,6 +9,11 @@ const rateLimiter = require('./middleware/rateLimiter');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// Trust proxy when running in production behind a reverse proxy (Dokploy)
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
