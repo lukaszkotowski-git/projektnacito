@@ -122,14 +122,19 @@ export function CitoConfigurator() {
                 <p className="text-sm text-gray-500 mb-4">Dodatkowe opracowanie techniczne punktów świetlnych i gniazd.</p>
                 {electricProject && (
                   <div className="animate-in fade-in duration-300">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">Powierzchnia projektu (m²)</label>
-                    <input 
-                      type="number" 
+                    <label htmlFor="electric-m2-input" className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">POWIERZCHNIA PROJEKTU (M²)</label>
+                    <input
+                      id="electric-m2-input"
+                      type="number"
                       value={electricM2 || ''}
                       onChange={(e) => setElectricM2(parseFloat(e.target.value) || 0)}
-                      placeholder="0" 
+                      placeholder="m²"
+                      min="0"
+                      step="0.1"
+                      aria-label="Powierzchnia projektu m2"
                       className="w-32 bg-[#FDFBF7] border border-[#E5DED4] rounded-xl px-4 py-2 outline-none focus:border-[#8C7E6A]"
                     />
+                    <p className="text-xs text-gray-400 mt-2">Wprowadź powierzchnię w m²</p>
                   </div>
                 )}
               </div>
