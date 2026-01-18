@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { PRICING } from '../constants'
 
@@ -126,8 +126,8 @@ export function CitoConfigurator() {
                     <input
                       id="electric-m2-input"
                       type="number"
-                      value={electricM2 || ''}
-                      onChange={(e) => setElectricM2(parseFloat(e.target.value) || 0)}
+                      value={electricM2 !== null && electricM2 !== undefined ? electricM2 : ''}
+                      onChange={(e) => setElectricM2(e.target.value === '' ? 0 : parseFloat(e.target.value))}
                       placeholder="m²"
                       min="0"
                       step="0.1"
