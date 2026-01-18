@@ -14,6 +14,15 @@ export function ConsultConfigurator() {
     setCurrentView('main')
   }
 
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = reject
+    })
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -25,22 +34,31 @@ export function ConsultConfigurator() {
       rate: "200 zł / h"
     }
 
-    const formData = new FormData()
-    formData.append('data', JSON.stringify(data))
-    if (file) formData.append('attachment', file)
+    let attachment = null
+    if (file) {
+      const base64 = await fileToBase64(file)
+      attachment = {
+        filename: file.name,
+        mimeType: file.type,
+        data: base64.split(',')[1]
+      }
+    }
 
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data, attachment })
       })
       const result = await response.json()
 
-      if (response.ok) {
+      if (response.ok && result.success) {
         alert("Sukces! Zgłoszenie zostało wysłane.")
         goToMain()
       } else {
-        const errorMsg = result.details ? result.details.join(', ') : result.error
+        const errorMsg = result.message || result.error || 'Nieznany błąd'
         alert("Błąd: " + errorMsg)
       }
     } catch {

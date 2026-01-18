@@ -1,0 +1,340 @@
+{
+  "name": "Projekt na Cito - Formularz",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "projektnacito-form",
+        "options": {
+          "rawBody": false
+        }
+      },
+      "id": "webhook-node",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "projektnacito-form"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-has-file",
+              "leftValue": "={{ $json.body.attachment }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-has-file",
+      "name": "Czy ma załącznik?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Konwertuj base64 na binarny plik\nconst attachment = $input.first().json.body.attachment;\n\nif (!attachment || !attachment.data) {\n  throw new Error('Brak danych załącznika');\n}\n\n// Przekonwertuj base64 na Buffer\nconst binaryData = Buffer.from(attachment.data, 'base64');\n\n// Zwróć item z binarnym plikiem\nreturn {\n  json: $input.first().json,\n  binary: {\n    data: await this.helpers.prepareBinaryData(\n      binaryData,\n      attachment.filename,\n      attachment.mimeType\n    )\n  }\n};"
+      },
+      "id": "code-base64-to-binary",
+      "name": "Konwertuj Base64 na plik",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [690, 200]
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "name": "={{ $json.body.data.packageType }}_{{ $now.format('yyyy-MM-dd_HH-mm') }}_{{ $json.body.data.userName.replace(' ', '_') }}.{{ $json.body.attachment.filename.split('.').pop() }}",
+        "folderId": {
+          "__rl": true,
+          "value": "FOLDER_ID_PLACEHOLDER",
+          "mode": "id"
+        },
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "id": "google-drive-upload",
+      "name": "Google Drive - Upload",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [910, 200],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "CREDENTIALS_ID_PLACEHOLDER",
+          "name": "Google Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "SPREADSHEET_ID_PLACEHOLDER",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Arkusz1",
+          "mode": "list",
+          "cachedResultName": "Arkusz1"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+            "Pakiet": "={{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Premium' : 'Konsultacja' }}",
+            "Imię i nazwisko": "={{ $('Webhook').item.json.body.data.userName }}",
+            "Telefon": "={{ $('Webhook').item.json.body.data.userPhone }}",
+            "Cena netto (zł)": "={{ $('Webhook').item.json.body.data.estimatedPrice || $('Webhook').item.json.body.data.rate || '' }}",
+            "Pokoje": "={{ $('Webhook').item.json.body.data.details?.rooms ? Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') : '' }}",
+            "Projekt elektryczny": "={{ $('Webhook').item.json.body.data.details?.electricProject ? 'Tak' : 'Nie' }}",
+            "Metraż elektryczny": "={{ $('Webhook').item.json.body.data.details?.electricM2 || '' }}",
+            "Metraż całkowity": "={{ $('Webhook').item.json.body.data.details?.totalM2 || '' }}",
+            "Metraż kuchni": "={{ $('Webhook').item.json.body.data.details?.kitchenM2 || '' }}",
+            "Metraż łazienek": "={{ $('Webhook').item.json.body.data.details?.bathM2 || '' }}",
+            "Link do pliku": "={{ $json.webViewLink || 'Brak załącznika' }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "google-sheets-with-file",
+      "name": "Google Sheets (z plikiem)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1130, 200],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CREDENTIALS_ID_PLACEHOLDER",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "SPREADSHEET_ID_PLACEHOLDER",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Arkusz1",
+          "mode": "list",
+          "cachedResultName": "Arkusz1"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+            "Pakiet": "={{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Premium' : 'Konsultacja' }}",
+            "Imię i nazwisko": "={{ $('Webhook').item.json.body.data.userName }}",
+            "Telefon": "={{ $('Webhook').item.json.body.data.userPhone }}",
+            "Cena netto (zł)": "={{ $('Webhook').item.json.body.data.estimatedPrice || $('Webhook').item.json.body.data.rate || '' }}",
+            "Pokoje": "={{ $('Webhook').item.json.body.data.details?.rooms ? Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') : '' }}",
+            "Projekt elektryczny": "={{ $('Webhook').item.json.body.data.details?.electricProject ? 'Tak' : 'Nie' }}",
+            "Metraż elektryczny": "={{ $('Webhook').item.json.body.data.details?.electricM2 || '' }}",
+            "Metraż całkowity": "={{ $('Webhook').item.json.body.data.details?.totalM2 || '' }}",
+            "Metraż kuchni": "={{ $('Webhook').item.json.body.data.details?.kitchenM2 || '' }}",
+            "Metraż łazienek": "={{ $('Webhook').item.json.body.data.details?.bathM2 || '' }}",
+            "Link do pliku": "=Brak załącznika"
+          }
+        },
+        "options": {}
+      },
+      "id": "google-sheets-no-file",
+      "name": "Google Sheets (bez pliku)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [690, 400],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CREDENTIALS_ID_PLACEHOLDER",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "projektnacitobiuro@gmail.com",
+        "subject": "=Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}",
+        "message": "=<h2>Nowe zgłoszenie z formularza Projekt na Cito</h2>\n\n<p><strong>Pakiet:</strong> {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }}</p>\n\n<p><strong>Dane klienta:</strong></p>\n<ul>\n<li>Imię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}</li>\n<li>Telefon: {{ $('Webhook').item.json.body.data.userPhone }}</li>\n</ul>\n\n<p><strong>Wycena:</strong> {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}</p>\n\n{{ $('Webhook').item.json.body.data.details?.rooms ? '<p><strong>Wybrane pomieszczenia:</strong> ' + Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') + '</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.electricProject ? '<p><strong>Projekt elektryczny:</strong> Tak (' + $('Webhook').item.json.body.data.details.electricM2 + ' m²)</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.totalM2 ? '<p><strong>Metraż:</strong> ' + $('Webhook').item.json.body.data.details.totalM2 + ' m² (kuchnia: ' + ($('Webhook').item.json.body.data.details.kitchenM2 || 0) + ' m², łazienki: ' + ($('Webhook').item.json.body.data.details.bathM2 || 0) + ' m²)</p>' : '' }}\n\n<p><strong>Załącznik:</strong> {{ $json.webViewLink || 'Brak' }}</p>\n\n<hr>\n<p><em>Wiadomość wygenerowana automatycznie przez system Projekt na Cito</em></p>",
+        "options": {}
+      },
+      "id": "gmail-with-file",
+      "name": "Gmail (z plikiem)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1350, 200],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "CREDENTIALS_ID_PLACEHOLDER",
+          "name": "Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "projektnacitobiuro@gmail.com",
+        "subject": "=Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}",
+        "message": "=<h2>Nowe zgłoszenie z formularza Projekt na Cito</h2>\n\n<p><strong>Pakiet:</strong> {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }}</p>\n\n<p><strong>Dane klienta:</strong></p>\n<ul>\n<li>Imię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}</li>\n<li>Telefon: {{ $('Webhook').item.json.body.data.userPhone }}</li>\n</ul>\n\n<p><strong>Wycena:</strong> {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}</p>\n\n{{ $('Webhook').item.json.body.data.details?.rooms ? '<p><strong>Wybrane pomieszczenia:</strong> ' + Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') + '</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.electricProject ? '<p><strong>Projekt elektryczny:</strong> Tak (' + $('Webhook').item.json.body.data.details.electricM2 + ' m²)</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.totalM2 ? '<p><strong>Metraż:</strong> ' + $('Webhook').item.json.body.data.details.totalM2 + ' m² (kuchnia: ' + ($('Webhook').item.json.body.data.details.kitchenM2 || 0) + ' m², łazienki: ' + ($('Webhook').item.json.body.data.details.bathM2 || 0) + ' m²)</p>' : '' }}\n\n<p><strong>Załącznik:</strong> Brak</p>\n\n<hr>\n<p><em>Wiadomość wygenerowana automatycznie przez system Projekt na Cito</em></p>",
+        "options": {}
+      },
+      "id": "gmail-no-file",
+      "name": "Gmail (bez pliku)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [910, 400],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "CREDENTIALS_ID_PLACEHOLDER",
+          "name": "Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, message: 'Zgłoszenie zostało przyjęte' }) }}",
+        "options": {}
+      },
+      "id": "respond-success-file",
+      "name": "Odpowiedź (z plikiem)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1570, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, message: 'Zgłoszenie zostało przyjęte' }) }}",
+        "options": {}
+      },
+      "id": "respond-success-no-file",
+      "name": "Odpowiedź (bez pliku)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1130, 400]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Czy ma załącznik?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Czy ma załącznik?": {
+      "main": [
+        [
+          {
+            "node": "Konwertuj Base64 na plik",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets (bez pliku)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Konwertuj Base64 na plik": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Upload": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (z plikiem)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (z plikiem)": {
+      "main": [
+        [
+          {
+            "node": "Gmail (z plikiem)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (bez pliku)": {
+      "main": [
+        [
+          {
+            "node": "Gmail (bez pliku)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail (z plikiem)": {
+      "main": [
+        [
+          {
+            "node": "Odpowiedź (z plikiem)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail (bez pliku)": {
+      "main": [
+        [
+          {
+            "node": "Odpowiedź (bez pliku)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "pinData": {}
+}

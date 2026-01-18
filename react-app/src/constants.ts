@@ -22,4 +22,4 @@ export const PRICING = {
   }
 }
 
-export const API_URL = '/api/submissions'
+export const API_URL = 'http://test-n8n-9c6ed0-72-61-136-140.traefik.me/webhook/projektnacito-form'
