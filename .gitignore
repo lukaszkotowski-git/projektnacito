@@ -1,6 +1,12 @@
 node_modules/
 .env
+.env.local
+.env.*.local
+react-app/.env
+react-app/.env.local
+react-app/.env.*.local
 
 *.log
 .DS_Store
 .npm_cache/
+dist/
