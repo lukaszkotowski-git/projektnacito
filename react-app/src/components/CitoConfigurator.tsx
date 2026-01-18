@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { PRICING } from '../constants'
 
@@ -46,6 +46,11 @@ export function CitoConfigurator() {
     currentPrice, setCurrentPrice,
     setCurrentPackage
   } = useAppContext()
+
+  const [localElectricM2, setLocalElectricM2] = useState<string>(electricM2 ? String(electricM2) : '')
+
+  useEffect(() => { setLocalElectricM2(electricM2 ? String(electricM2) : '') }, [electricM2])
+
 
   useEffect(() => {
     let total = 0
@@ -122,13 +127,15 @@ export function CitoConfigurator() {
                 <p className="text-sm text-gray-500 mb-4">Dodatkowe opracowanie techniczne punktów świetlnych i gniazd.</p>
                 {electricProject && (
                   <div className="relative">
-                    <div className="animate-in fade-in duration-300">
+                    <div className="animate-in duration-300 visible">
                       <label htmlFor="electric-m2-input" className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">POWIERZCHNIA PROJEKTU (M²)</label>
                       <input
                         id="electric-m2-input"
                         type="number"
-                        value={electricM2 !== null && electricM2 !== undefined ? electricM2 : ''}
-                        onChange={(e) => setElectricM2(e.target.value === '' ? 0 : parseFloat(e.target.value))}
+                        value={localElectricM2}
+                        onChange={(e) => setLocalElectricM2(e.target.value)}
+                        onBlur={() => setElectricM2(localElectricM2 === '' ? 0 : parseFloat(localElectricM2))}
+                        onKeyDown={(e) => { if (e.key === 'Enter') { (e.target as HTMLInputElement).blur() } }}
                         placeholder="m²"
                         min="0"
                         step="0.1"
