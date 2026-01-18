@@ -42,7 +42,7 @@
 4. Name: `n8n`
 5. **Authorized redirect URIs** - dodaj:
    ```
-   http://test-n8n-9c6ed0-72-61-136-140.traefik.me/rest/oauth2-credential/callback
+   https://n8n.projektnacito.com.pl/rest/oauth2-credential/callback
    ```
 6. Kliknij **Create**
 7. **ZAPISZ Client ID i Client Secret** - będą potrzebne w n8n
@@ -57,8 +57,8 @@
 2. Utwórz nowy arkusz: **Projekt na Cito - Zgłoszenia**
 3. W wierszu 1 wpisz nagłówki kolumn:
 
-| A | B | C | D | E | F | G | H | I | J | K | L |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+| A    | B      | C               | D       | E               | F      | G                   | H                  | I                | J             | K               | L             |
+| ---- | ------ | --------------- | ------- | --------------- | ------ | ------------------- | ------------------ | ---------------- | ------------- | --------------- | ------------- |
 | Data | Pakiet | Imię i nazwisko | Telefon | Cena netto (zł) | Pokoje | Projekt elektryczny | Metraż elektryczny | Metraż całkowity | Metraż kuchni | Metraż łazienek | Link do pliku |
 
 4. **ZAPISZ ID arkusza** z URL:
@@ -81,7 +81,7 @@
 
 ### 3.1 Import workflow
 
-1. Otwórz n8n: http://test-n8n-9c6ed0-72-61-136-140.traefik.me
+1. Otwórz n8n: https://n8n.projektnacito.com.pl
 2. Kliknij **+** (nowy workflow) lub **Import from File**
 3. Zaimportuj plik `workflow.json` z tego folderu
 
@@ -122,7 +122,7 @@
 ### 3.5 Zaktualizuj workflow
 
 1. Otwórz zaimportowany workflow
-2. **Google Drive - Upload**: 
+2. **Google Drive - Upload**:
    - Kliknij node → **Parameters** → **Folder** → wklej ID folderu Google Drive
    - **Credential**: wybierz `Google Drive`
 3. **Google Sheets (z plikiem)** i **Google Sheets (bez pliku)**:
@@ -143,14 +143,15 @@
 ### 4.1 Sprawdź URL webhooka
 
 Po aktywacji workflow, URL webhooka to:
+
 ```
-http://test-n8n-9c6ed0-72-61-136-140.traefik.me/webhook/projektnacito-form
+https://n8n.projektnacito.com.pl/webhook/projektnacito-form
 ```
 
 ### 4.2 Test z curl
 
 ```bash
-curl -X POST http://test-n8n-9c6ed0-72-61-136-140.traefik.me/webhook/projektnacito-form \
+curl -X POST https://n8n.projektnacito.com.pl/webhook/projektnacito-form \
   -H "Content-Type: application/json" \
   -d '{
     "data": {
@@ -168,8 +169,9 @@ curl -X POST http://test-n8n-9c6ed0-72-61-136-140.traefik.me/webhook/projektnaci
 ```
 
 Oczekiwana odpowiedź:
+
 ```json
-{"success": true, "message": "Zgłoszenie zostało przyjęte"}
+{ "success": true, "message": "Zgłoszenie zostało przyjęte" }
 ```
 
 ### 4.3 Weryfikacja
@@ -182,17 +184,21 @@ Oczekiwana odpowiedź:
 ## Troubleshooting
 
 ### Problem: "Access blocked: This app's request is invalid"
+
 - Upewnij się, że redirect URI w Google Cloud Console jest dokładnie taki sam jak w n8n
 - Sprawdź czy dodałeś email do Test users
 
 ### Problem: "Error 403: access_denied"
+
 - Dodaj `projektnacitobiuro@gmail.com` do Test users w OAuth consent screen
 
 ### Problem: Webhook nie odpowiada
+
 - Sprawdź czy workflow jest **Active**
 - Sprawdź logi w n8n: **Executions** → zobacz błędy
 
 ### Problem: Plik nie zapisuje się w Drive
+
 - Sprawdź czy credentials Google Drive mają uprawnienia do folderu
 - Sprawdź ID folderu
 
@@ -201,7 +207,7 @@ Oczekiwana odpowiedź:
 ## Struktura workflow
 
 ```
-[Webhook] 
+[Webhook]
     ↓
 [Czy ma załącznik?]
     ├── TAK → [Google Drive Upload] → [Google Sheets] → [Gmail] → [Odpowiedź]
