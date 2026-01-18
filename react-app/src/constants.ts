@@ -23,4 +23,4 @@ export const PRICING = {
 }
 
 // Read API URL from environment variable (set VITE_API_URL in .env or hosting platform)
-export const API_URL = import.meta.env.VITE_API_URL || 'https://n8n.projektnacito.com.pl/webhook-test/init'
+export const API_URL = import.meta.env.VITE_API_URL || 'https://n8n.projektnacito.com.pl/webhook/init'
