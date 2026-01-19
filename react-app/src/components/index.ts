@@ -1,5 +1,6 @@
 export { Navigation } from './Navigation'
 export { MainView } from './MainView'
+export { OfferOverview } from './OfferOverview'
 export { CitoConfigurator } from './CitoConfigurator'
 export { PremiumConfigurator } from './PremiumConfigurator'
 export { ConsultConfigurator } from './ConsultConfigurator'

@@ -1,9 +1,11 @@
 import { useState, FormEvent } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { API_URL } from '../constants'
+import { useNotification } from './notifications'
 
 export function ConsultConfigurator() {
   const { setCurrentView, resetState } = useAppContext()
+  const { addToast: notify } = useNotification()
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [file, setFile] = useState<File | null>(null)
@@ -55,14 +57,14 @@ export function ConsultConfigurator() {
       const result = await response.json()
 
       if (response.ok && result.success) {
-        alert("Sukces! Zgłoszenie zostało wysłane.")
+        notify("Sukces! Zgłoszenie zostało wysłane.", 'success')
         goToMain()
       } else {
         const errorMsg = result.message || result.error || 'Nieznany błąd'
-        alert("Błąd: " + errorMsg)
+        notify("Błąd: " + errorMsg, 'error')
       }
     } catch {
-      alert("Nie udało się połączyć z serwerem. Spróbuj ponownie później.")
+      notify("Nie udało się połączyć z serwerem. Spróbuj ponownie później.", 'error')
     } finally {
       setIsSubmitting(false)
     }

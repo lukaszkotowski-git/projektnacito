@@ -1,18 +1,18 @@
 export const PRICING = {
   cito: {
     "Kuchnia": 500,
-    "Jadalnia w aneksie": 250,
-    "Jadalnia": 400,
-    "Przedsionek": 300,
-    "Salon": 600,
-    "Biuro": 450,
-    "Pokój gościnny": 450,
-    "Klatka schodowa": 350,
-    "Łazienka": 550,
-    "Garderoba": 300,
+    "Jadalnia w aneksie": 500,
+    "Jadalnia": 250,
+    "Przedsionek": 500,
+    "Salon": 500,
+    "Biuro": 500,
+    "Pokój gościnny": 500,
+    "Klatka schodowa": 500,
+    "Łazienka": 500,
+    "Garderoba": 500,
     "Sypialnia": 500,
-    "Korytarz": 250,
-    "Pomieszczenie gospodarcze": 250
+    "Korytarz": 500,
+    "Pomieszczenie gospodarcze": 500
   } as Record<string, number>,
   electricPerM2: 15,
   premium: {

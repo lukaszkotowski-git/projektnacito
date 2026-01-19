@@ -1,5 +1,6 @@
 import { AppProvider, useAppContext } from './context/AppContext'
-import { Navigation, MainView, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep } from './components'
+import { NotificationProvider } from './components/notifications'
+import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep } from './components'
 
 function AppContent() {
   const { currentView } = useAppContext()
@@ -18,8 +19,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
+    <NotificationProvider>
+      <AppProvider>
+        <AppContent />
+      </AppProvider>
+    </NotificationProvider>
   )
 }
