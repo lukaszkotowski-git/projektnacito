@@ -1,6 +1,6 @@
 import { AppProvider, useAppContext } from './context/AppContext'
 import { NotificationProvider } from './components/notifications'
-import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep } from './components'
+import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas } from './components'
 
 function AppContent() {
   const { currentView } = useAppContext()
@@ -14,6 +14,7 @@ function AppContent() {
       {currentView === 'premium-config' && <PremiumConfigurator />}
       {currentView === 'consult-config' && <ConsultConfigurator />}
       {currentView === 'final-step' && <FinalStep />}
+      {currentView === 'onas' && <ONas />}
     </>
   )
 }

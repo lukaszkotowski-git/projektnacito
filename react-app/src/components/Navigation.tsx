@@ -28,6 +28,14 @@ export function Navigation() {
         <div className="flex space-x-6 md:space-x-8 text-sm font-medium uppercase tracking-wider items-center relative">
           <button onClick={goToMain} className="hover:text-gray-500 transition">Start</button>
           <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
+          <button
+            onClick={() => setCurrentView('onas')}
+            className="hover:text-gray-500 transition"
+            aria-label="O nas"
+          >
+            O nas
+          </button>
+          <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
           {/* NOWE MENU OFERTA */}
           <div
             className="relative group"
