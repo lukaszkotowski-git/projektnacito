@@ -1,7 +1,9 @@
 import { useAppContext } from '../context/AppContext'
+import { useState } from 'react'
 
 export function Navigation() {
   const { setCurrentView, resetState } = useAppContext()
+  const [ofertaOpen, setOfertaOpen] = useState(false)
 
   const goToMain = () => {
     resetState()
@@ -12,20 +14,66 @@ export function Navigation() {
     <nav className="fixed w-full z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-[#E5DED4]">
       <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
         <div className="flex items-center cursor-pointer" onClick={goToMain}>
-          <img 
-            src="/logo/logo.png" 
-            alt="Projekt na Cito logo" 
+          <img
+            src="/logo/logo.png"
+            alt="Projekt na Cito logo"
             loading="lazy"
-            className="h-6 md:h-7 w-auto p-2 mr-2 md:mr-3"
+            className="h-6 md:h-7 w-auto mr-2 md:mr-3"
           />
           <div className="flex flex-col">
             <span className="text-xl font-semibold tracking-tighter uppercase font-serif">Projekt na Cito</span>
             <span className="text-[10px] uppercase tracking-widest text-gray-500 -mt-1 font-medium">Klaudia & Angelika</span>
           </div>
         </div>
-        <div className="flex space-x-6 md:space-x-8 text-sm font-medium uppercase tracking-wider items-center">
+        <div className="flex space-x-6 md:space-x-8 text-sm font-medium uppercase tracking-wider items-center relative">
           <button onClick={goToMain} className="hover:text-gray-500 transition">Start</button>
           <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
+          {/* NOWE MENU OFERTA */}
+          <div
+            className="relative group"
+            onMouseEnter={() => setOfertaOpen(true)}
+          >
+            <button
+              className="hover:text-gray-500 transition flex items-center"
+              onClick={() => setOfertaOpen((v) => !v)}
+            >
+              Oferta
+              <svg className="ml-1 w-3 h-3" viewBox="0 0 20 20" fill="none"><path d="M6 8l4 4 4-4" stroke="#8C7E6A" strokeWidth="2" strokeLinecap="round"/></svg>
+            </button>
+            {/* Submenu */}
+            {(ofertaOpen) && (
+              <div
+                className="absolute mt-2 min-w-[180px] bg-white/90 backdrop-blur shadow-xl border border-[#E5DED4] rounded-lg py-2 flex flex-col text-[#8C7E6A] animate-dropdown z-40"
+                onMouseLeave={() => setOfertaOpen(false)}
+                onClick={() => setOfertaOpen(false)}
+              >
+                <button
+                  onClick={() => setCurrentView('offer-overview')}
+                  className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                >
+                  Poznaj ofertę
+                </button>
+                <button
+                  onClick={() => setCurrentView('cito-config')}
+                  className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                >
+                  Pakiet na Cito
+                </button>
+                <button
+                  onClick={() => setCurrentView('premium-config')}
+                  className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                >
+                  Pakiet Premium
+                </button>
+                <button
+                  onClick={() => setCurrentView('consult-config')}
+                  className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                >
+                  Konsultacje
+                </button>
+              </div>
+            )}
+          </div>
           <div className="flex space-x-4">
             <a href="https://www.instagram.com/projektna_cito/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition" title="Instagram">
               <span className="hidden md:inline">Instagram</span>
@@ -41,3 +89,4 @@ export function Navigation() {
     </nav>
   )
 }
+
