@@ -1,5 +1,3 @@
-import React from "react";
-
 export function Footer(): JSX.Element {
   return (
     <footer className="w-full bg-[#FDFBF7] text-[#8C7E6A] border-t border-[#E5DED4] py-4 text-sm font-serif">
