@@ -1,3 +1,4 @@
+import { Footer } from './components/Footer'
 import { AppProvider, useAppContext } from './context/AppContext'
 import { NotificationProvider } from './components/notifications'
 import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas } from './components'
@@ -25,6 +26,7 @@ export default function App() {
       <AppProvider>
         <AppContent />
       </AppProvider>
+      <Footer />
     </NotificationProvider>
   )
 }
