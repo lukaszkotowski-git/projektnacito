@@ -9,6 +9,7 @@ function AppContent() {
     <>
       <Navigation />
       {currentView === 'main' && <MainView />}
+      {currentView === 'offer-overview' && <OfferOverview />}
       {currentView === 'cito-config' && <CitoConfigurator />}
       {currentView === 'premium-config' && <PremiumConfigurator />}
       {currentView === 'consult-config' && <ConsultConfigurator />}
