@@ -11,9 +11,17 @@ export function Navigation() {
   return (
     <nav className="fixed w-full z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-[#E5DED4]">
       <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-        <div className="flex flex-col cursor-pointer" onClick={goToMain}>
-          <span className="text-xl font-semibold tracking-tighter uppercase font-serif">Projekt na Cito</span>
-          <span className="text-[10px] uppercase tracking-widest text-gray-500 -mt-1 font-medium">Klaudia & Angelika</span>
+        <div className="flex items-center cursor-pointer" onClick={goToMain}>
+          <img 
+            src="/logo/logo.png" 
+            alt="Projekt na Cito logo" 
+            loading="lazy"
+            className="h-8 md:h-12 w-auto mr-3 md:mr-4"
+          />
+          <div className="flex flex-col">
+            <span className="text-xl font-semibold tracking-tighter uppercase font-serif">Projekt na Cito</span>
+            <span className="text-[10px] uppercase tracking-widest text-gray-500 -mt-1 font-medium">Klaudia & Angelika</span>
+          </div>
         </div>
         <div className="flex space-x-6 md:space-x-8 text-sm font-medium uppercase tracking-wider items-center">
           <button onClick={goToMain} className="hover:text-gray-500 transition">Start</button>
