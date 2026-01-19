@@ -2,6 +2,35 @@ import { useAppContext } from '../context/AppContext'
 
 export function OfferOverview() {
   const { setCurrentView } = useAppContext()
+  
+  const etapy = [
+    {
+      numer: 1,
+      tytul: 'Pierwszy etap',
+      punkty: [
+        'Układ funkcjonalny w formacie rzutu technicznego 2D.',
+        'Wizualizacje wnętrz – materiały, kolory, meble (na wymiar i gotowe).',
+      ],
+    },
+    {
+      numer: 2,
+      tytul: 'Drugi etap',
+      punkty: [
+        'Rysunki wykonawcze – szczegółowy zestaw techniczny dla wykonawców.',
+        'Dobór elementów wyposażenia wnętrza.',
+        'Kosztorys – szczegółowa wycena i zestawienie elementów.',
+      ],
+    },
+    {
+      numer: 3,
+      tytul: 'Trzeci etap',
+      punkty: [
+        'Nadzór autorski – koordynacja zamówień, wizyty na budowie.',
+        'Stylizacja wnętrza.',
+        'Dokumentacja fotograficzna przestrzeni.',
+      ],
+    }
+  ];
 
   return (
     <main className="pt-32 pb-24">
@@ -9,35 +38,84 @@ export function OfferOverview() {
         <h1 className="text-5xl md:text-6xl font-serif mb-12 text-center">
           Proces <span className="italic text-[#8C7E6A]">projektowy</span>
         </h1>
-        <div className="mb-20 max-w-2xl mx-auto text-gray-600 text-lg text-center">Każdy projekt realizujemy kompleksowo — od kreatywnego układu po finalną stylizację Twojego wnętrza.</div>
-        <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch">
-          {/* Etap 1 */}
-          <div className="flex-1 min-w-[270px] rounded-xl bg-white/95 shadow-lg p-8 animate-slideIn" style={{ animationDelay: '0s' }}>
-            <h2 className="text-2xl md:text-3xl font-serif mb-4 text-[#8C7E6A]">Pierwszy etap</h2>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li>Wykonanie układów funkcjonalnych w formacie rzutu technicznego 2D z zaznaczeniem poszczególnych stref.</li>
-              <li>Wykonanie wizualizacji wnętrz, prezentujących użyte materiały, kolory oraz konkretne meble — zarówno projektowane pod wymiar jak i gotowe.</li>
-            </ul>
-          </div>
-          {/* Etap 2 */}
-          <div className="flex-1 min-w-[270px] rounded-xl bg-white/95 shadow-lg p-8 animate-slideIn" style={{ animationDelay: '0.1s' }}>
-            <h2 className="text-2xl md:text-3xl font-serif mb-4 text-[#8C7E6A]">Drugi etap</h2>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li>Opracowanie rysunków wykonawczych projektu (zestaw rysunków technicznych pozwala wykonawcom na samodzielne zrealizowanie remontu i pomaga uniknąć błędów podczas realizacji).</li>
-              <li>Ostateczne uzgodnienie i dobór elementów wyposażenia wnętrza.</li>
-              <li>Przygotowanie kosztorysu – zestawienie elementów wyposażenia wraz z wycenami od wykonawców.</li>
-            </ul>
-          </div>
-          {/* Etap 3 */}
-          <div className="flex-1 min-w-[270px] rounded-xl bg-white/95 shadow-lg p-8 animate-slideIn" style={{ animationDelay: '0.2s' }}>
-            <h2 className="text-2xl md:text-3xl font-serif mb-4 text-[#8C7E6A]">Trzeci etap</h2>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li>Nadzór autorski — tj. koordynacja zamówień, wizyty na budowie.</li>
-              <li>Stylizacja wnętrza.</li>
-              <li>Dokumentacja fotograficzna przestrzeni.</li>
-            </ul>
+        <div className="mb-12 max-w-2xl mx-auto text-[#8C7E6A] text-xl text-center font-semibold">
+          Nasze pakiety projektowe możesz dobrać do własnych potrzeb – od szybkiego projektu, przez pełną obsługę i wsparcie, aż po indywidualną konsultację z architektem wnętrz.
+        </div>
+        <div className="mb-16 max-w-2xl mx-auto text-gray-600 text-lg text-center">Każdy projekt realizujemy kompleksowo — od kreatywnego układu po finalną stylizację Twojego wnętrza.</div>
+
+        {/* ETAPY Z GRAFIKĄ NUMERÓW */}
+        <div className="flex flex-col gap-10 mb-20">
+          {etapy.map((etap, i) => (
+            <div className="rounded-xl bg-white/95 shadow-lg p-8 animate-slideIn" key={etap.numer} style={{ animationDelay: `${i * 0.05}s` }}>
+              <div className="flex items-center gap-7">
+                <div className="flex-shrink-0 w-16 h-16 rounded-full bg-white shadow flex items-center justify-center text-3xl font-bold text-[#8C7E6A] border-2 border-[#E5DED4]">
+                  {etap.numer}
+                </div>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-serif mb-4 text-[#8C7E6A]">{etap.tytul}</h2>
+                  <ul className="list-disc pl-6 space-y-2 text-gray-700 text-lg">
+                    {etap.punkty.map((punkt, idx) => (
+                      <li key={idx}>{punkt}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* PAKIETY – 3 BOXY OBOK SIEBIE z pełnymi opisami */}
+        <div className="mb-14">
+          <h2 className="text-3xl font-serif mb-8 text-center text-[#8C7E6A]">Pakiety</h2>
+          <div className="flex flex-col md:flex-row gap-8 justify-center">
+            {/* Pakiet na CITO */}
+            <div className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn">
+              <div className="text-xl font-bold text-[#8C7E6A] mb-3">Cito</div>
+              <p className="mb-4 text-gray-700">Każdy powinien móc mieszkać w pięknym, funkcjonalnym i dostosowanym do jego potrzeb wnętrzu, dlatego powstał Projekt na CITO.<br/>W jego skład wchodzi wszystko, co niezbędne do zrealizowania projektu wnętrza:</p>
+              <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
+                <li><b>Układ funkcjonalny</b><br/>Rzut z propozycją układu elementów we wnętrzu.</li>
+                <li><b>Aranżacja</b><br/>Model 3D prezentujący proponowane rozwiązania estetyczne.</li>
+                <li><b>Zestawienie materiałów i sprzętów</b><br/>Lista konkretnych materiałów z ich cenami i linkami do sklepów.</li>
+                <li><b>Wizualizacje</b><br/>Fotorealistyczne przedstawienie wnętrza.</li>
+                <li><b>Schemat meblowy</b><br/>Rzuty i przekroje mebli z ich podstawowymi wymiarami.</li>
+                <li><b>Oferty od wykonawców</b><br/>Oferta od np. stolarza, budowlańca, instalatora klimatyzacji na zastosowane w projekcie rozwiązania.</li>
+              </ol>
+              <p className="mt-2 text-gray-600 text-sm">Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu. Obmiar projektowanej przestrzeni wraz z przedstawieniem danych na rzucie.</p>
+              <div className="font-bold text-[#8C7E6A] text-lg mt-2">Koszt projektu to 500 zł za pomieszczenie o jednej funkcji.</div>
+            </div>
+            {/* Pakiet Premium */}
+            <div className="flex-1 min-w-[280px] bg-[rgba(216,171,80,0.06)] rounded-2xl shadow-xl p-8 border border-[#D8AB50] animate-slideIn" style={{ animationDelay: '0.1s' }}>
+              <div className="text-xl font-bold text-[#D8AB50] mb-3">Premium</div>
+              <p className="mb-4 text-gray-700">Chcesz cieszyć się realizacją projektu Twojego wymarzonego wnętrza pod czujnym okiem inżyniera budowy i architekta wnętrz? Projekt rozszerzony jest dla Ciebie!<br/>W jego skład wchodzi:</p>
+              <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
+                <li><b>Inwentaryzacja</b><br/>Pomiary całej projektowanej części.</li>
+                <li><b>Układ funkcjonalny</b><br/>Rzut z propozycją układu elementów we wnętrzu.</li>
+                <li><b>Aranżacja</b><br/>Model 3D prezentujący proponowane rozwiązania estetyczne.</li>
+                <li><b>Zestawienie materiałów i sprzętów</b><br/>Lista konkretnych materiałów z ich cenami i linkami do sklepów.</li>
+                <li><b>Wizualizacje</b><br/>Fotorealistyczne przedstawienie wnętrza.</li>
+                <li><b>Projekt meblowy</b><br/>Kompletny projekt zabudowy meblowej.</li>
+                <li><b>Projekt wykonawczy</b><br/>Rzuty podłóg i sufitów, rzuty instalacji wod-kan, rzuty instalacji elektrycznej, wentylacji, CO oraz rysunki detali.</li>
+                <li><b>Oferty od wykonawców</b><br/>Oferta od np. stolarza, budowlańca, instalatora na zastosowane w projekcie rozwiązania.</li>
+                <li><b>Nadzór autorski</b><br/>Pilnowanie przebiegu prac projektowych i ich zgodności z projektem, kontrolowanie zamówień, oglądanie i wybieranie elementów wyposażenia.</li>
+              </ol>
+              <div className="font-bold text-[#D8AB50] text-lg mt-2">Koszt tego opracowania to 150 zł za m² projektowanej powierzchni.<br/>Kuchnia i łazienka liczona każda za 2500zł.<br/>Nadzór wyceniany jest indywidualnie zależnie od jego zakresu i rozliczany stawką godzinową.</div>
+            </div>
+            {/* Konsultacja */}
+            <div className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn" style={{ animationDelay: '0.15s' }}>
+              <div className="text-xl font-bold text-[#8C7E6A] mb-3">Konsultacja</div>
+              <p className="mb-4 text-gray-700">Jeżeli potrzebujesz szybkiej i kompleksowej porady, to konsultacja jest rozwiązaniem dla Ciebie.<br/>Może ona polegać na:</p>
+              <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
+                <li><b>Analizie układu funkcjonalnego</b><br/>Proponowanie ustawienia elementów wyposażenia we wnętrzu.</li>
+                <li><b>Planowaniu zmian lokatorskich</b><br/>Dokonywanie zmian w projekcie przedstawionym przez dewelopera przed oddaniem mieszkania.</li>
+                <li><b>Sprawdzaniu wykonalności projektu</b><br/>Weryfikacja rozwiązań pod względem realności wykonania i kosztu.</li>
+                <li><b>Porównywaniu ustawności mieszkań</b><br/>Porównanie mieszkań przed zakupem.</li>
+                <li><b>Inne</b><br/>Chętnie podzielimy się naszą wiedzą i doświadczeniem w zakresie projektowania wnętrz i realizacji założeń projektowych.</li>
+              </ol>
+              <div className="font-bold text-[#8C7E6A] text-lg mt-2">Koszt tej usługi to 200 zł za godzinę konsultacji.</div>
+            </div>
           </div>
         </div>
+
         <div className="mt-20 text-center">
           <button
             onClick={() => setCurrentView('main')}
