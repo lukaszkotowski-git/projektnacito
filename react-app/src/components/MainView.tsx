@@ -28,7 +28,7 @@ export function MainView() {
           <div onClick={() => handleChoice('premium-config')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
             <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-6">Kompleksowy</div>
             <h3 className="text-3xl font-serif mb-4">Pakiet Premium</h3>
-            <p className="text-sm text-gray-500 leading-relaxed mb-8">Wycena na podstawie metrażu. Najlepszy wybór przy projektowaniu całego mieszkania lub domu.</p>
+            <p className="text-sm text-gray-500 leading-relaxed mb-8">przeprowadzamy Cię przez cały proces projektowy. Oszczędzasz czas i otrzymujesz pełne wsparcie.</p>
             <span className="text-[10px] font-bold uppercase tracking-widest flex items-center">
               Oblicz wycenę <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </span>
