@@ -43,22 +43,26 @@ export function OfferOverview() {
         </div>
         <div className="mb-16 max-w-2xl mx-auto text-gray-600 text-lg text-center">Każdy projekt realizujemy kompleksowo — od kreatywnego układu po finalną stylizację Twojego wnętrza.</div>
 
-        {/* ETAPY Z GRAFIKĄ NUMERÓW */}
-        <div className="flex flex-col gap-10 mb-20">
+        {/* ETAPY – TIMELINE */}
+        <div className="relative flex flex-col gap-16 mb-24 pl-12">
+          {/* Linia timeline (desktop) */}
+          <div className="hidden md:block absolute left-24 top-8 bottom-8 w-1 bg-gradient-to-b from-[#E5DED4] to-[#8C7E6A] animate-growLine" />
           {etapy.map((etap, i) => (
-            <div className="rounded-xl bg-white/95 shadow-lg p-8 animate-slideIn" key={etap.numer} style={{ animationDelay: `${i * 0.05}s` }}>
-              <div className="flex items-center gap-7">
-                <div className="flex-shrink-0 w-16 h-16 rounded-full bg-white shadow flex items-center justify-center text-3xl font-bold text-[#8C7E6A] border-2 border-[#E5DED4]">
-                  {etap.numer}
-                </div>
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-serif mb-4 text-[#8C7E6A]">{etap.tytul}</h2>
-                  <ul className="list-disc pl-6 space-y-2 text-gray-700 text-lg">
-                    {etap.punkty.map((punkt, idx) => (
-                      <li key={idx}>{punkt}</li>
-                    ))}
-                  </ul>
-                </div>
+            <div className={`relative flex ${i % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center gap-7`} key={etap.numer}>
+              {/* Numer w okręgu */}
+              <div className="relative z-10 flex-shrink-0 w-16 h-16 rounded-full bg-white shadow flex items-center justify-center text-3xl font-bold text-[#8C7E6A] border-2 border-[#E5DED4] animate-bounceIn">
+                {etap.numer}
+              </div>
+              {/* Połączenie pionowe – na mobile */}
+              <div className={`md:hidden absolute left-8 right-8 top-16 bottom-0 w-1 bg-gradient-to-b from-[#E5DED4] to-[#8C7E6A]`} />
+              {/* Card z opisem – animacja slide z boków*/}
+              <div className={`rounded-xl bg-white/95 shadow-lg p-8 flex-1 ${i % 2 === 0 ? 'animate-fadeInLeft' : 'animate-fadeInRight'}`} style={{ animationDelay: `${i * 0.13}s` }}>
+                <h2 className="text-2xl md:text-3xl font-serif mb-4 text-[#8C7E6A]">{etap.tytul}</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 text-lg">
+                  {etap.punkty.map((punkt, idx) => (
+                    <li key={idx}>{punkt}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}
