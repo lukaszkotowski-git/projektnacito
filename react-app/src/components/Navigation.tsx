@@ -28,15 +28,8 @@ export function Navigation() {
         <div className="flex space-x-6 md:space-x-8 text-sm font-medium uppercase tracking-wider items-center relative">
           <button onClick={goToMain} className="hover:text-gray-500 transition">Start</button>
           <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
-          <button
-            onClick={() => setCurrentView('onas')}
-            className="hover:text-gray-500 transition"
-            aria-label="O nas"
-          >
-            O nas
-          </button>
           <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
-          {/* NOWE MENU OFERTA */}
+
           <div
             className="relative group"
             onMouseEnter={() => setOfertaOpen(true)}
@@ -48,7 +41,7 @@ export function Navigation() {
               Oferta
               <svg className="ml-1 w-3 h-3" viewBox="0 0 20 20" fill="none"><path d="M6 8l4 4 4-4" stroke="#8C7E6A" strokeWidth="2" strokeLinecap="round"/></svg>
             </button>
-            {/* Submenu */}
+  
             {(ofertaOpen) && (
               <div
                 className="absolute mt-2 min-w-[180px] bg-white/90 backdrop-blur shadow-xl border border-[#E5DED4] rounded-lg py-2 flex flex-col text-[#8C7E6A] animate-dropdown z-40"
@@ -82,6 +75,7 @@ export function Navigation() {
               </div>
             )}
           </div>
+          <button onClick={() => setCurrentView('onas')} className="hover:text-gray-500 transition" aria-label="O nas">O nas</button>
           <div className="flex space-x-4">
             <a href="https://www.instagram.com/projektna_cito/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition" title="Instagram">
               <span className="hidden md:inline">Instagram</span>

@@ -43,19 +43,19 @@ export function OfferOverview() {
         </div>
         <div className="mb-16 max-w-2xl mx-auto text-gray-600 text-lg text-center">Każdy projekt realizujemy kompleksowo — od kreatywnego układu po finalną stylizację Twojego wnętrza.</div>
 
-        {/* ETAPY – TIMELINE */}
+
         <div className="relative flex flex-col gap-16 mb-24 pl-12">
-          {/* Linia timeline (desktop) */}
+
           <div className="hidden md:block absolute left-24 top-8 bottom-8 w-1 bg-gradient-to-b from-[#E5DED4] to-[#8C7E6A] animate-growLine" />
           {etapy.map((etap, i) => (
             <div className={`relative flex ${i % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center gap-7`} key={etap.numer}>
-              {/* Numer w okręgu */}
+    
               <div className="relative z-10 flex-shrink-0 w-16 h-16 rounded-full bg-white shadow flex items-center justify-center text-3xl font-bold text-[#8C7E6A] border-2 border-[#E5DED4] animate-bounceIn">
                 {etap.numer}
               </div>
-              {/* Połączenie pionowe – na mobile */}
+    
               <div className={`md:hidden absolute left-8 right-8 top-16 bottom-0 w-1 bg-gradient-to-b from-[#E5DED4] to-[#8C7E6A]`} />
-              {/* Card z opisem – animacja slide z boków*/}
+    
               <div className={`rounded-xl bg-white/95 shadow-lg p-8 flex-1 ${i % 2 === 0 ? 'animate-fadeInLeft' : 'animate-fadeInRight'}`} style={{ animationDelay: `${i * 0.13}s` }}>
                 <h2 className="text-2xl md:text-3xl font-serif mb-4 text-[#8C7E6A]">{etap.tytul}</h2>
                 <ul className="list-disc pl-6 space-y-2 text-gray-700 text-lg">
@@ -68,11 +68,11 @@ export function OfferOverview() {
           ))}
         </div>
 
-        {/* PAKIETY – 3 BOXY OBOK SIEBIE z pełnymi opisami */}
+
         <div className="mb-14">
           <h2 className="text-3xl font-serif mb-8 text-center text-[#8C7E6A]">Pakiety</h2>
           <div className="flex flex-col md:flex-row gap-8 justify-center">
-            {/* Pakiet na CITO */}
+
             <div className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn">
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">Cito</div>
               <p className="mb-4 text-gray-700">Każdy powinien móc mieszkać w pięknym, funkcjonalnym i dostosowanym do jego potrzeb wnętrzu, dlatego powstał Projekt na CITO.<br/>W jego skład wchodzi wszystko, co niezbędne do zrealizowania projektu wnętrza:</p>
@@ -87,7 +87,7 @@ export function OfferOverview() {
               <p className="mt-2 text-gray-600 text-sm">Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu. Obmiar projektowanej przestrzeni wraz z przedstawieniem danych na rzucie.</p>
               <div className="font-bold text-[#8C7E6A] text-lg mt-2">Koszt projektu to 500 zł za pomieszczenie o jednej funkcji.</div>
             </div>
-            {/* Pakiet Premium */}
+
             <div className="flex-1 min-w-[280px] bg-[rgba(216,171,80,0.06)] rounded-2xl shadow-xl p-8 border border-[#D8AB50] animate-slideIn" style={{ animationDelay: '0.1s' }}>
               <div className="text-xl font-bold text-[#D8AB50] mb-3">Premium</div>
               <p className="mb-4 text-gray-700">Chcesz cieszyć się realizacją projektu Twojego wymarzonego wnętrza pod czujnym okiem inżyniera budowy i architekta wnętrz? Projekt rozszerzony jest dla Ciebie!<br/>W jego skład wchodzi:</p>
@@ -104,7 +104,7 @@ export function OfferOverview() {
               </ol>
               <div className="font-bold text-[#D8AB50] text-lg mt-2">Koszt tego opracowania to 150 zł za m² projektowanej powierzchni.<br/>Kuchnia i łazienka liczona każda za 2500zł.<br/>Nadzór wyceniany jest indywidualnie zależnie od jego zakresu i rozliczany stawką godzinową.</div>
             </div>
-            {/* Konsultacja */}
+
             <div className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn" style={{ animationDelay: '0.15s' }}>
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">Konsultacja</div>
               <p className="mb-4 text-gray-700">Jeżeli potrzebujesz szybkiej i kompleksowej porady, to konsultacja jest rozwiązaniem dla Ciebie.<br/>Może ona polegać na:</p>
