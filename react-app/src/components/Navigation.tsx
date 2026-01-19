@@ -16,7 +16,7 @@ export function Navigation() {
             src="/logo/logo.png" 
             alt="Projekt na Cito logo" 
             loading="lazy"
-            className="h-8 md:h-8 w-auto mr-3 md:mr-4"
+            className="h-6 md:h-7 w-auto p-2 mr-2 md:mr-3"
           />
           <div className="flex flex-col">
             <span className="text-xl font-semibold tracking-tighter uppercase font-serif">Projekt na Cito</span>
