@@ -1,5 +1,5 @@
 import { useAppContext } from '../context/AppContext'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 
 export function Navigation() {
   const { setCurrentView, resetState } = useAppContext()
