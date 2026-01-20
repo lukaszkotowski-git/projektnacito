@@ -64,24 +64,36 @@ export function Navigation() {
                   ofertaTimeout.current = window.setTimeout(() => setOfertaOpen(false), 150)
                 }}
               >
-               <button
-                   onClick={() => setCurrentView('offer-overview')}
-                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
-                 >
-                   Poznaj ofertę
-                 </button>
+                 <button
+                    onClick={() => setCurrentView('offer-overview')}
+                    className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                  >
+                    Poznaj ofertę
+                  </button>
                  <button
                    onClick={() => setCurrentView('realizacje')}
                    className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
                  >
                    Realizacje
                  </button>
-                <button
-                  onClick={() => setCurrentView('cito-config')}
-                  className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
-                >
-                  Pakiet na Cito
-                </button>
+                 <button
+                   onClick={() => setCurrentView('cito-config')}
+                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                 >
+                   Pakiet na Cito
+                 </button>
+                 <button
+                   onClick={() => setCurrentView('premium-config')}
+                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                 >
+                   Pakiet Premium
+                 </button>
+                 <button
+                   onClick={() => setCurrentView('consult-config')}
+                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                 >
+                   Konsultacje
+                 </button>
                 <button
                   onClick={() => setCurrentView('premium-config')}
                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"

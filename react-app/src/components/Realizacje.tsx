@@ -3,7 +3,7 @@ import { useAppContext } from '../context/AppContext'
 export function Realizacje(): JSX.Element {
   const { setCurrentView } = useAppContext()
 
-  const placeholders = Array.from({ length: 8 }).map((_, i) => `https://via.placeholder.com/800x600?text=Realizacja+${i+1}`)
+  const placeholders = Array.from({ length: 8 }).map((_, i) => `https://placehold.co/600x400?text=Realizacja+${i+1}`)
 
   return (
     <main className="pt-32 pb-24">
