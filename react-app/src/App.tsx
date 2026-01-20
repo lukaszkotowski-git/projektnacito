@@ -24,9 +24,13 @@ export default function App() {
   return (
     <NotificationProvider>
       <AppProvider>
-        <AppContent />
+        <div className="min-h-screen flex flex-col">
+          <main className="flex-1">
+            <AppContent />
+          </main>
+          <Footer />
+        </div>
       </AppProvider>
-      <Footer />
     </NotificationProvider>
   )
 }

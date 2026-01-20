@@ -74,7 +74,41 @@ export function Navigation() {
             )}
           </div>
           <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
-          <button onClick={() => setCurrentView('onas')} className="hover:text-gray-500 transition" aria-label="O nas">O nas</button>
+          <div className="relative group" style={{ minWidth: '80px' }}>
+  <button
+    onClick={() => setCurrentView('onas')}
+    className="hover:text-gray-500 transition px-2 py-1"
+    aria-label="O nas"
+    onMouseEnter={() => setDropdownOnasOpen(true)}
+    onMouseLeave={() => setDropdownOnasOpen(false)}
+    onFocus={() => setDropdownOnasOpen(true)}
+    onBlur={() => setDropdownOnasOpen(false)}
+  >
+    O nas
+  </button>
+  {(dropdownOnasOpen) && (
+    <div
+      className="absolute mt-2 min-w-[180px] bg-white/90 backdrop-blur shadow-xl border border-[#E5DED4] rounded-lg py-2 flex flex-col text-[#8C7E6A] animate-dropdown z-40"
+      onMouseEnter={() => setDropdownOnasOpen(true)}
+      onMouseLeave={() => setDropdownOnasOpen(false)}
+    >
+      <a
+        href="tel:+48698354726"
+        className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition rounded"
+        aria-label="Zadzwoń do Klaudii"
+      >
+        Zadzwoń do Klaudii
+      </a>
+      <a
+        href="tel:+48697909309"
+        className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition rounded"
+        aria-label="Zadzwoń do Angeliki"
+      >
+        Zadzwoń do Angeliki
+      </a>
+    </div>
+  )}
+</div>
            <div className="flex space-x-4">
             <a
               href="https://www.instagram.com/projektna_cito/"
