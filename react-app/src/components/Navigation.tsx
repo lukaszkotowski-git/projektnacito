@@ -4,6 +4,7 @@ import { useState } from 'react'
 export function Navigation() {
   const { setCurrentView, resetState } = useAppContext()
   const [ofertaOpen, setOfertaOpen] = useState(false)
+  const [dropdownOnasOpen, setDropdownOnasOpen] = useState(false)
 
   const goToMain = () => {
     resetState()
