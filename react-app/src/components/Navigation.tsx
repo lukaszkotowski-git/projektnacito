@@ -31,7 +31,8 @@ export function Navigation() {
           <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
           <div
             className="relative group"
-            onMouseEnter={() => setOfertaOpen(true)}
+            onMouseEnter={() => { setOfertaOpen(true); setDropdownOnasOpen(false); }}
+            onMouseLeave={() => setOfertaOpen(false)}
           >
             <button
               className="hover:text-gray-500 transition flex items-center"
@@ -44,8 +45,8 @@ export function Navigation() {
             {(ofertaOpen) && (
               <div
                 className="absolute mt-2 min-w-[180px] bg-white/90 backdrop-blur shadow-xl border border-[#E5DED4] rounded-lg py-2 flex flex-col text-[#8C7E6A] animate-dropdown z-40"
+                onMouseEnter={() => setOfertaOpen(true)}
                 onMouseLeave={() => setOfertaOpen(false)}
-                onClick={() => setOfertaOpen(false)}
               >
                 <button
                   onClick={() => setCurrentView('offer-overview')}
@@ -80,7 +81,7 @@ export function Navigation() {
     onClick={() => setCurrentView('onas')}
     className="hover:text-gray-500 transition px-2 py-1"
     aria-label="O nas"
-    onMouseEnter={() => setDropdownOnasOpen(true)}
+    onMouseEnter={() => { setDropdownOnasOpen(true); setOfertaOpen(false); }}
     onMouseLeave={() => setDropdownOnasOpen(false)}
     onFocus={() => setDropdownOnasOpen(true)}
     onBlur={() => setDropdownOnasOpen(false)}
