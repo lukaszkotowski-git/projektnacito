@@ -37,7 +37,7 @@ export function MainView() {
           <div onClick={() => handleChoice('consult-config')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
             <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-6">Szybka Pomoc</div>
             <h3 className="text-3xl font-serif mb-4">Konsultacja</h3>
-            <p className="text-sm text-gray-500 leading-relaxed mb-8">Szybka porada ekspercka online lub na budowie. Idealne rozwiązanie na konkretne dylematy.</p>
+            <p className="text-sm text-gray-500 leading-relaxed mb-8">Szybka porada ekspercka online. Idealne rozwiązanie na konkretne dylematy.</p>
             <span className="text-[10px] font-bold uppercase tracking-widest flex items-center">
               Umów się <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </span>
