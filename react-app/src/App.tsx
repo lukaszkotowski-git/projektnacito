@@ -16,6 +16,7 @@ function AppContent() {
       {currentView === 'consult-config' && <ConsultConfigurator />}
       {currentView === 'final-step' && <FinalStep />}
       {currentView === 'onas' && <ONas />}
+      {currentView === 'realizacje' && <Realizacje />}
     </>
   )
 }
@@ -30,9 +31,7 @@ export default function App() {
           </main>
           <Footer />
         </div>
-        </div>
       </AppProvider>
-    </NotificationProvider>
     </NotificationProvider>
   )
 }
