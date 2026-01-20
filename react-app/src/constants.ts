@@ -1,7 +1,7 @@
 export const PRICING = {
   cito: {
     "Kuchnia": 500,
-    "Jadalnia w aneksie": 500,
+    "Jadalnia w aneksie": 250,
     "Jadalnia": 250,
     "Przedsionek": 500,
     "Salon": 500,
