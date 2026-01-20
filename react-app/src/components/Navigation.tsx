@@ -126,17 +126,21 @@ export function Navigation() {
       </button>
       <a
         href="tel:+48698354726"
-        className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition rounded"
         aria-label="Zadzwoń do Klaudii"
+        className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition rounded flex items-center gap-3"
       >
-        Zadzwoń do Klaudii
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M6.5 5.5l2.75-2.75a2 2 0 0 1 2.83 0l2.17 2.17a2 2 0 0 1 0 2.83l-.95.95a1 1 0 0 0-.25 1.06c.63 1.72 1.98 3.07 3.7 3.7a1 1 0 0 0 1.06-.25l.95-.95a2 2 0 0 1 2.83 0l2.17 2.17a2 2 0 0 1 0 2.83l-2.75 2.75c-1.82 1.82-5.68.7-8.78-2.39C5.8 11.18 4.68 7.32 6.5 5.5z"/></svg>
+        Klaudia
+        <span className="sr-only">Zadzwoń do Klaudii</span>
       </a>
       <a
         href="tel:+48697909309"
-        className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition rounded"
         aria-label="Zadzwoń do Angeliki"
+        className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition rounded flex items-center gap-3"
       >
-        Zadzwoń do Angeliki
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M6.5 5.5l2.75-2.75a2 2 0 0 1 2.83 0l2.17 2.17a2 2 0 0 1 0 2.83l-.95.95a1 1 0 0 0-.25 1.06c.63 1.72 1.98 3.07 3.7 3.7a1 1 0 0 0 1.06-.25l.95-.95a2 2 0 0 1 2.83 0l2.17 2.17a2 2 0 0 1 0 2.83l-2.75 2.75c-1.82 1.82-5.68.7-8.78-2.39C5.8 11.18 4.68 7.32 6.5 5.5z"/></svg>
+        Angelika
+        <span className="sr-only">Zadzwoń do Angeliki</span>
       </a>
     </div>
   )}
