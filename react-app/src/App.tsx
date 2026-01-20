@@ -1,7 +1,7 @@
 import { Footer } from './components/Footer'
 import { AppProvider, useAppContext } from './context/AppContext'
 import { NotificationProvider } from './components/notifications'
-import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas } from './components'
+import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas, Realizacje } from './components'
 
 function AppContent() {
   const { currentView } = useAppContext()
@@ -30,7 +30,9 @@ export default function App() {
           </main>
           <Footer />
         </div>
+        </div>
       </AppProvider>
+    </NotificationProvider>
     </NotificationProvider>
   )
 }
