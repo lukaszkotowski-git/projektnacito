@@ -93,6 +93,13 @@ export function Navigation() {
       onMouseEnter={() => setDropdownOnasOpen(true)}
       onMouseLeave={() => setDropdownOnasOpen(false)}
     >
+      <button
+        onClick={() => { setCurrentView('onas'); setDropdownOnasOpen(false); }}
+        className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+        aria-label="O nas"
+      >
+        O nas
+      </button>
       <a
         href="tel:+48698354726"
         className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition rounded"
