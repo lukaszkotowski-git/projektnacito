@@ -64,12 +64,18 @@ export function Navigation() {
                   ofertaTimeout.current = window.setTimeout(() => setOfertaOpen(false), 150)
                 }}
               >
-                <button
-                  onClick={() => setCurrentView('offer-overview')}
-                  className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
-                >
-                  Poznaj ofertę
-                </button>
+               <button
+                   onClick={() => setCurrentView('offer-overview')}
+                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                 >
+                   Poznaj ofertę
+                 </button>
+                 <button
+                   onClick={() => setCurrentView('realizacje')}
+                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
+                 >
+                   Realizacje
+                 </button>
                 <button
                   onClick={() => setCurrentView('cito-config')}
                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
