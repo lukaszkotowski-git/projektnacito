@@ -1,10 +1,13 @@
 import { useAppContext } from '../context/AppContext'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 export function Navigation() {
   const { setCurrentView, resetState } = useAppContext()
   const [ofertaOpen, setOfertaOpen] = useState(false)
   const [dropdownOnasOpen, setDropdownOnasOpen] = useState(false)
+
+  const ofertaTimeout = useRef<number | null>(null)
+  const onasTimeout = useRef<number | null>(null)
 
   const goToMain = () => {
     resetState()
@@ -31,8 +34,15 @@ export function Navigation() {
           <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
           <div
             className="relative group"
-            onMouseEnter={() => { setOfertaOpen(true); setDropdownOnasOpen(false); }}
-            onMouseLeave={() => setOfertaOpen(false)}
+            onMouseEnter={() => {
+              if (onasTimeout.current) { window.clearTimeout(onasTimeout.current); onasTimeout.current = null }
+              if (ofertaTimeout.current) { window.clearTimeout(ofertaTimeout.current); ofertaTimeout.current = null }
+              setOfertaOpen(true); setDropdownOnasOpen(false);
+            }}
+            onMouseLeave={() => {
+              if (ofertaTimeout.current) window.clearTimeout(ofertaTimeout.current)
+              ofertaTimeout.current = window.setTimeout(() => setOfertaOpen(false), 150)
+            } }
           >
             <button
               className="hover:text-gray-500 transition flex items-center"
@@ -45,8 +55,14 @@ export function Navigation() {
             {(ofertaOpen) && (
               <div
                 className="absolute mt-2 min-w-[180px] bg-white/90 backdrop-blur shadow-xl border border-[#E5DED4] rounded-lg py-2 flex flex-col text-[#8C7E6A] animate-dropdown z-40"
-                onMouseEnter={() => setOfertaOpen(true)}
-                onMouseLeave={() => setOfertaOpen(false)}
+                onMouseEnter={() => {
+                  if (ofertaTimeout.current) { window.clearTimeout(ofertaTimeout.current); ofertaTimeout.current = null }
+                  setOfertaOpen(true)
+                }}
+                onMouseLeave={() => {
+                  if (ofertaTimeout.current) window.clearTimeout(ofertaTimeout.current)
+                  ofertaTimeout.current = window.setTimeout(() => setOfertaOpen(false), 150)
+                }}
               >
                 <button
                   onClick={() => setCurrentView('offer-overview')}
@@ -81,19 +97,26 @@ export function Navigation() {
     onClick={() => setCurrentView('onas')}
     className="hover:text-gray-500 transition px-2 py-1"
     aria-label="O nas"
-    onMouseEnter={() => { setDropdownOnasOpen(true); setOfertaOpen(false); }}
-    onMouseLeave={() => setDropdownOnasOpen(false)}
+    onMouseEnter={() => {
+      if (ofertaTimeout.current) { window.clearTimeout(ofertaTimeout.current); ofertaTimeout.current = null }
+      if (onasTimeout.current) { window.clearTimeout(onasTimeout.current); onasTimeout.current = null }
+      setDropdownOnasOpen(true); setOfertaOpen(false);
+    }}
+    onMouseLeave={() => {
+      if (onasTimeout.current) window.clearTimeout(onasTimeout.current)
+      onasTimeout.current = window.setTimeout(() => setDropdownOnasOpen(false), 150)
+    }}
     onFocus={() => setDropdownOnasOpen(true)}
     onBlur={() => setDropdownOnasOpen(false)}
   >
     O nas
   </button>
-  {(dropdownOnasOpen) && (
-    <div
-      className="absolute mt-2 min-w-[180px] bg-white/90 backdrop-blur shadow-xl border border-[#E5DED4] rounded-lg py-2 flex flex-col text-[#8C7E6A] animate-dropdown z-40"
-      onMouseEnter={() => setDropdownOnasOpen(true)}
-      onMouseLeave={() => setDropdownOnasOpen(false)}
-    >
+      {(dropdownOnasOpen) && (
+      <div
+        className="absolute mt-2 min-w-[180px] bg-white/90 backdrop-blur shadow-xl border border-[#E5DED4] rounded-lg py-2 flex flex-col text-[#8C7E6A] animate-dropdown z-40"
+        onMouseEnter={() => { if (onasTimeout.current) { window.clearTimeout(onasTimeout.current); onasTimeout.current = null } setDropdownOnasOpen(true) }}
+        onMouseLeave={() => { if (onasTimeout.current) window.clearTimeout(onasTimeout.current); onasTimeout.current = window.setTimeout(() => setDropdownOnasOpen(false), 150) }}
+      >
       <button
         onClick={() => { setCurrentView('onas'); setDropdownOnasOpen(false); }}
         className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
