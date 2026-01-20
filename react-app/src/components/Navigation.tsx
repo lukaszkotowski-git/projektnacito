@@ -71,12 +71,6 @@ export function Navigation() {
                     Poznaj ofertę
                   </button>
                  <button
-                   onClick={() => setCurrentView('realizacje')}
-                   className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
-                 >
-                   Realizacje
-                 </button>
-                 <button
                    onClick={() => setCurrentView('cito-config')}
                    className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
                  >
@@ -94,22 +88,11 @@ export function Navigation() {
                  >
                    Konsultacje
                  </button>
-                <button
-                  onClick={() => setCurrentView('premium-config')}
-                  className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
-                >
-                  Pakiet Premium
-                </button>
-                <button
-                  onClick={() => setCurrentView('consult-config')}
-                  className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition"
-                >
-                  Konsultacje
-                </button>
-              </div>
-            )}
-          </div>
-          <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
+               </div>
+              )}
+           </div>
+           <button onClick={() => setCurrentView('realizacje')} className="hover:text-gray-500 transition">Realizacje</button>
+           <div className="h-4 w-[1px] bg-gray-200 hidden md:block"></div>
           <div className="relative group" style={{ minWidth: '80px' }}>
   <button
     onClick={() => setCurrentView('onas')}
