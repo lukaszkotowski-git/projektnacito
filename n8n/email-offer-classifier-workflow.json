@@ -1,0 +1,456 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "custom",
+              "cronExpression": "*/5 * * * *"
+            }
+          ]
+        },
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "id": "f0dac76f-41ce-4c33-add9-0278701badaf",
+      "name": "Gmail Trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2224,
+        32
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "check-n8n-label",
+              "leftValue": "={{$json.labels.some(label => label.id.includes('n8n-processed')) }}",
+              "rightValue": "INBOX",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "bac38f70-f0ab-43ae-b2a3-04dc17ee1f40",
+      "name": "Skip if Already Processed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -2000,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "emailFrom",
+              "name": "emailFrom",
+              "value": "={{ $json.From }}",
+              "type": "string"
+            },
+            {
+              "id": "emailFromName",
+              "name": "emailFromName",
+              "value": "={{ $json.From }}",
+              "type": "string"
+            },
+            {
+              "id": "subject",
+              "name": "subject",
+              "value": "={{ $json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "bodyPlain",
+              "name": "bodyPlain",
+              "value": "={{ ($json.text || $json.snippet || '').substring(0, 4000) }}",
+              "type": "string"
+            },
+            {
+              "id": "messageId",
+              "name": "messageId",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "threadId",
+              "name": "threadId",
+              "value": "={{ $json.threadId }}",
+              "type": "string"
+            },
+            {
+              "id": "receivedAt",
+              "name": "receivedAt",
+              "value": "={{ $json.internalDate.toDateTime('ms') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1f2380bb-2533-4a25-acbb-1e389b461146",
+      "name": "Extract Email Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -1776,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Jesteś inteligentnym botem odpowiadającym na wiadomości e-mail dla firmy \"Projekt na Cito\" (usługi projektowania wnętrz). \nTwoim zadaniem jest ocenić, czy wiadomość to zapytanie o ofertę/usługi biura projektowego, portfolio, wycenę lub inne kwestie związane z cenami lub projektem, lub prośba dotyczy kontaktu telefonicznego, oznacz ją jako \"offer\", w przeciwnym razie jeśli widaomość nie dotyczy zapytania związanego z prowadzonym biznesem jako \"other\".\n\nODPOWIEDŹ WYŁĄCZNIE W FORMACIE JSON (NIE DODAWAJ INNEGO TEKSTU). \nZWRÓĆ OBIEKT Z POLAMI: \nlabel: \"offer\" (zapytanie ofertowe) lub \"other\" (inne) \n- confidence: liczba od 0 do 1 (pewność klasyfikacji) \n- intent: krótki token opisujący intencję (np. \"pricing_request\", \"portfolio_request\", \"meeting_request\", \"complaint\", \"spam\")\n- entities: lista fraz kluczowych z maila (np. [\"kuchnia\", \"łazienka\", \"salon\"])\n- reason: 1-zdaniowe uzasadnienie klasyfikacji. \n\nPRZYKŁADY: Email: \"Ile będzie kosztowało zaprojektowanie kuchni i łazienki?\"\nOdpowiedź: \n{\"label\":\"offer\",\"confidence\":0.95,\"intent\":\"pricing_request\",\"entities\":[\"kuchnia\",\"łazienka\"],\"reason\":\"bezpośrednie pytanie o koszt zaprojektowania pomieszczeń\"} \nEmail: \"Czy macie portfolio?\"\nOdpowiedź: {\"label\":\"offer\",\"confidence\":0.98,\"intent\":\"portfolio_request\",\"entities\":[\"portfolio\"],\"reason\":\"prośba o portfolio\"}\nEmail: \"Chcę umówić spotkanie z architektem\"\nOdpowiedź: {\"label\":\"offer\",\"confidence\":0.95,\"intent\":\"meeting_request\",\"entities\":[\"meeting\", \"architect\"],\"reason\":\"prośba o spotkanie z architektem\"}\nEmail: \"Interesuje mnie projekt całego mieszkania 60m2, ile to będzie kosztować?\"\nOdpowiedź: {\"label\":\"offer\",\"confidence\":0.98,\"intent\":\"pricing_request\",\"entities\":[\"mieszkanie\",\"60m2\"],\"reason\":\"pytanie o wycenę projektu mieszkania z podanym metrażem\"}\nEmail: \"Dzień dobry, mam psa i kota\"\nOdpowiedź: {\"label\":\"other\",\"confidence\":0.95,\"intent\":\"spam\",\"entities\":[],\"reason\":\"wiadomość nie dotyczy usług projektowych\"}",
+              "role": "assistant"
+            },
+            {
+              "content": "=Email subject:  {{ $json.subject }}\nEmail body: {{ $json.bodyPlain }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "id": "5f493157-c102-49cb-9c58-d0898af77c4d",
+      "name": "OpenAI Classify",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.3,
+      "position": [
+        -1552,
+        32
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "OR8dh5gGX0Z9umH4",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "condition-label",
+              "leftValue": "={{ $json.message.content.label }}",
+              "rightValue": "offer",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "condition-confidence",
+              "leftValue": "={{ $json.message.content.confidence }}",
+              "rightValue": 0.7,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "cec5bc8c-d341-40d7-bd75-20147fdb8809",
+      "name": "Is Offer Request?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1200,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "replyTo",
+              "name": "replyTo",
+              "value": "={{ $('Extract Email Fields').item.json.emailFrom }}",
+              "type": "string"
+            },
+            {
+              "id": "replySubject",
+              "name": "replySubject",
+              "value": "=Re: {{ $('Extract Email Fields').item.json.subject || 'Zapytanie' }} — Informacja o kalkulatorze oferty",
+              "type": "string"
+            },
+            {
+              "id": "replyBody",
+              "name": "replyBody",
+              "value": "=<p>\n      Cześć {{ $json.emailFromName || 'Kliencie' }},\n    </p>\n\n    <p>\n      Dziękujemy za wiadomość i zainteresowanie usługami <strong>Projekt na Cito</strong>.\n    </p>\n\n    <p>\n      Wygląda na to, że pytasz o wycenę projektu. Najszybszym sposobem uzyskania przybliżonej\n      ceny jest nasz kalkulator oferty:\n      <a href=\"https://projektnacito.com.pl\" target=\"_blank\" rel=\"noopener noreferrer\">\n        https://projektnacito.com.pl\n      </a>\n    </p>\n\n    <p>Wybierz odpowiedni pakiet i skonfiguruj go według swoich potrzeb:</p>\n    <ul>\n      <li>\n        <strong>Pakiet na Cito</strong> – szybki projekt zawierający wszystko co niezbędne.\n      </li>\n      <li>\n        <strong>Pakiet Premium</strong> – kompleksowy projekt z pełną dokumentacją.\n      </li>\n      <li>\n        <strong>Konsultacje</strong> – godzinne konsultacje z projektantem.\n      </li>\n    </ul>\n\n    <p>Pozdrawiamy serdecznie,<br />\n    Zespół Projekt na Cito</p>\n\n    <hr />\n    <p style=\"font-size: 12px; color: #777;\">\n      Wiadomość wysłana automatycznie\n    </p>",
+              "type": "string"
+            },
+            {
+              "id": "threadId",
+              "name": "threadId",
+              "value": "={{ $('Extract Email Fields').item.json.threadId }}",
+              "type": "string"
+            },
+            {
+              "id": "messageId",
+              "name": "messageId",
+              "value": "={{ $('Extract Email Fields').item.json.messageId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e398836f-91ed-4d0e-a1e1-7f4cd0719c8e",
+      "name": "Prepare Auto Reply",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -976,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.replyTo }}",
+        "subject": "={{ $json.replySubject }}",
+        "message": "={{ $json.replyBody }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Projekt na Cito",
+          "replyToSenderOnly": false
+        }
+      },
+      "id": "1937159f-3db5-44a9-b3f7-1935fbbc761b",
+      "name": "Send Auto Reply",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -752,
+        -64
+      ],
+      "webhookId": "ece81376-7c6e-4a48-9d59-471eba48907c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Extract Email Fields').item.json.messageId }}",
+        "labelIds": [
+          "Label_1170604044697810115",
+          "Label_5333537222323505779"
+        ]
+      },
+      "id": "985c8e1f-e1b5-4e18-9ae1-6feae3616b7a",
+      "name": "Add Label (Offer)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -528,
+        -64
+      ],
+      "webhookId": "5e97f1ce-12c8-439a-a31a-87fbbdd8fe12",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "markAsRead",
+        "messageId": "={{ $('Extract Email Fields').item.json.messageId }}"
+      },
+      "id": "88d27f17-1e1f-4ba6-a16a-7a3989a72f40",
+      "name": "Mark as Read (Offer)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -304,
+        -64
+      ],
+      "webhookId": "1a1eaeca-9151-42d1-8ad6-e62a60e1db8f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Extract Email Fields').item.json.messageId }}",
+        "labelIds": [
+          "Label_5333537222323505779"
+        ]
+      },
+      "id": "1b11f004-1612-400a-b12a-d1f2d3316b14",
+      "name": "Add Label (Other)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -976,
+        128
+      ],
+      "webhookId": "ef7ecddb-a732-4904-8d60-30df3cfd598b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Skip if Already Processed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip if Already Processed": {
+      "main": [
+        [
+          {
+            "node": "Extract Email Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Email Fields": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Classify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Classify": {
+      "main": [
+        [
+          {
+            "node": "Is Offer Request?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Offer Request?": {
+      "main": [
+        [
+          {
+            "node": "Prepare Auto Reply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add Label (Other)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Auto Reply": {
+      "main": [
+        [
+          {
+            "node": "Send Auto Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Auto Reply": {
+      "main": [
+        [
+          {
+            "node": "Add Label (Offer)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Label (Offer)": {
+      "main": [
+        [
+          {
+            "node": "Mark as Read (Offer)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Label (Other)": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e9696b3a570d6fcf2d2300f6666877d4d6947cf19d96f48d62d0972646fdaf29"
+  }
+}
