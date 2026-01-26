@@ -11,8 +11,23 @@ export function FinalStep() {
   } = useAppContext()
   const { addToast: notify } = useNotification()
 
+  const generateSubmissionId = (prefix: string): string => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    let random = ''
+    for (let i = 0; i < 8; i++) {
+      random += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    return `${prefix}_${random}`
+  }
+
+  const [submissionId] = useState(() => {
+    const prefix = currentPackage === 'cito' ? 'C' : 'P'
+    return generateSubmissionId(prefix)
+  })
+
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [file, setFile] = useState<File | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -38,10 +53,18 @@ export function FinalStep() {
     e.preventDefault()
     setIsSubmitting(true)
 
+    if (!email.match(/^\S+@\S+\.\S+$/)) {
+      notify("Nieprawidłowy adres e-mail", 'error')
+      setIsSubmitting(false)
+      return
+    }
+
     const data = {
+      submissionId,
       packageType: currentPackage,
       userName: name,
       userPhone: phone,
+      userEmail: email,
       estimatedPrice: currentPrice,
       details: currentPackage === 'cito' ? getCitoDetails() : getPremiumDetails()
     }
@@ -111,6 +134,17 @@ export function FinalStep() {
                 onChange={(e) => setPhone(e.target.value)}
                 required 
                 placeholder="+48 000 000 000" 
+                className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Adres e-mail</label>
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required 
+                placeholder="np. imie@domena.pl" 
                 className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
               />
             </div>
