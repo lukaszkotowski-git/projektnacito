@@ -124,7 +124,7 @@ export function CitoConfigurator() {
               />
               <div className="flex-1">
                 <label htmlFor="electric-project" className="font-semibold block">Projekt instalacji elektrycznej</label>
-                <p className="text-sm text-gray-500 mb-4">Dodatkowe opracowanie techniczne punktów świetlnych i gniazd.</p>
+                <p className="text-sm text-gray-500 mb-4">Określa rozmieszczenie gniazdek, włączników, punktów świetlnych.</p>
                 {electricProject && (
                   <div className="relative">
                     <div className="animate-in duration-300 visible">

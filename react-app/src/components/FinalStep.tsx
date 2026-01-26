@@ -115,7 +115,7 @@ export function FinalStep() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Załącz rzut / rysunek</label>
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Załącz rzut / rysunek (JPG, PNG, PDF)</label>
               <div className="border-2 border-dashed border-[#E5DED4] rounded-2xl p-8 text-center hover:bg-[#FDFBF7] transition-colors relative">
                 <input 
                   type="file" 
@@ -124,7 +124,7 @@ export function FinalStep() {
                   className="absolute inset-0 opacity-0 cursor-pointer"
                 />
                 <svg className="w-8 h-8 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeWidth="2" strokeLinecap="round"/></svg>
-                <span className="text-xs text-gray-400">{file?.name || "Wymagany rzut nieruchomości"}</span>
+                <span className="text-xs text-gray-400">{file?.name || "Rzut lub rysunek z obmiarem projektowanej przestrzeni."}</span>
               </div>
             </div>
             <div className="bg-[#FDFBF7] p-6 rounded-2xl border border-[#E5DED4] mb-4">

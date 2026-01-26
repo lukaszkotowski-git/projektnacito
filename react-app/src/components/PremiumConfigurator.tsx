@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { PRICING } from '../constants'
 
@@ -12,12 +12,24 @@ export function PremiumConfigurator() {
     setCurrentPackage
   } = useAppContext()
 
+  // track raw input strings so we can distinguish "user didn't type anything" from numeric 0
+  const [premiumTotalM2Raw, setPremiumTotalM2Raw] = useState('')
+  const [premiumKitchenM2Raw, setPremiumKitchenM2Raw] = useState('')
+  const [premiumBathM2Raw, setPremiumBathM2Raw] = useState('')
+
   useEffect(() => {
+    const allFilled = premiumTotalM2Raw.trim() !== '' && premiumKitchenM2Raw.trim() !== '' && premiumBathM2Raw.trim() !== ''
+    if (!allFilled) {
+      // don't calculate / show price until user filled all three fields
+      setCurrentPrice(0)
+      return
+    }
+
     let total = premiumTotalM2 * PRICING.premium.basePerM2
     if (premiumKitchenM2 > 0) total += PRICING.premium.kitchenFlat
     if (premiumBathM2 > 0) total += PRICING.premium.bathFlat
     setCurrentPrice(total)
-  }, [premiumTotalM2, premiumKitchenM2, premiumBathM2, setCurrentPrice])
+  }, [premiumTotalM2Raw, premiumKitchenM2Raw, premiumBathM2Raw, premiumTotalM2, premiumKitchenM2, premiumBathM2, setCurrentPrice])
 
   const goToMain = () => {
     resetState()
@@ -45,8 +57,12 @@ export function PremiumConfigurator() {
               <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia całkowita (m²)</label>
               <input 
                 type="number" 
-                value={premiumTotalM2 || ''}
-                onChange={(e) => setPremiumTotalM2(parseFloat(e.target.value) || 0)}
+                value={premiumTotalM2Raw}
+                onChange={(e) => {
+                  const v = e.target.value
+                  setPremiumTotalM2Raw(v)
+                  setPremiumTotalM2(parseFloat(v) || 0)
+                }}
                 placeholder="0" 
                 className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
               />
@@ -55,8 +71,12 @@ export function PremiumConfigurator() {
               <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia kuchni (m²)</label>
               <input 
                 type="number" 
-                value={premiumKitchenM2 || ''}
-                onChange={(e) => setPremiumKitchenM2(parseFloat(e.target.value) || 0)}
+                value={premiumKitchenM2Raw}
+                onChange={(e) => {
+                  const v = e.target.value
+                  setPremiumKitchenM2Raw(v)
+                  setPremiumKitchenM2(parseFloat(v) || 0)
+                }}
                 placeholder="0" 
                 className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
               />
@@ -65,18 +85,28 @@ export function PremiumConfigurator() {
               <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia łazienek (m²)</label>
               <input 
                 type="number" 
-                value={premiumBathM2 || ''}
-                onChange={(e) => setPremiumBathM2(parseFloat(e.target.value) || 0)}
+                value={premiumBathM2Raw}
+                onChange={(e) => {
+                  const v = e.target.value
+                  setPremiumBathM2Raw(v)
+                  setPremiumBathM2(parseFloat(v) || 0)
+                }}
                 placeholder="0" 
                 className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
               />
             </div>
           </div>
           <div className="sticky bottom-6 bg-[#33302E] text-white p-8 rounded-[2rem] shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-              <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Szacunkowy koszt Premium</span>
-              <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> zł <span className="text-sm text-gray-400">netto</span></div>
-            </div>
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Szacunkowy koszt Premium</span>
+                {
+                  (premiumTotalM2Raw.trim() !== '' && premiumKitchenM2Raw.trim() !== '' && premiumBathM2Raw.trim() !== '') ? (
+                    <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> zł <span className="text-sm text-gray-400">netto</span></div>
+                  ) : (
+                    <div className="text-3xl font-light">— zł <span className="text-sm text-gray-400">netto</span></div>
+                  )
+                }
+              </div>
             <button 
               onClick={goToFinalStep} 
               disabled={premiumTotalM2 <= 0}
