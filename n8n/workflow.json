@@ -9,61 +9,27 @@
           "rawBody": false
         }
       },
-      "id": "bf789ce7-ae46-4498-b331-5691dd3b09dc",
+      "id": "5682bf84-7957-4e43-9379-bae2cf764776",
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -720,
-        48
+        896,
+        912
       ],
       "webhookId": "projektnacito-form"
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 1
-          },
-          "conditions": [
-            {
-              "id": "condition-has-file",
-              "leftValue": "={{ $json.body.attachment }}",
-              "rightValue": "",
-              "operator": {
-                "type": "object",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "47b70848-9d7b-405c-84d9-e0ea1fd0a8c2",
-      "name": "Czy ma załącznik?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
-      "position": [
-        -496,
-        48
-      ]
-    },
-    {
-      "parameters": {
         "jsCode": "// Konwertuj base64 na binarny plik\nconst attachment = $input.first().json.body.attachment;\n\nif (!attachment || !attachment.data) {\n  throw new Error('Brak danych załącznika');\n}\n\n// Przekonwertuj base64 na Buffer\nconst binaryData = Buffer.from(attachment.data, 'base64');\n\n// Zwróć item z binarnym plikiem\nreturn {\n  json: $input.first().json,\n  binary: {\n    data: await this.helpers.prepareBinaryData(\n      binaryData,\n      attachment.filename,\n      attachment.mimeType\n    )\n  }\n};"
       },
-      "id": "23bccb46-d7dc-43f2-8da5-c296fdcda8a5",
+      "id": "57105a3f-e507-45db-956b-8c91ce443052",
       "name": "Konwertuj Base64 na plik",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -272,
-        -64
+        1120,
+        912
       ]
     },
     {
@@ -81,13 +47,13 @@
         },
         "options": {}
       },
-      "id": "6e8bd03e-eb7a-413b-a2b1-95fdcc44ef52",
+      "id": "ebb61dd4-2cba-426f-8559-0d7d7c79d750",
       "name": "Google Drive - Upload",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -48,
-        -64
+        1344,
+        912
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -276,46 +242,13 @@
         },
         "options": {}
       },
-      "id": "69c72770-b095-4780-b1f2-7958bcc60a22",
+      "id": "3066dafc-0a7d-44f3-a183-d3c93c39fc5f",
       "name": "Google Sheets (z plikiem)",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        176,
-        -64
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "TlGquhNuKtBM7aT5",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1QlSxoSbUVJD5QAPXANf4HMKGqxApqnA-8f351NsmTys",
-          "mode": "list",
-          "cachedResultName": "Projekt na Cito - Zgłoszenia",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QlSxoSbUVJD5QAPXANf4HMKGqxApqnA-8f351NsmTys/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Arkusz1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QlSxoSbUVJD5QAPXANf4HMKGqxApqnA-8f351NsmTys/edit#gid=0"
-        },
-        "options": {}
-      },
-      "id": "042dda59-1010-4c3a-864f-521c5633fb9a",
-      "name": "Google Sheets (bez pliku)",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
-      "position": [
-        -272,
-        144
+        1568,
+        912
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -334,13 +267,13 @@
           "senderName": "Projekt na Cito"
         }
       },
-      "id": "068cc40b-e97d-4783-a890-9d26ad6562c9",
+      "id": "8bf6c38d-0f74-4f83-a974-e732ff74cf35",
       "name": "Gmail (z plikiem)",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        400,
-        -64
+        1792,
+        912
       ],
       "webhookId": "e8ec8260-a220-4d12-a4fe-156f64556fe7",
       "credentials": {
@@ -352,24 +285,23 @@
     },
     {
       "parameters": {
-        "sendTo": "projektnacitobiuro@gmail.com",
-        "subject": "=Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}",
-        "message": "=<h2>Nowe zgłoszenie z formularza Projekt na Cito</h2>\n\n<p><strong>Pakiet:</strong> {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }}</p>\n\n<p><strong>Dane klienta:</strong></p>\n<ul>\n<li>Imię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}</li>\n<li>Telefon: {{ $('Webhook').item.json.body.data.userPhone }}</li>\n</ul>\n\n<p><strong>Wycena:</strong> {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}</p>\n\n{{ $('Webhook').item.json.body.data.details?.rooms ? '<p><strong>Wybrane pomieszczenia:</strong> ' + Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') + '</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.electricProject ? '<p><strong>Projekt elektryczny:</strong> Tak (' + $('Webhook').item.json.body.data.details.electricM2 + ' m²)</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.totalM2 ? '<p><strong>Metraż:</strong> ' + $('Webhook').item.json.body.data.details.totalM2 + ' m² (kuchnia: ' + ($('Webhook').item.json.body.data.details.kitchenM2 || 0) + ' m², łazienki: ' + ($('Webhook').item.json.body.data.details.bathM2 || 0) + ' m²)</p>' : '' }}\n\n<p><strong>Załącznik:</strong> Brak</p>\n\n<hr>\n<p><em>Wiadomość wygenerowana automatycznie przez system Projekt na Cito</em></p>",
-        "options": {}
+        "chatId": "-5216597047",
+        "text": "=Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.submissionId }}\n\n{{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}\n\nTelefon: {{ $('Webhook').item.json.body.data.userPhone }}\nEmail: {{ $('Webhook').item.json.body.data.userEmail }}\nWycena: {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}\nZałącznik: {{ $('Google Drive - Upload').item.json.webContentLink || 'Brak' }}",
+        "additionalFields": {}
       },
-      "id": "c46c595c-9330-40b8-a08c-96d12829498f",
-      "name": "Gmail (bez pliku)",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
+      "id": "5bce2f9c-bc16-4f1b-9502-3e7455b726e5",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
       "position": [
-        -48,
-        144
+        2016,
+        912
       ],
-      "webhookId": "fd7170df-f851-46ba-86dd-cb53eeb212e3",
+      "webhookId": "0d133324-5240-4d05-bd6d-64dd75be4f43",
       "credentials": {
-        "gmailOAuth2": {
-          "id": "hJOKC0vaNcJfiaFS",
-          "name": "Gmail account"
+        "telegramApi": {
+          "id": "YwIYvsgq3gsVlysO",
+          "name": "Telegram account"
         }
       }
     },
@@ -379,28 +311,13 @@
         "responseBody": "={{ JSON.stringify({ success: true, message: 'Zgłoszenie zostało przyjęte' }) }}",
         "options": {}
       },
-      "id": "2d76c646-c3dd-497a-baad-992239fffea0",
+      "id": "eed3aaa2-f8d0-464f-9bc5-d6196b4347ea",
       "name": "Odpowiedź (z plikiem)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        608,
-        -64
-      ]
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ success: true, message: 'Zgłoszenie zostało przyjęte' }) }}",
-        "options": {}
-      },
-      "id": "595d99d1-d67f-41bc-82b0-8085c85afbe2",
-      "name": "Odpowiedź (bez pliku)",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [
-        176,
-        144
+        2240,
+        912
       ]
     }
   ],
@@ -409,25 +326,7 @@
       "main": [
         [
           {
-            "node": "Czy ma załącznik?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Czy ma załącznik?": {
-      "main": [
-        [
-          {
             "node": "Konwertuj Base64 na plik",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Google Sheets (bez pliku)",
             "type": "main",
             "index": 0
           }
@@ -467,33 +366,22 @@
         ]
       ]
     },
-    "Google Sheets (bez pliku)": {
-      "main": [
-        [
-          {
-            "node": "Gmail (bez pliku)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Gmail (z plikiem)": {
       "main": [
         [
           {
-            "node": "Odpowiedź (z plikiem)",
+            "node": "Telegram",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Gmail (bez pliku)": {
+    "Telegram": {
       "main": [
         [
           {
-            "node": "Odpowiedź (bez pliku)",
+            "node": "Odpowiedź (z plikiem)",
             "type": "main",
             "index": 0
           }
