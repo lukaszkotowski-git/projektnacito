@@ -116,19 +116,32 @@
           "value": {
             "Pakiet": "={{ $('Webhook').item.json.body.data.packageType }}",
             "Telefon": "={{ $('Webhook').item.json.body.data.userPhone }}",
-            "Imię i nazwisko": "={{ $('Webhook').item.json.body.data.userName }}",
+            "Imię i nazwisko": "={{ $('Webhook').item.json.body.data.userName || \"-\" }}",
             "Cena netto (zł)": "={{ $('Webhook').item.json.body.data.estimatedPrice }}",
-            "Projekt elektryczny": "={{ $('Webhook').item.json.body.data.details.electricProject }}",
-            "Metraż elektryczny": "={{ $('Webhook').item.json.body.data.details.electricM2 }}",
+            "Projekt elektryczny": "={{ $('Webhook').item.json.body.data.details.electricProject || \"-\" }}",
+            "Metraż elektryczny": "={{ $('Webhook').item.json.body.data.details.electricM2 || \"-\" }}",
             "Link do pliku": "={{ $json.webContentLink }}",
             "Data": "={{ $json.createdTime }}",
-            "Pokoje": "={{ $('Webhook').item.json.body.data.details.rooms }}",
-            "Metraż całkowity": "={{ $('Webhook').item.json.body.data.details.totalM2 }}",
-            "Metraż kuchni": "={{ $('Webhook').item.json.body.data.details.kitchenM2 }}",
-            "Metraż łazienek": "={{ $('Webhook').item.json.body.data.details.bathM2 }}"
+            "Pokoje": "={{ $('Webhook').item.json.body.data.details.rooms || \"-\" }}",
+            "Metraż całkowity": "={{ $('Webhook').item.json.body.data.details.totalM2 || \"-\" }}",
+            "Metraż kuchni": "={{ $('Webhook').item.json.body.data.details.kitchenM2 || \"-\" }}",
+            "Metraż łazienek": "={{ $('Webhook').item.json.body.data.details.bathM2 || \"-\" }}",
+            "ID": "={{ $('Webhook').item.json.body.data.submissionId }}",
+            "Email": "={{ $('Webhook').item.json.body.data.userEmail }}",
+            "Cena brutto (zł)": "={{ $('Webhook').item.json.body.data.estimatedPrice * 1.23 }}"
           },
           "matchingColumns": [],
           "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
             {
               "id": "Data",
               "displayName": "Data",
@@ -166,6 +179,16 @@
               "canBeUsedToMatch": true
             },
             {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Cena netto (zł)",
               "displayName": "Cena netto (zł)",
               "required": false,
@@ -173,6 +196,16 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cena brutto (zł)",
+              "displayName": "Cena brutto (zł)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "Pokoje",
@@ -294,8 +327,8 @@
     {
       "parameters": {
         "sendTo": "projektnacitobiuro@gmail.com",
-        "subject": "=Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}",
-        "message": "=<h2>Nowe zgłoszenie z formularza Projekt na Cito</h2>\n\n<p><strong>Pakiet:</strong> {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }}</p>\n\n<p><strong>Dane klienta:</strong></p>\n<ul>\n<li>Imię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}</li>\n<li>Telefon: {{ $('Webhook').item.json.body.data.userPhone }}</li>\n</ul>\n\n<p><strong>Wycena:</strong> {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}</p>\n\n{{ $('Webhook').item.json.body.data.details?.rooms ? '<p><strong>Wybrane pomieszczenia:</strong> ' + Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') + '</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.electricProject ? '<p><strong>Projekt elektryczny:</strong> Tak (' + $('Webhook').item.json.body.data.details.electricM2 + ' m²)</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.totalM2 ? '<p><strong>Metraż:</strong> ' + $('Webhook').item.json.body.data.details.totalM2 + ' m² (kuchnia: ' + ($('Webhook').item.json.body.data.details.kitchenM2 || 0) + ' m², łazienki: ' + ($('Webhook').item.json.body.data.details.bathM2 || 0) + ' m²)</p>' : '' }}\n\n<p><strong>Załącznik:</strong> {{ $('Google Drive - Upload').item.json.webContentLink || 'Brak'}}</p>\n\n<hr>\n<p><em>Wiadomość wygenerowana automatycznie przez system Projekt na Cito</em></p>",
+        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}",
+        "message": "=<h2>Nowe zgłoszenie z formularza Projekt na Cito</h2>\n\n<p><strong>Pakiet:</strong> {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Premium' : 'Konsultacja' }}</p>\n\n<p><strong>Dane klienta:</strong></p>\n<ul>\n<li>Imię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}</li>\n<li>Telefon: {{ $('Webhook').item.json.body.data.userPhone }}</li>\n<li>Email: {{ $('Webhook').item.json.body.data.userEmail }}</li>\n</ul>\n\n<p><strong>Wycena:</strong> {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}</p>\n\n{{ $('Webhook').item.json.body.data.details?.rooms ? '<p><strong>Wybrane pomieszczenia:</strong> ' + Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') + '</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.electricProject ? '<p><strong>Projekt elektryczny:</strong> Tak (' + $('Webhook').item.json.body.data.details.electricM2 + ' m²)</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.totalM2 ? '<p><strong>Metraż:</strong> ' + $('Webhook').item.json.body.data.details.totalM2 + ' m² (kuchnia: ' + ($('Webhook').item.json.body.data.details.kitchenM2 || 0) + ' m², łazienki: ' + ($('Webhook').item.json.body.data.details.bathM2 || 0) + ' m²)</p>' : '' }}\n\n<p><strong>Załącznik:</strong> {{ $('Google Drive - Upload').item.json.webContentLink || 'Brak'}}</p>\n\n<hr>\n<p><em>Wiadomość wygenerowana automatycznie przez system Projekt na Cito</em></p>",
         "options": {
           "appendAttribution": false,
           "senderName": "Projekt na Cito"
