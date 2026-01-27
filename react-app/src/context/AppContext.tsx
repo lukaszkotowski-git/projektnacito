@@ -20,6 +20,8 @@ interface AppState {
   setPremiumKitchenM2: (val: number) => void
   premiumBathM2: number
   setPremiumBathM2: (val: number) => void
+  lastSubmissionId: string | null
+  setLastSubmissionId: (id: string | null) => void
   resetState: () => void
   getCitoDetails: () => CitoDetails
   getPremiumDetails: () => PremiumDetails
@@ -37,6 +39,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [premiumTotalM2, setPremiumTotalM2] = useState(0)
   const [premiumKitchenM2, setPremiumKitchenM2] = useState(0)
   const [premiumBathM2, setPremiumBathM2] = useState(0)
+  const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null)
 
   const resetState = () => {
     setSelectedRoomsCito({})
@@ -72,6 +75,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       premiumTotalM2, setPremiumTotalM2,
       premiumKitchenM2, setPremiumKitchenM2,
       premiumBathM2, setPremiumBathM2,
+      lastSubmissionId, setLastSubmissionId,
       resetState,
       getCitoDetails,
       getPremiumDetails

@@ -4,7 +4,7 @@ import { API_URL } from '../constants'
 import { useNotification } from './notifications'
 
 export function ConsultConfigurator() {
-  const { setCurrentView, resetState } = useAppContext()
+  const { setCurrentView, resetState, setLastSubmissionId } = useAppContext()
   const { addToast: notify } = useNotification()
   
   const generateSubmissionId = (prefix: string): string => {
@@ -13,7 +13,7 @@ export function ConsultConfigurator() {
     for (let i = 0; i < 8; i++) {
       random += chars.charAt(Math.floor(Math.random() * chars.length))
     }
-    return `${prefix}_${random}`
+    return `${prefix}${random}`
   }
 
   const [submissionId] = useState(() => generateSubmissionId('K'))
@@ -22,11 +22,6 @@ export function ConsultConfigurator() {
   const [email, setEmail] = useState('')
   const [file, setFile] = useState<File | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const goToMain = () => {
-    resetState()
-    setCurrentView('main')
-  }
 
   const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -77,8 +72,8 @@ export function ConsultConfigurator() {
       const result = await response.json()
 
       if (response.ok && result.success) {
-        notify("Sukces! Zgłoszenie zostało wysłane.", 'success')
-        goToMain()
+        setLastSubmissionId(submissionId)
+        setCurrentView('success')
       } else {
         const errorMsg = result.message || result.error || 'Nieznany błąd'
         notify("Błąd: " + errorMsg, 'error')
@@ -96,7 +91,16 @@ export function ConsultConfigurator() {
         <button onClick={goToMain} className="text-[10px] uppercase tracking-widest font-bold flex items-center mb-8 hover:text-[#8C7E6A] transition">
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Wróć do wyboru
         </button>
-        <div className="bg-white p-10 rounded-[2.5rem] border border-[#E5DED4] text-center max-w-2xl mx-auto">
+        <div className="bg-white p-10 rounded-[2.5rem] border border-[#E5DED4] text-center max-w-2xl mx-auto relative">
+          {isSubmitting && (
+            <div className="absolute inset-0 bg-white/80 rounded-[2.5rem] z-10 flex flex-col items-center justify-center backdrop-blur-sm">
+              <svg className="animate-spin h-10 w-10 text-[#8C7E6A] mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span className="text-[#8C7E6A] font-medium tracking-widest text-xs uppercase">Wysyłanie...</span>
+            </div>
+          )}
           <h2 className="text-4xl font-serif mb-4">Umów Konsultację</h2>
           <div className="inline-block bg-[#F2EBE1] text-[#8C7E6A] px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs mb-6">Koszt: 200 zł / h</div>
           <p className="text-gray-600 mb-8 leading-relaxed text-sm">Odezwiemy się, wszystko wyjaśnimy i wspólnie wybierzemy odpowiedni termin.</p>
