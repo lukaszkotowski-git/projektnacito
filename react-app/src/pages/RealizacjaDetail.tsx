@@ -225,6 +225,7 @@ export const RealizacjaDetail: React.FC<RealizacjaDetailProps> = ({ id, onBack }
             </div>
           </div>
         </div>
+      </div>
       )}
     </div>
   )

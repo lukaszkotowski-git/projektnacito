@@ -44,10 +44,13 @@ export function CitoConfigurator() {
     electricProject, setElectricProject,
     electricM2, setElectricM2,
     currentPrice, setCurrentPrice,
-    setCurrentPackage
+    setCurrentPackage,
+    furnitureProject, setFurnitureProject,
+    plumbingProject, setPlumbingProject
   } = useAppContext()
 
   const [localElectricM2, setLocalElectricM2] = useState<string>(electricM2 ? String(electricM2) : '')
+  const [touchedElectric, setTouchedElectric] = useState(false)
 
   useEffect(() => { setLocalElectricM2(electricM2 ? String(electricM2) : '') }, [electricM2])
 
@@ -60,6 +63,7 @@ export function CitoConfigurator() {
     if (electricProject) {
       total += electricM2 * PRICING.electricPerM2
     }
+    // Note: furnitureProject and plumbingProject are checkboxes without extra price
     setCurrentPrice(total)
   }, [selectedRoomsCito, electricProject, electricM2, setCurrentPrice])
 
@@ -85,6 +89,16 @@ export function CitoConfigurator() {
   }
 
   const goToFinalStep = () => {
+    // Ensure electric m2 value is committed
+    setTouchedElectric(true)
+    const parsedM2 = localElectricM2 === '' ? 0 : parseFloat(localElectricM2)
+    setElectricM2(parsedM2)
+
+    // If electric project selected, require a valid >0 m2
+    if (electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0)) {
+      return
+    }
+
     setCurrentPackage('cito')
     setCurrentView('final-step')
   }
@@ -134,35 +148,63 @@ export function CitoConfigurator() {
                         type="number"
                         value={localElectricM2}
                         onChange={(e) => setLocalElectricM2(e.target.value)}
-                        onBlur={() => setElectricM2(localElectricM2 === '' ? 0 : parseFloat(localElectricM2))}
+                        onBlur={() => {
+                          setTouchedElectric(true)
+                          setElectricM2(localElectricM2 === '' ? 0 : parseFloat(localElectricM2))
+                        }}
                         onKeyDown={(e) => { if (e.key === 'Enter') { (e.target as HTMLInputElement).blur() } }}
                         placeholder="m²"
                         min="0"
                         step="0.1"
                         aria-label="Powierzchnia projektu m2"
                         aria-describedby="electric-m2-help"
-                        className="relative z-10 pointer-events-auto w-32 bg-[#FDFBF7] border border-[#E5DED4] rounded-xl px-4 py-2 outline-none focus:border-[#8C7E6A]"
+                        aria-invalid={electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0)}
+                        className={`relative z-10 pointer-events-auto w-32 bg-[#FDFBF7] rounded-xl px-4 py-2 outline-none focus:border-[#8C7E6A] ${electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0) ? 'border border-red-500' : 'border border-[#E5DED4]'}`}
                       />
                       <p id="electric-m2-help" className="text-xs text-gray-400 mt-2">Wprowadź powierzchnię w m²</p>
+                      {electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0) && touchedElectric && (
+                        <p className="text-xs text-red-500 mt-2">Wprowadź poprawną powierzchnię projektu (więcej niż 0 m²)</p>
+                      )}
                     </div>
                   </div>
                 )}
               </div>
             </div>
+
+            {/* Additional optional project checkboxes (no price impact) */}
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <label className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#E5DED4]">
+                  <input type="checkbox" checked={furnitureProject} onChange={(e) => setFurnitureProject(e.target.checked)} className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A]" />
+                  <div>
+                    <div className="font-semibold">Projekt zabudowy meblowej</div>
+                    <div className="text-sm text-gray-500">Opcjonalny projekt mebli na wymiar.</div>
+                  </div>
+                </label>
+
+                <label className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#E5DED4]">
+                  <input type="checkbox" checked={plumbingProject} onChange={(e) => setPlumbingProject(e.target.checked)} className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A]" />
+                  <div>
+                    <div className="font-semibold">Projekt instalacji wodno-kanalizacyjnych</div>
+                    <div className="text-sm text-gray-500">Opcjonalny projekt instalacji wodno-kanalizacyjnej.</div>
+                  </div>
+                </label>
+              </div>
           </div>
-          <div className="sticky bottom-6 bg-[#33302E] text-white p-8 rounded-[2rem] shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-              <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Szacunkowy koszt projektu</span>
-              <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> zł <span className="text-sm text-gray-400">netto</span></div>
+            <div className="sticky bottom-6 bg-[#33302E] text-white p-8 rounded-[2rem] shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Szacunkowy koszt projektu</span>
+                <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> zł <span className="text-sm text-gray-400">netto</span></div>
+              </div>
+              <button 
+                onClick={goToFinalStep} 
+                disabled={
+                  currentPrice === 0 || (electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0))
+                }
+                className="btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
+              >
+                Kontynuuj
+              </button>
             </div>
-            <button 
-              onClick={goToFinalStep} 
-              disabled={currentPrice === 0}
-              className="btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
-            >
-              Kontynuuj
-            </button>
-          </div>
         </div>
       </div>
     </main>

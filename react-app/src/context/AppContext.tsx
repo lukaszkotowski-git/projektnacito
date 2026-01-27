@@ -10,18 +10,28 @@ interface AppState {
   setCurrentPrice: (price: number) => void
   selectedRoomsCito: Record<string, number>
   setSelectedRoomsCito: (rooms: Record<string, number>) => void
+
+  // Cito / optional project flags
   electricProject: boolean
   setElectricProject: (val: boolean) => void
   electricM2: number
   setElectricM2: (val: number) => void
+  furnitureProject: boolean
+  setFurnitureProject: (val: boolean) => void
+  plumbingProject: boolean
+  setPlumbingProject: (val: boolean) => void
+
+  // Premium package measurements
   premiumTotalM2: number
   setPremiumTotalM2: (val: number) => void
   premiumKitchenM2: number
   setPremiumKitchenM2: (val: number) => void
   premiumBathM2: number
   setPremiumBathM2: (val: number) => void
+
   lastSubmissionId: string | null
   setLastSubmissionId: (id: string | null) => void
+
   resetState: () => void
   getCitoDetails: () => CitoDetails
   getPremiumDetails: () => PremiumDetails
@@ -36,18 +46,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [selectedRoomsCito, setSelectedRoomsCito] = useState<Record<string, number>>({})
   const [electricProject, setElectricProject] = useState(false)
   const [electricM2, setElectricM2] = useState(0)
+  const [furnitureProject, setFurnitureProject] = useState(false)
+  const [plumbingProject, setPlumbingProject] = useState(false)
   const [premiumTotalM2, setPremiumTotalM2] = useState(0)
   const [premiumKitchenM2, setPremiumKitchenM2] = useState(0)
   const [premiumBathM2, setPremiumBathM2] = useState(0)
   const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null)
 
-  const resetState = () => {
-    setSelectedRoomsCito({})
-    setElectricProject(false)
-    setElectricM2(0)
-    setPremiumTotalM2(0)
-    setPremiumKitchenM2(0)
-    setPremiumBathM2(0)
+    const resetState = () => {
+      setSelectedRoomsCito({})
+      setElectricProject(false)
+      setElectricM2(0)
+      setFurnitureProject(false)
+      setPlumbingProject(false)
+      setPremiumTotalM2(0)
+      setPremiumKitchenM2(0)
+      setPremiumBathM2(0)
     setCurrentPrice(0)
     setCurrentPackage(null)
   }
@@ -56,6 +70,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     rooms: selectedRoomsCito,
     electricProject,
     electricM2
+    ,
+    furnitureProject,
+    plumbingProject
   })
 
   const getPremiumDetails = (): PremiumDetails => ({
@@ -72,6 +89,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       selectedRoomsCito, setSelectedRoomsCito,
       electricProject, setElectricProject,
       electricM2, setElectricM2,
+      furnitureProject, setFurnitureProject,
+      plumbingProject, setPlumbingProject,
       premiumTotalM2, setPremiumTotalM2,
       premiumKitchenM2, setPremiumKitchenM2,
       premiumBathM2, setPremiumBathM2,

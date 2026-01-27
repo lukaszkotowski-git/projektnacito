@@ -2,6 +2,7 @@ import { useAppContext } from '../context/AppContext'
 
 export default function SubmissionSuccess() {
   const { lastSubmissionId, setCurrentView } = useAppContext()
+  const { currentPackage } = useAppContext()
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -11,19 +12,25 @@ export default function SubmissionSuccess() {
         <div className="space-y-4 mb-10">
           <p className="text-xl">
             Zgłoszenie zostało wysłane poprawnie.
-            {lastSubmissionId && (
+            {currentPackage !== 'consult' && lastSubmissionId && (
               <span className="block mt-2 font-medium">
                 Numer zgłoszenia: {lastSubmissionId}
               </span>
             )}
           </p>
-          <p className="text-gray-600">
-            Wkrótce skontaktuje się z Tobą nasze biuro projektowe.
-          </p>
-          <p className="text-gray-600">
-            Na wskazany adres e-mail otrzymasz również wzór umowy do podpisania.<br />
-            Jeśli nie otrzymasz wiadomości w ciągu kilku minut, sprawdź folder spam.
-          </p>
+          {currentPackage !== 'consult' ? (
+            <>
+              <p className="text-gray-600">
+                Wkrótce skontaktuje się z Tobą nasze biuro projektowe.
+              </p>
+              <p className="text-gray-600">
+                Na wskazany adres e-mail otrzymasz również wzór umowy do podpisania.<br />
+                Jeśli nie otrzymasz wiadomości w ciągu kilku minut, sprawdź folder spam.
+              </p>
+            </>
+          ) : (
+            <p className="text-gray-600">Dziękujemy — Twoje zgłoszenie konsultacji zostało przyjęte. Wkrótce oddzwonimy.</p>
+          )}
         </div>
 
         <button

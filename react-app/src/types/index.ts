@@ -6,6 +6,8 @@ export interface CitoDetails {
   rooms: Record<string, number>
   electricProject: boolean
   electricM2: number
+  furnitureProject?: boolean
+  plumbingProject?: boolean
 }
 
 export interface PremiumDetails {

@@ -4,7 +4,7 @@ import { API_URL } from '../constants'
 import { useNotification } from './notifications'
 
 export function ConsultConfigurator() {
-  const { setCurrentView, setLastSubmissionId } = useAppContext()
+  const { setCurrentView, setLastSubmissionId, setCurrentPackage } = useAppContext()
   const { addToast: notify } = useNotification()
   
   const generateSubmissionId = (prefix: string): string => {
@@ -19,47 +19,23 @@ export function ConsultConfigurator() {
   const [submissionId] = useState(() => generateSubmissionId('K'))
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [file, setFile] = useState<File | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result as string)
-      reader.onerror = reject
-    })
-  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    if (!email.match(/^\S+@\S+\.\S+$/)) {
-      notify("Nieprawidłowy adres e-mail", 'error')
-      setIsSubmitting(false)
-      return
-    }
+    // For consult package email is optional — do not block submission if missing/invalid
 
     const data = {
       submissionId,
       packageType: 'consult',
       userName: name,
       userPhone: phone,
-      userEmail: email,
       rate: "200 zł / h"
     }
 
-    let attachment = null
-    if (file) {
-      const base64 = await fileToBase64(file)
-      attachment = {
-        filename: file.name,
-        mimeType: file.type,
-        data: base64.split(',')[1]
-      }
-    }
+    // For consult package we do not send user email or attachments
 
     try {
       const response = await fetch(API_URL, {
@@ -67,12 +43,14 @@ export function ConsultConfigurator() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ data, attachment })
+        body: JSON.stringify({ data })
       })
       const result = await response.json()
 
       if (response.ok && result.success) {
         setLastSubmissionId(submissionId)
+        // mark the current package so the success page can tailor its message
+        setCurrentPackage('consult')
         setCurrentView('success')
       } else {
         const errorMsg = result.message || result.error || 'Nieznany błąd'
@@ -129,29 +107,8 @@ export function ConsultConfigurator() {
                 className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Adres e-mail</label>
-              <input 
-                type="email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required 
-                placeholder="np. imie@domena.pl" 
-                className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Załącz rzut / zdjęcia (opcjonalnie)</label>
-              <div className="border-2 border-dashed border-[#E5DED4] rounded-2xl p-8 text-center hover:bg-[#FDFBF7] transition-colors relative">
-                <input 
-                  type="file" 
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
-                  className="absolute inset-0 opacity-0 cursor-pointer"
-                />
-                <svg className="w-8 h-8 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" strokeWidth="2" strokeLinecap="round"/></svg>
-                <span className="text-xs text-gray-400">{file?.name || "Kliknij lub przeciągnij plik tutaj"}</span>
-              </div>
-            </div>
+            {/* email removed for consult per requirement */}
+            {/* Attachments removed for consult package per requirement */}
             <button 
               type="submit" 
               disabled={isSubmitting}
