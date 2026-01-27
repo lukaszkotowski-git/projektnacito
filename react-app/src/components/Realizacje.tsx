@@ -1,24 +1,41 @@
+import { useState } from 'react'
 import { useAppContext } from '../context/AppContext'
+import { RealizacjeList } from '../pages/RealizacjeList'
+import { RealizacjaDetail } from '../pages/RealizacjaDetail'
 
 export function Realizacje(): JSX.Element {
   const { setCurrentView } = useAppContext()
+  const [activeRealizationId, setActiveRealizationId] = useState<string | null>(null)
 
-  const placeholders = Array.from({ length: 8 }).map((_, i) => `https://placehold.co/600x400?text=Realizacja+${i+1}`)
+  const handleSelectRealization = (id: string) => {
+    setActiveRealizationId(id)
+    window.scrollTo(0, 0)
+  }
+
+  const handleBackToList = () => {
+    setActiveRealizationId(null)
+    window.scrollTo(0, 0)
+  }
+
+  const handleBackToMain = () => {
+    setCurrentView('main')
+    window.scrollTo(0, 0)
+  }
 
   return (
-    <main className="pt-32 pb-24">
-      <section className="max-w-6xl mx-auto px-6">
-        <h1 className="text-4xl font-serif mb-8 text-center text-[#8C7E6A]">Realizacje</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {placeholders.map((src, idx) => (
-            <div key={idx} className="rounded-lg overflow-hidden shadow-lg">
-              <img src={src} alt={`Realizacja ${idx+1}`} className="w-full h-56 object-cover" />
-            </div>
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <button onClick={() => setCurrentView('main')} className="px-6 py-2 bg-[#8C7E6A] text-white rounded-md">Wróć</button>
-        </div>
+    <main className="pt-32 pb-24 min-h-screen bg-neutral-50">
+      <section className="max-w-7xl mx-auto px-6">
+        {activeRealizationId ? (
+          <RealizacjaDetail 
+            id={activeRealizationId} 
+            onBack={handleBackToList} 
+          />
+        ) : (
+          <RealizacjeList 
+            onSelect={handleSelectRealization} 
+            onBack={handleBackToMain} 
+          />
+        )}
       </section>
     </main>
   )
