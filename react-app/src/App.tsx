@@ -3,9 +3,17 @@ import { AppProvider, useAppContext } from './context/AppContext'
 import { NotificationProvider } from './components/notifications'
 import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas, Realizacje } from './components'
 import SubmissionSuccess from './components/SubmissionSuccess'
+import { useEffect } from 'react'
 
 function AppContent() {
   const { currentView } = useAppContext()
+
+  useEffect(() => {
+    // Smooth scroll to top whenever the view changes
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }
+  }, [currentView])
 
   return (
     <>
