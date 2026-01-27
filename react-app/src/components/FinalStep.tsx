@@ -5,7 +5,7 @@ import { useNotification } from './notifications'
 
 export function FinalStep() {
   const {
-    setCurrentView, resetState, setLastSubmissionId,
+    setCurrentView, setLastSubmissionId,
     currentPackage, currentPrice,
     getCitoDetails, getPremiumDetails
   } = useAppContext()

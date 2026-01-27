@@ -4,7 +4,7 @@ import { API_URL } from '../constants'
 import { useNotification } from './notifications'
 
 export function ConsultConfigurator() {
-  const { setCurrentView, resetState, setLastSubmissionId } = useAppContext()
+  const { setCurrentView, setLastSubmissionId } = useAppContext()
   const { addToast: notify } = useNotification()
   
   const generateSubmissionId = (prefix: string): string => {
@@ -84,6 +84,8 @@ export function ConsultConfigurator() {
       setIsSubmitting(false)
     }
   }
+
+  const goToMain = () => setCurrentView('main')
 
   return (
     <main className="pt-32 pb-24 px-6">
