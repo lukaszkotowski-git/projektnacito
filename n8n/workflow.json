@@ -9,13 +9,13 @@
           "rawBody": false
         }
       },
-      "id": "5682bf84-7957-4e43-9379-bae2cf764776",
+      "id": "dd8abacf-4579-483d-8411-83d26d11cc3b",
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        896,
-        912
+        1136,
+        1248
       ],
       "webhookId": "projektnacito-form"
     },
@@ -23,13 +23,13 @@
       "parameters": {
         "jsCode": "// Konwertuj base64 na binarny plik\nconst attachment = $input.first().json.body.attachment;\n\nif (!attachment || !attachment.data) {\n  throw new Error('Brak danych załącznika');\n}\n\n// Przekonwertuj base64 na Buffer\nconst binaryData = Buffer.from(attachment.data, 'base64');\n\n// Zwróć item z binarnym plikiem\nreturn {\n  json: $input.first().json,\n  binary: {\n    data: await this.helpers.prepareBinaryData(\n      binaryData,\n      attachment.filename,\n      attachment.mimeType\n    )\n  }\n};"
       },
-      "id": "57105a3f-e507-45db-956b-8c91ce443052",
+      "id": "421b905e-55a2-4249-a1b0-65f5b6a1c494",
       "name": "Konwertuj Base64 na plik",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1120,
-        912
+        1360,
+        1248
       ]
     },
     {
@@ -47,13 +47,13 @@
         },
         "options": {}
       },
-      "id": "ebb61dd4-2cba-426f-8559-0d7d7c79d750",
+      "id": "e8e6e733-61ed-4cc5-8cf3-b33b5e7ccd9c",
       "name": "Google Drive - Upload",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1344,
-        912
+        1584,
+        1248
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -242,13 +242,13 @@
         },
         "options": {}
       },
-      "id": "3066dafc-0a7d-44f3-a183-d3c93c39fc5f",
+      "id": "e1b3abd6-24d9-4a1e-9fb6-0f21de7ad82a",
       "name": "Google Sheets (z plikiem)",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        1568,
-        912
+        1808,
+        1248
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -267,15 +267,46 @@
           "senderName": "Projekt na Cito"
         }
       },
-      "id": "8bf6c38d-0f74-4f83-a974-e732ff74cf35",
+      "id": "a410e3fd-1a49-4c42-9d30-8c8b28ed9150",
       "name": "Gmail (z plikiem)",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1792,
-        912
+        2032,
+        1248
       ],
       "webhookId": "e8ec8260-a220-4d12-a4fe-156f64556fe7",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.data.userEmail }}",
+        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Projekt na Cito - Wstępna umowa",
+        "message": "=<p>Dzień dobry {{ $('Webhook').item.json.body.data.userName }},</p>\n\n<p>Dziękujemy za zaufanie i cieszymy się na współpracę przy projektowaniu Państwa wnętrza.</p>\n\n<p>W załączeniu przesyłamy wstępną wersję umowy. W najbliższych dniach skontaktujemy się z Państwem i udostępnimy ostateczną wersję dokumentu z kwotami brutto.</p>\n\n<p>Potwierdzamy, że wartość projektu w ustalonym zakresie wynosi <strong>{{ $('Webhook').item.json.body.data.estimatedPrice }} zł netto</strong>.</p>\n\n<p>Pozostajemy do Państwa dyspozycji – w razie pytań lub wątpliwości prosimy o kontakt telefoniczny.</p>\n\n<p>Pozdrawiamy serdecznie,<br>Zespół Projekt na CITO</p>",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          },
+          "senderName": "Projekt na Cito"
+        }
+      },
+      "id": "3004ad5b-b18d-4097-9fdb-374bb0bc4403",
+      "name": "Gmail (do klienta)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2480,
+        1248
+      ],
+      "webhookId": "251c4e6f-b05b-46a0-a512-165fe04f99bb",
       "credentials": {
         "gmailOAuth2": {
           "id": "hJOKC0vaNcJfiaFS",
@@ -289,13 +320,13 @@
         "text": "=Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.submissionId }}\n\n{{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}\n\nTelefon: {{ $('Webhook').item.json.body.data.userPhone }}\nEmail: {{ $('Webhook').item.json.body.data.userEmail }}\nWycena: {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}\nZałącznik: {{ $('Google Drive - Upload').item.json.webContentLink || 'Brak' }}",
         "additionalFields": {}
       },
-      "id": "5bce2f9c-bc16-4f1b-9502-3e7455b726e5",
+      "id": "440dd227-c97d-48f9-b3fd-e37588110c8e",
       "name": "Telegram",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1,
       "position": [
-        2016,
-        912
+        2704,
+        1248
       ],
       "webhookId": "0d133324-5240-4d05-bd6d-64dd75be4f43",
       "credentials": {
@@ -311,14 +342,41 @@
         "responseBody": "={{ JSON.stringify({ success: true, message: 'Zgłoszenie zostało przyjęte' }) }}",
         "options": {}
       },
-      "id": "eed3aaa2-f8d0-464f-9bc5-d6196b4347ea",
+      "id": "192e33c9-812a-4f29-96ef-0ccb48580286",
       "name": "Odpowiedź (z plikiem)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        2240,
-        912
+        2928,
+        1248
       ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "10lcNi71shYH1-FzdM1vd8IdjtXw7ACL2",
+          "mode": "list",
+          "cachedResultName": "Testowa umowa.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/10lcNi71shYH1-FzdM1vd8IdjtXw7ACL2/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2256,
+        1248
+      ],
+      "id": "4b1d8572-9c5e-4cb8-8c75-cf84119c7e40",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "rDUDzSbGgZOID1m3",
+          "name": "Google Drive account"
+        }
+      }
     }
   ],
   "connections": {
@@ -370,6 +428,17 @@
       "main": [
         [
           {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail (do klienta)": {
+      "main": [
+        [
+          {
             "node": "Telegram",
             "type": "main",
             "index": 0
@@ -382,6 +451,17 @@
         [
           {
             "node": "Odpowiedź (z plikiem)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Gmail (do klienta)",
             "type": "main",
             "index": 0
           }
