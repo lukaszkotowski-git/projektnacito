@@ -2,7 +2,10 @@ import { useAppContext } from '../context/AppContext'
 import { useState, useRef } from 'react'
 
 export function Navigation() {
-  const { setCurrentView, resetState } = useAppContext()
+  const { setCurrentView, resetState, currentView } = useAppContext()
+  const offerViews = ['offer-overview', 'cito-config', 'premium-config', 'consult-config']
+  const isOfferView = offerViews.includes(currentView)
+  const activeClass = (viewName: string) => currentView === viewName ? 'text-[#8C7E6A] font-semibold underline underline-offset-4 decoration-[#8C7E6A]' : ''
   const [ofertaOpen, setOfertaOpen] = useState(false)
   const [dropdownOnasOpen, setDropdownOnasOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -52,7 +55,12 @@ export function Navigation() {
           </div>
 
           <div className="hidden md:flex space-x-6 md:space-x-8 text-sm font-medium uppercase tracking-wider items-center relative">
-            <button onClick={goToMain} className="hover:text-gray-500 transition">Start</button>
+            <button
+              onClick={goToMain}
+              className={`hover:text-gray-500 transition ${activeClass('main')}`}
+            >
+              Start
+            </button>
             <div className="h-4 w-[1px] bg-gray-200 hidden md:block" />
 
             <div
@@ -68,7 +76,7 @@ export function Navigation() {
               }}
             >
               <button
-                className="hover:text-gray-500 transition flex items-center"
+                className={`hover:text-gray-500 transition flex items-center ${isOfferView ? 'text-[#8C7E6A] font-semibold underline underline-offset-4 decoration-[#8C7E6A]' : ''}`}
                 onClick={() => setOfertaOpen((v) => !v)}
               >
                 Oferta
@@ -97,11 +105,19 @@ export function Navigation() {
 
             <div className="h-4 w-[1px] bg-gray-200 hidden md:block" />
 
+            <button
+              onClick={() => setCurrentView('realizacje')}
+              className={`hover:text-gray-500 transition ${activeClass('realizacje')}`}
+            >
+              Realizacje
+            </button>
+
+
             <div className="relative group" style={{ minWidth: '80px' }}>
-              <button
-                onClick={() => setCurrentView('onas')}
-                className="hover:text-gray-500 transition px-2 py-1"
-                aria-label="O nas"
+               <button
+                 onClick={() => setCurrentView('onas')}
+                 className={`hover:text-gray-500 transition px-2 py-1 ${activeClass('onas')}`}
+                 aria-label="O nas"
                 onMouseEnter={() => {
                   if (ofertaTimeout.current) { window.clearTimeout(ofertaTimeout.current); ofertaTimeout.current = null }
                   if (onasTimeout.current) { window.clearTimeout(onasTimeout.current); onasTimeout.current = null }
