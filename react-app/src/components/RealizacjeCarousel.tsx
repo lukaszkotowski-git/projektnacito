@@ -237,29 +237,7 @@ export default function RealizacjeCarousel() {
               <button className="absolute right-6 text-white text-3xl" onClick={(e) => { e.stopPropagation(); setLightboxIndex((i) => (i! + 1) % total) }}>›</button>
             </div>
           )}
-        {/* Fallback gallery for debugging: plain grid of originals to verify images are reachable */}
-        <div className="mt-8">
-          <h3 className="text-lg font-medium mb-3">Galeria (fallback) — jeśli zdjęcia nie wyświetlają się w karuzeli</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {originals.map((img, i) => (
-              <div key={`dbg-${i}`} className="rounded overflow-hidden border">
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-40 object-cover"
-                  loading="lazy"
-                  onError={(e) => {
-                    const t = e.currentTarget as HTMLImageElement
-                    console.warn('Fallback image failed to load:', t.src)
-                    t.onerror = null
-                    t.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="%23e5e7eb"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23888" font-size="14">Image not found</text></svg>'
-                  }}
-                />
-                <div className="p-2 text-xs text-gray-500 break-all">{img.src}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+          
         </div>
       </div>
     </section>
