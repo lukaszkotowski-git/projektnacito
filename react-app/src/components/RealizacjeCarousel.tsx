@@ -162,10 +162,11 @@ export default function RealizacjeCarousel(): JSX.Element {
                 }}
               >
                 {slides.map((img, i) => (
-                  <div
+                <div
                     key={i}
                     data-slide-index={i}
-                    style={{ width: `${100 / slides.length}%` }}
+                    // each slide should occupy 1/visible of the viewport width
+                    style={{ width: `${100 / visible}%` }}
                     className="px-2"
                   >
                     <div
