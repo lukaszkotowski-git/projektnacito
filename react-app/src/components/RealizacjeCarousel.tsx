@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 /**
  * RealizacjeCarousel
@@ -9,6 +9,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
  * - Lightbox modal locks body scroll while open
  */
 
+// Use absolute paths from public/ (served at root)
 const originals = [
   ...Array.from({ length: 6 }).map((_, i) => ({ src: `/realizacje/realizacja1/r${i + 1}.JPG`, alt: `Realizacja 1 - zdjęcie ${i + 1}` })),
   ...Array.from({ length: 7 }).map((_, i) => {
@@ -21,7 +22,7 @@ const originals = [
 // Build slides as clones: [orig, orig, orig] -> start in the middle copy
 const slides = [...originals, ...originals, ...originals]
 
-export default function RealizacjeCarousel(): JSX.Element {
+export default function RealizacjeCarousel() {
   const total = originals.length
   const middle = total // start index at beginning of middle copy
 
@@ -33,6 +34,12 @@ export default function RealizacjeCarousel(): JSX.Element {
 
   const trackRef = useRef<HTMLDivElement | null>(null)
   const autoplayRef = useRef<number | null>(null)
+
+  // Debugging logs to help verify images and layout when troubleshooting
+  useEffect(() => {
+    console.debug('[RealizacjeCarousel] originals count:', originals.length)
+    console.debug('[RealizacjeCarousel] sample urls:', originals.slice(0, 3).map(i => i.src))
+  }, [])
 
   // Responsive visible count
   useEffect(() => {
@@ -47,8 +54,8 @@ export default function RealizacjeCarousel(): JSX.Element {
     return () => window.removeEventListener('resize', update)
   }, [])
 
-  // Translate calculation (percentage per slide)
-  const slidePercent = 100 / visible
+  // We'll measure container width and compute slide width in px to avoid percent math issues
+  const [slideWidthPx, setSlideWidthPx] = useState(0)
 
   // Move to next/prev
   const next = useCallback(() => {
@@ -120,8 +127,22 @@ export default function RealizacjeCarousel(): JSX.Element {
     }
   }, [isTransitioning])
 
-  // compute transform
-  const translatePercent = -index * slidePercent
+  // compute transform in pixels
+  useEffect(() => {
+    const resize = () => {
+      const el = containerRef.current
+      // fallback to viewport width when container not yet measured
+      const full = el ? el.clientWidth : (document.documentElement.clientWidth || window.innerWidth)
+      // account for small gaps/margins between slides
+      const gapTotal = 16
+      const computed = Math.max(120, Math.floor((full - gapTotal) / visible))
+      setSlideWidthPx(computed)
+      console.debug('[RealizacjeCarousel] resize:', { full, visible, computed })
+    }
+    resize()
+    window.addEventListener('resize', resize)
+    return () => window.removeEventListener('resize', resize)
+  }, [visible])
 
   // helpers to open lightbox with correct normalized index
   const openLightboxAt = (globalIndex: number) => {
@@ -156,8 +177,8 @@ export default function RealizacjeCarousel(): JSX.Element {
                 onTransitionEnd={handleTransitionEnd}
                 style={{
                   display: 'flex',
-                  width: `${(slides.length * 100) / visible}%`,
-                  transform: `translateX(${translatePercent}%)`,
+                  width: `${slides.length * slideWidthPx}px`,
+                  transform: `translateX(${-index * slideWidthPx}px)`,
                   transition: isTransitioning ? 'transform 420ms ease' : 'none'
                 }}
               >
@@ -165,8 +186,8 @@ export default function RealizacjeCarousel(): JSX.Element {
                 <div
                     key={i}
                     data-slide-index={i}
-                    // each slide should occupy 1/visible of the viewport width
-                    style={{ width: `${100 / visible}%` }}
+                    // each slide occupies slideWidthPx
+                    style={{ width: `${slideWidthPx}px` }}
                     className="px-2"
                   >
                     <div
@@ -177,7 +198,19 @@ export default function RealizacjeCarousel(): JSX.Element {
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openLightboxAt(i) }}
                       className="aspect-[4/3] rounded-lg overflow-hidden cursor-pointer"
                     >
-                      <img src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
+                      <img
+                        src={img.src}
+                        alt={img.alt}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                          // show placeholder and log for debugging
+                          const t = e.currentTarget as HTMLImageElement
+                          console.warn('Image failed to load:', t.src)
+                          t.onerror = null
+                          t.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="100%" height="100%" fill="%23e5e7eb"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23888" font-size="20">Image not found</text></svg>'
+                        }}
+                      />
                     </div>
                   </div>
                 ))}
@@ -204,6 +237,29 @@ export default function RealizacjeCarousel(): JSX.Element {
               <button className="absolute right-6 text-white text-3xl" onClick={(e) => { e.stopPropagation(); setLightboxIndex((i) => (i! + 1) % total) }}>›</button>
             </div>
           )}
+        {/* Fallback gallery for debugging: plain grid of originals to verify images are reachable */}
+        <div className="mt-8">
+          <h3 className="text-lg font-medium mb-3">Galeria (fallback) — jeśli zdjęcia nie wyświetlają się w karuzeli</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {originals.map((img, i) => (
+              <div key={`dbg-${i}`} className="rounded overflow-hidden border">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-40 object-cover"
+                  loading="lazy"
+                  onError={(e) => {
+                    const t = e.currentTarget as HTMLImageElement
+                    console.warn('Fallback image failed to load:', t.src)
+                    t.onerror = null
+                    t.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="%23e5e7eb"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23888" font-size="14">Image not found</text></svg>'
+                  }}
+                />
+                <div className="p-2 text-xs text-gray-500 break-all">{img.src}</div>
+              </div>
+            ))}
+          </div>
+        </div>
         </div>
       </div>
     </section>
