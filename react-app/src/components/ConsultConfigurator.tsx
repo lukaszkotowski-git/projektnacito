@@ -21,23 +21,24 @@ export function ConsultConfigurator() {
   const [submissionId] = useState(() => generateSubmissionId('K'))
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [notes, setNotes] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // For consult package email is optional — do not block submission if missing/invalid
-
+    // For consult package email is optional — include if provided
     const data = {
       submissionId,
       packageType: 'consult',
       userName: name,
       userPhone: phone,
-      rate: "200 zł / h"
+      userEmail: email || undefined,
+      notes: notes || undefined,
+      rate: "250 zł / h"
     }
-
-    // For consult package we do not send user email or attachments
 
     try {
       const response = await fetch(API_URL, {
@@ -84,7 +85,7 @@ export function ConsultConfigurator() {
             </div>
           )}
           <h2 className="text-4xl font-serif mb-4">Umów Konsultację</h2>
-          <div className="inline-block bg-[#F2EBE1] text-[#8C7E6A] px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs mb-6">Koszt: 200 zł / h</div>
+          <div className="inline-block bg-[#F2EBE1] text-[#8C7E6A] px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs mb-6">Koszt: 250 zł / h</div>
           <p className="text-gray-600 mb-8 leading-relaxed text-sm">Odezwiemy się, wszystko wyjaśnimy i wspólnie wybierzemy odpowiedni termin.</p>
           <form onSubmit={handleSubmit} className="text-left space-y-6">
             <div className="space-y-2">
@@ -109,8 +110,26 @@ export function ConsultConfigurator() {
                 className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
               />
             </div>
-            {/* email removed for consult per requirement */}
-            {/* Attachments removed for consult package per requirement */}
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Adres e-mail (opcjonalnie)</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="np. imie@domena.pl"
+                className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Dodatkowe informacje / notatka</label>
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Opcjonalne informacje dla konsultanta..."
+                className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A] h-28 resize-none"
+              />
+            </div>
             <button 
               type="submit" 
               disabled={isSubmitting}
