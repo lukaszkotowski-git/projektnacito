@@ -167,10 +167,12 @@ export function FinalStep() {
                 <span className="text-xs text-gray-400">{file?.name || "Rzut lub rysunek z obmiarem projektowanej przestrzeni."}</span>
               </div>
             </div>
-            <div className="bg-[#FDFBF7] p-6 rounded-2xl border border-[#E5DED4] mb-4">
-              <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Wyliczona kwota</span>
-              <div className="text-xl font-semibold">{currentPrice.toLocaleString()} zł netto</div>
-            </div>
+            {currentPackage !== 'premium' && (
+              <div className="bg-[#FDFBF7] p-6 rounded-2xl border border-[#E5DED4] mb-4">
+                <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Wyliczona kwota</span>
+                <div className="text-xl font-semibold">{currentPrice.toLocaleString()} zł netto</div>
+              </div>
+            )}
             <button 
               type="submit" 
               disabled={isSubmitting}
