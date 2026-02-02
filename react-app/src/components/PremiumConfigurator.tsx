@@ -27,7 +27,10 @@ export function PremiumConfigurator() {
       return
     }
 
-    let total = premiumTotalM2 * PRICING.premium.basePerM2
+    // Compute net area excluding kitchen and bathrooms, then apply base rate.
+    const netArea = Math.max(0, premiumTotalM2 - premiumKitchenM2 - premiumBathM2)
+    let total = netArea * PRICING.premium.basePerM2
+    // Kitchens and bathrooms are charged as fixed flats if present
     if (premiumKitchenM2 > 0) total += PRICING.premium.kitchenFlat
     if (premiumBathM2 > 0) total += PRICING.premium.bathFlat
     setCurrentPrice(total)
@@ -51,68 +54,86 @@ export function PremiumConfigurator() {
         </button>
         <header className="mb-12">
           <h2 className="text-4xl font-serif mb-2">Konfigurator Pakietu Premium</h2>
-          <p className="text-gray-500 max-w-2xl text-sm leading-relaxed">Podaj metraże, aby obliczyć koszt projektu.</p>
+          <p className="text-gray-500 max-w-2xl text-sm leading-relaxed">Wprowadź metraże — otrzymasz szczegółową wycenę na podany adres e-mail.</p>
         </header>
         <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="card-choice p-8 rounded-[2rem]">
-              <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia całkowita (m²)</label>
-              <input 
-                type="number" 
-                value={premiumTotalM2Raw}
-                onChange={(e) => {
-                  const v = e.target.value
-                  setPremiumTotalM2Raw(v)
-                  setPremiumTotalM2(parseFloat(v) || 0)
-                }}
-                placeholder="0" 
-                className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-              />
-            </div>
-            <div className="card-choice p-8 rounded-[2rem]">
-              <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia kuchni (m²)</label>
-              <input 
-                type="number" 
-                value={premiumKitchenM2Raw}
-                onChange={(e) => {
-                  const v = e.target.value
-                  setPremiumKitchenM2Raw(v)
-                  setPremiumKitchenM2(parseFloat(v) || 0)
-                }}
-                placeholder="0" 
-                className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-              />
-            </div>
-            <div className="card-choice p-8 rounded-[2rem]">
-              <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia łazienek (m²)</label>
-              <input 
-                type="number" 
-                value={premiumBathM2Raw}
-                onChange={(e) => {
-                  const v = e.target.value
-                  setPremiumBathM2Raw(v)
-                  setPremiumBathM2(parseFloat(v) || 0)
-                }}
-                placeholder="0" 
-                className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-              />
-            </div>
-          </div>
-          <div className="sticky bottom-6 bg-[#33302E] text-white p-8 rounded-[2rem] shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6">
-              <div>
-                <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Szacunkowy koszt Premium</span>
-                {
-                  (premiumTotalM2Raw.trim() !== '' && premiumKitchenM2Raw.trim() !== '' && premiumBathM2Raw.trim() !== '') ? (
-                    <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> zł <span className="text-sm text-gray-400">netto</span></div>
-                  ) : (
-                    <div className="text-3xl font-light">— zł <span className="text-sm text-gray-400">netto</span></div>
-                  )
-                }
+            <div className="md:flex md:items-start md:gap-8">
+            <div className="flex-1">
+              {/* Show aside content above inputs on all screen sizes when requested */}
+              <div className="mb-6">
+                <div className="p-6 rounded-2xl bg-white border border-[#E5DED4] shadow-sm">
+                  <h3 className="text-lg font-semibold text-[#8C7E6A] mb-2">Pakiet Premium — w pigułce</h3>
+                  <p className="mb-4 text-gray-700">Chcesz cieszyć się realizacją projektu Twojego wymarzonego wnętrza pod czujnym okiem inżyniera budowy i architekta wnętrz? Projekt rozszerzony jest dla Ciebie!<br/>W jego skład wchodzi:</p>
+                  <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-sm mb-2">
+                    <li><b>Inwentaryzacja</b><br/>Pomiary całej projektowanej części.</li>
+                    <li><b>Układ funkcjonalny</b><br/>Rzut z propozycją układu elementów we wnętrzu.</li>
+                    <li><b>Aranżacja</b><br/>Model 3D prezentujący proponowane rozwiązania estetyczne.</li>
+                    <li><b>Zestawienie materiałów i sprzętów</b><br/>Lista konkretnych materiałów z ich cenami i linkami do sklepów.</li>
+                    <li><b>Wizualizacje</b><br/>Fotorealistyczne przedstawienie wnętrza.</li>
+                    <li><b>Projekt meblowy</b><br/>Kompletny projekt zabudowy meblowej.</li>
+                    <li><b>Projekt wykonawczy</b><br/>Rzuty podłóg i sufitów, rzuty instalacji wod-kan, rzuty instalacji elektrycznej, wentylacji, CO oraz rysunki detali.</li>
+                    <li><b>Oferty od wykonawców</b><br/>Oferta od np. stolarza, budowlańca, instalatora na zastosowane w projekcie rozwiązania.</li>
+                    <li><b>Nadzór autorski</b><br/>Pilnowanie przebiegu prac projektowych i ich zgodności z projektem, kontrolowanie zamówień, oglądanie i wybieranie elementów wyposażenia.</li>
+                  </ol>
+
+                </div>
               </div>
-            <button 
-              onClick={goToFinalStep} 
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="card-choice p-8 rounded-[2rem]">
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia całkowita (m²)</label>
+                  <input 
+                    type="number" 
+                    value={premiumTotalM2Raw}
+                    onChange={(e) => {
+                      const v = e.target.value
+                      setPremiumTotalM2Raw(v)
+                      setPremiumTotalM2(parseFloat(v) || 0)
+                    }}
+                    placeholder="0" 
+                    className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
+                  />
+                </div>
+                <div className="card-choice p-8 rounded-[2rem]">
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia kuchni (m²)</label>
+                  <input 
+                    type="number" 
+                    value={premiumKitchenM2Raw}
+                    onChange={(e) => {
+                      const v = e.target.value
+                      setPremiumKitchenM2Raw(v)
+                      setPremiumKitchenM2(parseFloat(v) || 0)
+                    }}
+                    placeholder="0" 
+                    className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
+                  />
+                </div>
+                <div className="card-choice p-8 rounded-[2rem]">
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia łazienek (m²)</label>
+                  <input 
+                    type="number" 
+                    value={premiumBathM2Raw}
+                    onChange={(e) => {
+                      const v = e.target.value
+                      setPremiumBathM2Raw(v)
+                      setPremiumBathM2(parseFloat(v) || 0)
+                    }}
+                    placeholder="0" 
+                    className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Right aside removed — single shared panel is shown above inputs */}
+          </div>
+
+          {/* Non-sticky continue button only (hide the black sticky panel) */}
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={goToFinalStep}
               disabled={premiumTotalM2 <= 0}
-              className="btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
+              className="w-full md:w-auto btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
             >
               Kontynuuj
             </button>
