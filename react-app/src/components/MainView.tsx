@@ -1,5 +1,6 @@
 import { useAppContext } from '../context/AppContext'
 import { ViewType } from '../types'
+import RealizacjeCarousel from './RealizacjeCarousel'
 
 export function MainView() {
   const { setCurrentView } = useAppContext()
@@ -44,6 +45,9 @@ export function MainView() {
           </div>
         </div>
       </section>
+
+      {/* Carousel inserted under packages */}
+      <RealizacjeCarousel />
     </main>
   )
 }

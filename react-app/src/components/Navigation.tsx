@@ -109,12 +109,7 @@ export function Navigation() {
 
             <div className="h-4 w-[1px] bg-gray-200 hidden md:block" />
 
-            <button
-              onClick={() => { setCurrentView('realizacje'); navigate('/realizacje') }}
-              className={`hover:text-gray-500 transition ${activeClass('realizacje')}`}
-            >
-              Realizacje
-            </button>
+            {/* Realizacje link intentionally hidden; route remains available */}
 
 
             <div className="relative group" style={{ minWidth: '80px' }}>
@@ -187,18 +182,17 @@ export function Navigation() {
                 Oferta
                 <svg className={`w-4 h-4 transform transition ${mobileOfertaOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="none"><path d="M6 8l4 4 4-4" stroke="#8C7E6A" strokeWidth="2" strokeLinecap="round"/></svg>
               </button>
-              {mobileOfertaOpen && (
-                <div id="mobile-oferta" className="pl-4">
+               {mobileOfertaOpen && (
+                 <div id="mobile-oferta" className="pl-4">
                    <button onClick={() => { setCurrentView('offer-overview'); setMobileMenuOpen(false); navigate('/offer') }} className="w-full text-left px-4 py-3">Poznaj ofertę</button>
-                   <button onClick={() => { setCurrentView('realizacje'); setMobileMenuOpen(false); navigate('/realizacje') }} className="w-full text-left px-4 py-3">Realizacje</button>
                    <button onClick={() => { setCurrentView('cito-config'); setMobileMenuOpen(false); navigate('/offer/cito') }} className="w-full text-left px-4 py-3">Pakiet na Cito</button>
                    <button onClick={() => { setCurrentView('premium-config'); setMobileMenuOpen(false); navigate('/offer/premium') }} className="w-full text-left px-4 py-3">Pakiet Premium</button>
                    <button onClick={() => { setCurrentView('consult-config'); setMobileMenuOpen(false); navigate('/offer/consult') }} className="w-full text-left px-4 py-3">Konsultacje</button>
-                </div>
-              )}
+                 </div>
+               )}
             </div>
 
-            <button onClick={() => { setCurrentView('realizacje'); setMobileMenuOpen(false); navigate('/realizacje') }} className="w-full text-left px-4 py-3 uppercase">Realizacje</button>
+            {/* Realizacje mobile link hidden */}
 
             <div>
               <button onClick={() => { setCurrentView('onas'); setMobileMenuOpen(false); navigate('/about') }} className="w-full text-left px-4 py-3 uppercase">O nas</button>
