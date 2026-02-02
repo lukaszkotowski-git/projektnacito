@@ -1,9 +1,11 @@
 import { useState, FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import { API_URL } from '../constants'
 import { useNotification } from './notifications'
 
 export function ConsultConfigurator() {
+  const navigate = useNavigate()
   const { setCurrentView, setLastSubmissionId, setCurrentPackage } = useAppContext()
   const { addToast: notify } = useNotification()
   
@@ -63,7 +65,7 @@ export function ConsultConfigurator() {
     }
   }
 
-  const goToMain = () => setCurrentView('main')
+  const goToMain = () => navigate('/')
 
   return (
     <main className="pt-32 pb-24 px-6">

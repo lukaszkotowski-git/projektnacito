@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import { PRICING } from '../constants'
 
@@ -38,8 +39,9 @@ function RoomCard({ room, price, count, selected, onToggle, onCountChange }: Roo
 }
 
 export function CitoConfigurator() {
+  const navigate = useNavigate()
   const {
-    setCurrentView, resetState,
+    resetState,
     selectedRoomsCito, setSelectedRoomsCito,
     electricProject, setElectricProject,
     electricM2, setElectricM2,
@@ -85,7 +87,7 @@ export function CitoConfigurator() {
 
   const goToMain = () => {
     resetState()
-    setCurrentView('main')
+    navigate('/')
   }
 
   const goToFinalStep = () => {
@@ -100,7 +102,7 @@ export function CitoConfigurator() {
     }
 
     setCurrentPackage('cito')
-    setCurrentView('final-step')
+    navigate('/final')
   }
 
   return (

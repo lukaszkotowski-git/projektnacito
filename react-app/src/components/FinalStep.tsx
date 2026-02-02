@@ -1,9 +1,11 @@
 import { useState, FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import { API_URL } from '../constants'
 import { useNotification } from './notifications'
 
 export function FinalStep() {
+  const navigate = useNavigate()
   const {
     setCurrentView, setLastSubmissionId,
     currentPackage, currentPrice,
@@ -32,7 +34,7 @@ export function FinalStep() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const goBack = () => {
-    setCurrentView(currentPackage === 'cito' ? 'cito-config' : 'premium-config')
+    navigate(currentPackage === 'cito' ? '/offer/cito' : '/offer/premium')
   }
 
   const fileToBase64 = (file: File): Promise<string> => {

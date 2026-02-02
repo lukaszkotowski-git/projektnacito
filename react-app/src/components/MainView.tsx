@@ -1,12 +1,11 @@
-import { useAppContext } from '../context/AppContext'
-import { ViewType } from '../types'
+import { useNavigate } from 'react-router-dom'
 import RealizacjeCarousel from './RealizacjeCarousel'
 
 export function MainView() {
-  const { setCurrentView } = useAppContext()
+  const navigate = useNavigate()
 
-  const handleChoice = (view: ViewType) => {
-    setCurrentView(view)
+  const handleChoice = (path: string) => {
+    navigate(path)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -17,7 +16,7 @@ export function MainView() {
           Wybierz swój <br /><span className="italic text-[#8C7E6A]">zakres wsparcia</span>
         </h1>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-          <div onClick={() => handleChoice('cito-config')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
+          <div onClick={() => handleChoice('/offer/cito')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
             <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-6">Najczęściej wybierany</div>
             <h3 className="text-3xl font-serif mb-4">Pakiet na Cito</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-8">Zawiera wszystko, co NIEZBĘDNE do zrealizowania wnętrza. Dzięki temu powstaje szybciej i jest dostępny cenowo.</p>
@@ -26,7 +25,7 @@ export function MainView() {
             </span>
           </div>
 
-          <div onClick={() => handleChoice('premium-config')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
+          <div onClick={() => handleChoice('/offer/premium')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
             <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-6">Kompleksowy</div>
             <h3 className="text-3xl font-serif mb-4">Pakiet Premium</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-8">Przeprowadzamy Cię przez cały proces projektowy. Oszczędzasz czas i otrzymujesz pełne wsparcie.</p>
@@ -35,7 +34,7 @@ export function MainView() {
             </span>
           </div>
 
-          <div onClick={() => handleChoice('consult-config')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
+          <div onClick={() => handleChoice('/offer/consult')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
             <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-6">Szybka Pomoc</div>
             <h3 className="text-3xl font-serif mb-4">Konsultacja</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-8">Szybka porada ekspercka online. Idealne rozwiązanie na konkretne dylematy.</p>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import { PRICING } from '../constants'
 
 export function PremiumConfigurator() {
+  const navigate = useNavigate()
   const {
-    setCurrentView, resetState,
+    resetState,
     premiumTotalM2, setPremiumTotalM2,
     premiumKitchenM2, setPremiumKitchenM2,
     premiumBathM2, setPremiumBathM2,
@@ -33,12 +35,12 @@ export function PremiumConfigurator() {
 
   const goToMain = () => {
     resetState()
-    setCurrentView('main')
+    navigate('/')
   }
 
   const goToFinalStep = () => {
     setCurrentPackage('premium')
-    setCurrentView('final-step')
+    navigate('/final')
   }
 
   return (

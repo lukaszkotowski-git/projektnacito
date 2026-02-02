@@ -1,7 +1,14 @@
 import { useAppContext } from '../context/AppContext'
+import { useNavigate } from 'react-router-dom'
 
 export function OfferOverview() {
   const { setCurrentView } = useAppContext()
+  const navigate = useNavigate()
+
+  const handlePackageClick = (path: string) => {
+    navigate(path)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   
   const etapy = [
     {
@@ -73,7 +80,10 @@ export function OfferOverview() {
           <h2 className="text-3xl font-serif mb-8 text-center text-[#8C7E6A]">Pakiety</h2>
           <div className="flex flex-col md:flex-row gap-8 justify-center">
 
-            <div className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn">
+            <div 
+              onClick={() => handlePackageClick('/offer/cito')}
+              className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group"
+            >
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">Cito</div>
               <p className="mb-4 text-gray-700">Każdy powinien móc mieszkać w pięknym, funkcjonalnym i dostosowanym do jego potrzeb wnętrzu, dlatego powstał Projekt na CITO.<br/>W jego skład wchodzi wszystko, co niezbędne do zrealizowania projektu wnętrza:</p>
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
@@ -86,9 +96,15 @@ export function OfferOverview() {
               </ol>
               <p className="mt-2 text-gray-600 text-sm">Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu. Obmiar projektowanej przestrzeni wraz z przedstawieniem danych na rzucie.</p>
               <div className="font-bold text-[#8C7E6A] text-lg mt-2">Koszt projektu to 500 zł za pomieszczenie o jednej funkcji.</div>
+              <span className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
+                Konfiguruj <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
             </div>
 
-            <div className="flex-1 min-w-[280px] bg-[rgba(216,171,80,0.06)] rounded-2xl shadow-xl p-8 border border-[#D8AB50] animate-slideIn" style={{ animationDelay: '0.1s' }}>
+            <div 
+              onClick={() => handlePackageClick('/offer/premium')}
+              className="flex-1 min-w-[280px] bg-[rgba(216,171,80,0.06)] rounded-2xl shadow-xl p-8 border border-[#D8AB50] animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group" style={{ animationDelay: '0.1s' }}
+            >
               <div className="text-xl font-bold text-[#D8AB50] mb-3">Premium</div>
               <p className="mb-4 text-gray-700">Chcesz cieszyć się realizacją projektu Twojego wymarzonego wnętrza pod czujnym okiem inżyniera budowy i architekta wnętrz? Projekt rozszerzony jest dla Ciebie!<br/>W jego skład wchodzi:</p>
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
@@ -103,9 +119,15 @@ export function OfferOverview() {
                 <li><b>Nadzór autorski</b><br/>Pilnowanie przebiegu prac projektowych i ich zgodności z projektem, kontrolowanie zamówień, oglądanie i wybieranie elementów wyposażenia.</li>
               </ol>
               <div className="font-bold text-[#D8AB50] text-lg mt-2">Koszt tego opracowania to 150 zł za m² projektowanej powierzchni.<br/>Kuchnia i łazienka liczona każda za 2500zł.<br/>Nadzór wyceniany jest indywidualnie zależnie od jego zakresu i rozliczany stawką godzinową.</div>
+              <span className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#D8AB50]">
+                Oblicz wycenę <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
             </div>
 
-            <div className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn" style={{ animationDelay: '0.15s' }}>
+            <div 
+              onClick={() => handlePackageClick('/offer/consult')}
+              className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group" style={{ animationDelay: '0.15s' }}
+            >
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">Konsultacja</div>
               <p className="mb-4 text-gray-700">Jeżeli potrzebujesz szybkiej i kompleksowej porady, to konsultacja jest rozwiązaniem dla Ciebie.<br/>Może ona polegać na:</p>
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
@@ -116,6 +138,9 @@ export function OfferOverview() {
                 <li><b>Inne</b><br/>Chętnie podzielimy się naszą wiedzą i doświadczeniem w zakresie projektowania wnętrz i realizacji założeń projektowych.</li>
               </ol>
               <div className="font-bold text-[#8C7E6A] text-lg mt-2">Koszt tej usługi to 200 zł za godzinę konsultacji.</div>
+              <span className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
+                Umów się <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
             </div>
           </div>
         </div>
