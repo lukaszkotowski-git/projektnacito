@@ -4,6 +4,7 @@ import { NotificationProvider } from './components/notifications'
 import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas, Realizacje } from './components'
 import SubmissionSuccess from './components/SubmissionSuccess'
 import { useEffect } from 'react'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 
 function AppContent() {
   const { currentView } = useAppContext()
@@ -22,18 +23,45 @@ function AppContent() {
       ) : (
         <>
           <Navigation />
-          {currentView === 'main' && <MainView />}
-          {currentView === 'offer-overview' && <OfferOverview />}
-          {currentView === 'cito-config' && <CitoConfigurator />}
-          {currentView === 'premium-config' && <PremiumConfigurator />}
-          {currentView === 'consult-config' && <ConsultConfigurator />}
-          {currentView === 'final-step' && <FinalStep />}
-          {currentView === 'onas' && <ONas />}
-          {currentView === 'realizacje' && <Realizacje />}
+          <RouteSync />
+          <Routes>
+            <Route path="/" element={<MainView />} />
+            <Route path="/offer" element={<OfferOverview />} />
+            <Route path="/offer/cito" element={<CitoConfigurator />} />
+            <Route path="/offer/premium" element={<PremiumConfigurator />} />
+            <Route path="/offer/consult" element={<ConsultConfigurator />} />
+            <Route path="/final" element={<FinalStep />} />
+            <Route path="/about" element={<ONas />} />
+            <Route path="/realizacje" element={<Realizacje />} />
+            {/* legacy view-based fallback removed; RouteSync keeps internal view in sync */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
         </>
       )}
     </>
   )
+}
+
+function RouteSync() {
+  const { setCurrentView } = useAppContext()
+  const location = useLocation()
+
+  const mapPathToView = (path: string) => {
+    if (path.startsWith('/offer/cito')) return 'cito-config'
+    if (path.startsWith('/offer/premium')) return 'premium-config'
+    if (path.startsWith('/offer/consult')) return 'consult-config'
+    if (path.startsWith('/offer')) return 'offer-overview'
+    if (path.startsWith('/about')) return 'onas'
+    if (path.startsWith('/realizacje')) return 'realizacje'
+    if (path === '/' || path === '') return 'main'
+    return 'main'
+  }
+
+  useEffect(() => {
+    setCurrentView(mapPathToView(location.pathname))
+  }, [location.pathname, setCurrentView])
+
+  return null
 }
 
 export default function App() {

@@ -1,5 +1,6 @@
 import { useAppContext } from '../context/AppContext'
 import { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export function Navigation() {
   const { setCurrentView, resetState, currentView } = useAppContext()
@@ -17,7 +18,10 @@ export function Navigation() {
   const goToMain = () => {
     resetState()
     setCurrentView('main')
+    navigate('/')
   }
+
+  const navigate = useNavigate()
 
   return (
     <>
@@ -55,12 +59,12 @@ export function Navigation() {
           </div>
 
           <div className="hidden md:flex space-x-6 md:space-x-8 text-sm font-medium uppercase tracking-wider items-center relative">
-            <button
-              onClick={goToMain}
-              className={`hover:text-gray-500 transition ${activeClass('main')}`}
-            >
-              Start
-            </button>
+              <button
+                onClick={goToMain}
+                className={`hover:text-gray-500 transition ${activeClass('main')}`}
+              >
+                Start
+              </button>
             <div className="h-4 w-[1px] bg-gray-200 hidden md:block" />
 
             <div
@@ -95,10 +99,10 @@ export function Navigation() {
                     ofertaTimeout.current = window.setTimeout(() => setOfertaOpen(false), 150)
                   }}
                 >
-                  <button onClick={() => setCurrentView('offer-overview')} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition">Poznaj ofertę</button>
-                  <button onClick={() => setCurrentView('cito-config')} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition">Pakiet na Cito</button>
-                  <button onClick={() => setCurrentView('premium-config')} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition">Pakiet Premium</button>
-                  <button onClick={() => setCurrentView('consult-config')} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition">Konsultacje</button>
+                  <button onClick={() => { navigate('/offer'); setOfertaOpen(false) }} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition">Poznaj ofertę</button>
+                  <button onClick={() => { navigate('/offer/cito'); setOfertaOpen(false) }} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition">Pakiet na Cito</button>
+                  <button onClick={() => { navigate('/offer/premium'); setOfertaOpen(false) }} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition">Pakiet Premium</button>
+                  <button onClick={() => { navigate('/offer/consult'); setOfertaOpen(false) }} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition">Konsultacje</button>
                 </div>
               )}
             </div>
@@ -106,7 +110,7 @@ export function Navigation() {
             <div className="h-4 w-[1px] bg-gray-200 hidden md:block" />
 
             <button
-              onClick={() => setCurrentView('realizacje')}
+              onClick={() => { setCurrentView('realizacje'); navigate('/realizacje') }}
               className={`hover:text-gray-500 transition ${activeClass('realizacje')}`}
             >
               Realizacje
@@ -114,11 +118,11 @@ export function Navigation() {
 
 
             <div className="relative group" style={{ minWidth: '80px' }}>
-               <button
-                 onClick={() => setCurrentView('onas')}
-                 className={`hover:text-gray-500 transition px-2 py-1 ${activeClass('onas')}`}
-                 aria-label="O nas"
-                onMouseEnter={() => {
+                 <button
+                  onClick={() => { setCurrentView('onas'); navigate('/about') }}
+                  className={`hover:text-gray-500 transition px-2 py-1 ${activeClass('onas')}`}
+                  aria-label="O nas"
+                 onMouseEnter={() => {
                   if (ofertaTimeout.current) { window.clearTimeout(ofertaTimeout.current); ofertaTimeout.current = null }
                   if (onasTimeout.current) { window.clearTimeout(onasTimeout.current); onasTimeout.current = null }
                   setDropdownOnasOpen(true); setOfertaOpen(false);
@@ -139,7 +143,7 @@ export function Navigation() {
                   onMouseEnter={() => { if (onasTimeout.current) { window.clearTimeout(onasTimeout.current); onasTimeout.current = null } setDropdownOnasOpen(true) }}
                   onMouseLeave={() => { if (onasTimeout.current) window.clearTimeout(onasTimeout.current); onasTimeout.current = window.setTimeout(() => setDropdownOnasOpen(false), 150) }}
                 >
-                  <button onClick={() => { setCurrentView('onas'); setDropdownOnasOpen(false); }} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition" aria-label="O nas">O nas</button>
+                  <button onClick={() => { setCurrentView('onas'); setDropdownOnasOpen(false); navigate('/about') }} className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition" aria-label="O nas">O nas</button>
                   <a href="tel:+48698354726" aria-label="Zadzwoń do Klaudii" className="px-5 py-2 text-left hover:bg-[#FDFBF7] transition rounded flex items-center gap-3">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M6.5 5.5l2.75-2.75a2 2 0 0 1 2.83 0l2.17 2.17a2 2 0 0 1 0 2.83l-.95.95a1 1 0 0 0-.25 1.06c.63 1.72 1.98 3.07 3.7 3.7a1 1 0 0 0 1.06-.25l.95-.95a2 2 0 0 1 2.83 0l2.17 2.17a2 2 0 0 1 0 2.83l-2.75 2.75c-1.82 1.82-5.68.7-8.78-2.39C5.8 11.18 4.68 7.32 6.5 5.5z"/></svg>
                     Klaudia
@@ -171,7 +175,7 @@ export function Navigation() {
       {mobileMenuOpen && (
         <div id="mobile-menu" className="md:hidden fixed inset-x-0 top-20 bg-[#FDFBF7] z-50 shadow-lg">
           <div className="px-4 py-4 space-y-2">
-            <button onClick={() => { setCurrentView('main'); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-3 uppercase">Start</button>
+                  <button onClick={() => { setCurrentView('main'); setMobileMenuOpen(false); navigate('/') }} className="w-full text-left px-4 py-3 uppercase">Start</button>
 
             <div>
               <button
@@ -185,19 +189,19 @@ export function Navigation() {
               </button>
               {mobileOfertaOpen && (
                 <div id="mobile-oferta" className="pl-4">
-                  <button onClick={() => { setCurrentView('offer-overview'); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-3">Poznaj ofertę</button>
-                  <button onClick={() => { setCurrentView('realizacje'); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-3">Realizacje</button>
-                  <button onClick={() => { setCurrentView('cito-config'); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-3">Pakiet na Cito</button>
-                  <button onClick={() => { setCurrentView('premium-config'); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-3">Pakiet Premium</button>
-                  <button onClick={() => { setCurrentView('consult-config'); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-3">Konsultacje</button>
+                   <button onClick={() => { setCurrentView('offer-overview'); setMobileMenuOpen(false); navigate('/offer') }} className="w-full text-left px-4 py-3">Poznaj ofertę</button>
+                   <button onClick={() => { setCurrentView('realizacje'); setMobileMenuOpen(false); navigate('/realizacje') }} className="w-full text-left px-4 py-3">Realizacje</button>
+                   <button onClick={() => { setCurrentView('cito-config'); setMobileMenuOpen(false); navigate('/offer/cito') }} className="w-full text-left px-4 py-3">Pakiet na Cito</button>
+                   <button onClick={() => { setCurrentView('premium-config'); setMobileMenuOpen(false); navigate('/offer/premium') }} className="w-full text-left px-4 py-3">Pakiet Premium</button>
+                   <button onClick={() => { setCurrentView('consult-config'); setMobileMenuOpen(false); navigate('/offer/consult') }} className="w-full text-left px-4 py-3">Konsultacje</button>
                 </div>
               )}
             </div>
 
-            <button onClick={() => { setCurrentView('realizacje'); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-3 uppercase">Realizacje</button>
+            <button onClick={() => { setCurrentView('realizacje'); setMobileMenuOpen(false); navigate('/realizacje') }} className="w-full text-left px-4 py-3 uppercase">Realizacje</button>
 
             <div>
-              <button onClick={() => { setCurrentView('onas'); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-3 uppercase">O nas</button>
+              <button onClick={() => { setCurrentView('onas'); setMobileMenuOpen(false); navigate('/about') }} className="w-full text-left px-4 py-3 uppercase">O nas</button>
               <div className="pl-4">
                 <a href="tel:+48698354726" onClick={() => setMobileMenuOpen(false)} className="block px-4 py-3">Klaudia: 698 354 726</a>
                 <a href="tel:+48697909309" onClick={() => setMobileMenuOpen(false)} className="block px-4 py-3">Angelika: 697 909 309</a>
