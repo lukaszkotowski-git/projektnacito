@@ -152,7 +152,7 @@ export default function RealizacjeCarousel() {
   }
 
   return (
-    <section className="pt-16 pb-20">
+    <section className="pb-20">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-3xl font-serif text-[#8C7E6A] mb-6">Nasze realizacje</h2>
 
