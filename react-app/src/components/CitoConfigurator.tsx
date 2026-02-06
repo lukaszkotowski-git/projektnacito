@@ -124,11 +124,12 @@ export function CitoConfigurator() {
               className="inline-flex items-center gap-3 bg-[#8C7E6A] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#7A6C58] transition-shadow shadow-md md:fixed md:right-6 md:top-32 z-50"
               aria-label="Masz pytanie? Przejdź do FAQ"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 8.5a1 1 0 110-2 1 1 0 010 2z" fill="currentColor" />
-                <path d="M11 11h2v5h-2z" fill="currentColor" />
-              </svg>
+              <span className="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[#8C7E6A] ring-2 ring-[#8C7E6A]/20 animate-pulse">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M8 10h8M8 14h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
               <span className="text-sm">Masz pytanie?</span>
             </button>
           </div>
