@@ -193,15 +193,7 @@ export function CitoConfigurator() {
                     )}
                   </div>
                 </div>
-                <div className="mt-6">
-                  <button
-                    onClick={() => { setCurrentView('faq'); navigate('/faq') }}
-                    className="bg-[#8C7E6A] text-white px-5 py-3 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-[#7A6C58] transition-shadow shadow-md"
-                    aria-label="Przejdź do FAQ"
-                  >
-                    FAQ
-                  </button>
-                </div>
+                
 
                 {/* Additional optional project checkboxes (no price impact) */}
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
