@@ -46,6 +46,7 @@ export function CitoConfigurator() {
     electricProject, setElectricProject,
     electricM2, setElectricM2,
     currentPrice, setCurrentPrice,
+    setCurrentView,
     setCurrentPackage,
     furnitureProject, setFurnitureProject,
     plumbingProject, setPlumbingProject
@@ -108,9 +109,15 @@ export function CitoConfigurator() {
   return (
     <main className="pt-32 pb-24 px-6">
       <div className="max-w-4xl mx-auto">
-        <button onClick={goToMain} className="text-[10px] uppercase tracking-widest font-bold flex items-center mb-8 hover:text-[#8C7E6A] transition">
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Wróć do wyboru
-        </button>
+        <div className="flex items-center justify-between mb-8">
+          <button onClick={goToMain} className="text-[10px] uppercase tracking-widest font-bold flex items-center hover:text-[#8C7E6A] transition">
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Wróć do wyboru
+          </button>
+          <button onClick={() => { setCurrentView('faq'); navigate('/faq') }} className="text-[10px] uppercase tracking-widest font-bold flex items-center hover:text-[#8C7E6A] transition">
+            FAQ
+          </button>
+        </div>
           <header className="mb-12">
           <h2 className="text-4xl font-serif mb-2">Konfigurator Pakietu na Cito</h2>
           <p className="text-gray-500">Zaznacz pomieszczenia, które wymagają projektu.</p>
@@ -175,6 +182,15 @@ export function CitoConfigurator() {
                       </div>
                     )}
                   </div>
+                </div>
+                <div className="mt-6">
+                  <button
+                    onClick={() => { setCurrentView('faq'); navigate('/faq') }}
+                    className="bg-[#8C7E6A] text-white px-5 py-3 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-[#7A6C58] transition-shadow shadow-md"
+                    aria-label="Przejdź do FAQ"
+                  >
+                    FAQ
+                  </button>
                 </div>
 
                 {/* Additional optional project checkboxes (no price impact) */}

@@ -1,4 +1,4 @@
-export type ViewType = 'main' | 'offer-overview' | 'cito-config' | 'premium-config' | 'consult-config' | 'final-step' | 'onas' | 'realizacje' | 'success'
+export type ViewType = 'main' | 'offer-overview' | 'cito-config' | 'premium-config' | 'consult-config' | 'final-step' | 'onas' | 'realizacje' | 'success' | 'faq'
 
 export type PackageType = 'cito' | 'premium' | 'consult'
 
