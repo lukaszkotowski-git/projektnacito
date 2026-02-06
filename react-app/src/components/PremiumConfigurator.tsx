@@ -10,7 +10,7 @@ export function PremiumConfigurator() {
     premiumTotalM2, setPremiumTotalM2,
     premiumKitchenM2, setPremiumKitchenM2,
     premiumBathM2, setPremiumBathM2,
-    currentPrice, setCurrentPrice,
+    setCurrentPrice,
     setCurrentPackage
   } = useAppContext()
 
