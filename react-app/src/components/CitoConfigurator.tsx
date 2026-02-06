@@ -114,14 +114,16 @@ export function CitoConfigurator() {
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             Wróć do wyboru
           </button>
-          <button onClick={() => { setCurrentView('faq'); navigate('/faq') }} className="text-[10px] uppercase tracking-widest font-bold flex items-center hover:text-[#8C7E6A] transition">
-            FAQ
-          </button>
         </div>
           <header className="mb-12">
           <h2 className="text-4xl font-serif mb-2">Konfigurator Pakietu na Cito</h2>
           <p className="text-gray-500">Zaznacz pomieszczenia, które wymagają projektu.</p>
-          
+          <div className="mt-4">
+            <button onClick={() => { setCurrentView('faq'); navigate('/faq') }} className="inline-flex items-center gap-3 bg-[#8C7E6A] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#7A6C58] transition-shadow shadow-md">
+              <span className="text-sm">Masz pytanie?</span>
+              <span className="text-sm font-bold">FAQ</span>
+            </button>
+          </div>
         </header>
         <div className="space-y-12">
           <div className="md:flex md:items-start md:gap-8">
