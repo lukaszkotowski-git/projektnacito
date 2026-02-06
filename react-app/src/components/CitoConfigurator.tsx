@@ -130,7 +130,6 @@ export function CitoConfigurator() {
                 <path d="M11 11h2v5h-2z" fill="currentColor" />
               </svg>
               <span className="text-sm">Masz pytanie?</span>
-              <span className="text-sm font-bold">FAQ</span>
             </button>
           </div>
         </header>
