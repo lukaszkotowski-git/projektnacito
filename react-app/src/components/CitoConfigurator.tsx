@@ -118,8 +118,15 @@ export function CitoConfigurator() {
           <header className="mb-12">
           <h2 className="text-4xl font-serif mb-2">Konfigurator Pakietu na Cito</h2>
           <p className="text-gray-500">Zaznacz pomieszczenia, które wymagają projektu.</p>
-          <div className="mt-4">
-            <button onClick={() => { setCurrentView('faq'); navigate('/faq') }} className="inline-flex items-center gap-3 bg-[#8C7E6A] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#7A6C58] transition-shadow shadow-md">
+          <div className="mt-4 flex justify-end">
+            <button
+              onClick={() => { setCurrentView('faq'); navigate('/faq#faq') }}
+              className="inline-flex items-center gap-3 bg-[#8C7E6A] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#7A6C58] transition-shadow shadow-md"
+              aria-label="Masz pytanie? Przejdź do FAQ"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 17a1.25 1.25 0 110-2.5A1.25 1.25 0 0112 17zm1.5-6.5a2.5 2.5 0 10-3 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               <span className="text-sm">Masz pytanie?</span>
               <span className="text-sm font-bold">FAQ</span>
             </button>

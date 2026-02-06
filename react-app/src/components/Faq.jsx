@@ -119,7 +119,7 @@ export function Faq() {
   const handleToggle = (idx) => setOpenIndex(idx === openIndex ? null : idx);
 
   return (
-    <div className="max-w-2xl mx-auto py-10 px-4">
+    <div className="max-w-2xl mx-auto py-10 px-4" id="faq">
       <h2 className="text-3xl font-bold mb-8 text-center">Najczęściej zadawane pytania</h2>
       <div className="space-y-4">
         {FAQ_DATA.map((item, idx) => (
