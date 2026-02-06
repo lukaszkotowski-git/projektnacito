@@ -155,7 +155,7 @@ export function FinalStep() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">Załącz rzut / rysunek (JPG, PNG, PDF)</label>
+            <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">ZAŁĄCZ RZUT/ RYSUNEK ODRĘCZNY Z WYMIARAMI (JPG, PNG, PDF)</label>
               <div className="border-2 border-dashed border-[#E5DED4] rounded-2xl p-8 text-center hover:bg-[#FDFBF7] transition-colors relative">
                 <input 
                   type="file" 

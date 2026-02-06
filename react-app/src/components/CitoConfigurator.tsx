@@ -125,7 +125,9 @@ export function CitoConfigurator() {
               aria-label="Masz pytanie? Przejdź do FAQ"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 17a1.25 1.25 0 110-2.5A1.25 1.25 0 0112 17zm1.5-6.5a2.5 2.5 0 10-3 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 8.5a1 1 0 110-2 1 1 0 010 2z" fill="currentColor" />
+                <path d="M11 11h2v5h-2z" fill="currentColor" />
               </svg>
               <span className="text-sm">Masz pytanie?</span>
               <span className="text-sm font-bold">FAQ</span>
