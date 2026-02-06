@@ -1,7 +1,7 @@
 import { Footer } from './components/Footer'
 import { AppProvider, useAppContext } from './context/AppContext'
 import { NotificationProvider } from './components/notifications'
-import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas, Realizacje } from './components'
+import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas, Realizacje, Faq } from './components'
 import SubmissionSuccess from './components/SubmissionSuccess'
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
@@ -33,6 +33,7 @@ function AppContent() {
             <Route path="/final" element={<FinalStep />} />
             <Route path="/about" element={<ONas />} />
             <Route path="/realizacje" element={<Realizacje />} />
+<Route path="/faq" element={<Faq />} />
             {/* legacy view-based fallback removed; RouteSync keeps internal view in sync */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

@@ -59,6 +59,7 @@ export function Navigation() {
           </div>
 
           <div className="hidden md:flex space-x-6 md:space-x-8 text-sm font-medium uppercase tracking-wider items-center relative">
+  
               <button
                 onClick={goToMain}
                 className={`hover:text-gray-500 transition ${activeClass('main')}`}
@@ -132,6 +133,12 @@ export function Navigation() {
                 O nas
               </button>
 
+              <button
+                onClick={() => { navigate('/faq') }}
+                className={`hover:text-gray-500 transition px-2 py-1 ${activeClass('faq')}`}
+                aria-label="FAQ"
+              >FAQ</button>
+
               {dropdownOnasOpen && (
                 <div
                   className="absolute mt-2 min-w-[180px] bg-white/90 backdrop-blur shadow-xl border border-[#E5DED4] rounded-lg py-2 flex flex-col text-[#8C7E6A] animate-dropdown z-40"
@@ -196,6 +203,7 @@ export function Navigation() {
 
             <div>
               <button onClick={() => { setCurrentView('onas'); setMobileMenuOpen(false); navigate('/about') }} className="w-full text-left px-4 py-3 uppercase">O nas</button>
+<button onClick={() => { setMobileMenuOpen(false); navigate('/faq') }} className="w-full text-left px-4 py-3 uppercase">FAQ</button>
               <div className="pl-4">
                 <a href="tel:+48698354726" onClick={() => setMobileMenuOpen(false)} className="block px-4 py-3">Klaudia: 698 354 726</a>
                 <a href="tel:+48697909309" onClick={() => setMobileMenuOpen(false)} className="block px-4 py-3">Angelika: 697 909 309</a>
