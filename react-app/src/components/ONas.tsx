@@ -14,10 +14,7 @@ export function ONas(): JSX.Element {
           <div className="order-2 md:order-1">
             <h1 className="text-4xl md:text-5xl font-serif mb-4 text-[#8C7E6A]">{txt.about.title}</h1>
             <p className="text-lg text-gray-700 leading-relaxed mb-6">{txt.about.description}</p>
-              <div className="flex gap-4">
-                <button onClick={() => { setCurrentView('offer-overview'); navigate('/offer') }} className="px-6 py-3 bg-[#8C7E6A] text-white rounded-md uppercase text-sm tracking-wider hover:bg-[#7A6C58] transition">{txt.about.seeOffer}</button>
-                <button onClick={() => { setCurrentView('main'); navigate('/') }} className="px-6 py-3 border border-[#E5DED4] rounded-md uppercase text-sm tracking-wider hover:bg-gray-50 transition">{txt.about.goBack}</button>
-              </div>
+              {/* Buttons removed as requested */}
           </div>
 
           <div className="order-1 md:order-2 flex justify-center md:justify-end">
