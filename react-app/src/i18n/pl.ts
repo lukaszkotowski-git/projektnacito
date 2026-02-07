@@ -162,7 +162,7 @@ export const pl = {
   // About (O nas)
   about: {
     title: 'Projekt na CITO',
-    description: 'Projekt na CITO to studio projektowe prowadzone przez Klaudię Kołakowską – architektkę wnętrz, absolwentkę ASP w Warszawie, oraz Angelikę Kłos – mgr inż. budownictwa. Naszą specjalnością jest Pakiet na CITO – szybki i kompleksowy projekt wnętrza online, dopasowany do budżetu i potrzeb, tworzony w krótkim czasie. Dla osób oczekujących pełniejszej obsługi oferujemy Pakiet Premium – z inwentaryzacją, rysunkami wykonawczymi i możliwością nadzoru autorskiego. Każdy detal ma dla nas znaczenie, bo wierzymy, że najlepsze wnętrza powstają tam, gdzie funkcjonalność spotyka estetykę. Realizujemy projekty w Polsce i za granicą – online stworzyłyśmy już dziesiątki aranżacji prezentowanych w mediach społecznościowych.',
+    description: 'Projekt na CITO to studio projektowe prowadzone przez Klaudię Kołakowską – architektkę wnętrz, absolwentkę ASP w Warszawie, oraz Angelikę Kłos – mgr inż. budownictwa. Naszą specjalnością jest Pakiet na CITO – szybki i kompleksowy projekt wnętrza online, dopasowany do budżetu i potrzeb, tworzony w krótkim czasie. Dla osób oczekujących pełniejszej obsługi oferujemy Pakiet Premium – z inwentaryzacją, rysunkami wykonawczymi i możliwością nadzoru autorskiego. Każdy detal ma dla nas znaczenie, bo wierzymy, że najlepsze wnętrza powstają tam, gdzie funkcjonalność spotyka estetykę. Realizujemy projekty w Polsce i za granicą – online. Stworzyłyśmy już dziesiątki aranżacji prezentowanych w mediach społecznościowych.',
     seeOffer: 'Poznaj ofertę',
     goBack: 'Wróć',
   },
