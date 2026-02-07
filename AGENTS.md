@@ -37,6 +37,16 @@ Notes for contributors
 - The repository does not contain CI config or tests in the root; add them if required.
 - No commit or PR was created by this change (file written locally only).
 
+Pre-push linting policy
+-----------------------
+- Before pushing to remote, run the TypeScript type-check to ensure no type errors are introduced. Use:
+
+  cd react-app && npm run lint
+
+- You can automate this locally by installing a git pre-push hook (recommended). The hook should run `npm run lint` in the react-app folder and abort the push if linting/type-check fails.
+- Recommended simple implementation: use Husky to add a pre-push hook that runs `cd react-app && npm run lint`.
+- If you prefer, I can add Husky and configure the hook for you — tell me and I'll add it on a branch and open a PR.
+
 Contact / next steps
 --------------------
 If you want a more detailed AGENTS.md (per-file responsibilities, run scripts, TODOs, or to open a PR with this file), tell me and I will prepare it.
