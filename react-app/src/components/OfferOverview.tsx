@@ -35,7 +35,7 @@ export function OfferOverview() {
             >
               {/* Ribbon - smaller and inside corner */}
               <div className="hidden md:block absolute top-3 right-3 pointer-events-none">
-                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-4 transform rotate-45 shadow-sm leading-none text-center">
+                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 transform origin-top-right rotate-45 shadow-sm w-20 text-center leading-tight z-10">
                   {citoRibbonLines[0]}<br />{citoRibbonLines.slice(1).join(' ')}
                 </span>
               </div>
