@@ -185,9 +185,9 @@ export const pl = {
       { title: 'Schemat meblowy', desc: 'Rzuty i przekroje mebli z ich podstawowymi wymiarami.' },
       { title: 'Oferty od wykonawców', desc: 'Oferta od np. stolarza, budowlańca, instalatora klimatyzacji na zastosowane w projekcie rozwiązania.' },
     ],
-    citoNote: 'Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu. Obmiar projektowanej przestrzeni wraz z przedstawieniem danych na rzucie.',
+    citoNote: 'Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu.',
     citoCost: 'Koszt projektu to 500 zł za pomieszczenie o jednej funkcji.',
-    citoCta: 'Konfiguruj',
+    citoCta: 'Oblicz wycenę',
     // Premium package
     premiumTitle: 'Premium',
     premiumIntro: 'Chcesz cieszyć się realizacją projektu Twojego wymarzonego wnętrza pod czujnym okiem inżyniera budowy i architekta wnętrz? Projekt rozszerzony jest dla Ciebie!\nW jego skład wchodzi:',
