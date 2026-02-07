@@ -214,7 +214,7 @@ export const pl = {
       { title: 'Porównywaniu ustawności mieszkań', desc: 'Porównanie mieszkań przed zakupem.' },
       { title: 'Inne', desc: 'Chętnie podzielimy się naszą wiedzą i doświadczeniem w zakresie projektowania wnętrz i realizacji założeń projektowych.' },
     ],
-    consultCost: 'Koszt tej usługi to 200 zł za godzinę konsultacji.',
+    consultCost: 'Koszt tej usługi to 250 zł za godzinę konsultacji.',
     consultCta: 'Umów się',
   },
 

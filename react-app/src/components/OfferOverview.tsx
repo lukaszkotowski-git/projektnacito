@@ -18,9 +18,7 @@ export function OfferOverview() {
         <h1 className="text-5xl md:text-6xl font-serif mb-12 text-center">
           {txt.offerOverview.headline} <span className="italic text-[#8C7E6A]">{txt.offerOverview.headlineAccent}</span>
         </h1>
-        <div className="mb-16 max-w-2xl mx-auto text-[#8C7E6A] text-xl text-center font-semibold">
-          {txt.offerOverview.intro}
-        </div>
+        {/* Top intro removed as requested */}
 
 
         {/* Stages timeline removed as requested */}
@@ -34,6 +32,7 @@ export function OfferOverview() {
               onClick={() => handlePackageClick('/offer/cito')}
               className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group"
             >
+              <div className="text-[10px] uppercase tracking-widest font-bold text-[#8C7E6A] mb-2">{txt.main.citoTag}</div>
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.citoTitle}</div>
               <p className="mb-4 text-gray-700 whitespace-pre-line">{txt.offerOverview.citoIntro}</p>
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
@@ -50,17 +49,17 @@ export function OfferOverview() {
 
             <div 
               onClick={() => handlePackageClick('/offer/premium')}
-              className="flex-1 min-w-[280px] bg-[rgba(216,171,80,0.06)] rounded-2xl shadow-xl p-8 border border-[#D8AB50] animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group" style={{ animationDelay: '0.1s' }}
+              className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group" style={{ animationDelay: '0.1s' }}
             >
-              <div className="text-xl font-bold text-[#D8AB50] mb-3">{txt.offerOverview.premiumTitle}</div>
+              <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.premiumTitle}</div>
               <p className="mb-4 text-gray-700 whitespace-pre-line">{txt.offerOverview.premiumIntro}</p>
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
                 {txt.offerOverview.premiumItems.map((item, idx) => (
                   <li key={idx}><b>{item.title}</b><br/>{item.desc}</li>
                 ))}
               </ol>
-              <div className="font-bold text-[#D8AB50] text-lg mt-2 whitespace-pre-line">{txt.offerOverview.premiumCost}</div>
-              <span className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#D8AB50]">
+              {/* Premium cost intentionally hidden on overview page */}
+              <span className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
                 {txt.offerOverview.premiumCta} <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </span>
             </div>
