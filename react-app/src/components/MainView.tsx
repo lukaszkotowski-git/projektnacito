@@ -5,7 +5,6 @@ import { t } from '../i18n'
 export function MainView() {
   const navigate = useNavigate()
   const txt = t()
-  const citoRibbonLines = txt.main.citoTag.split(' ')
 
   const handleChoice = (path: string) => {
     navigate(path)

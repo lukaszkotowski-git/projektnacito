@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { t } from '../i18n'
 
 export function OfferOverview() {
-  const { setCurrentView } = useAppContext()
+  const { /* setCurrentView */ } = useAppContext()
   const navigate = useNavigate()
   const txt = t()
-  const citoRibbonLines = txt.main.citoTag.split(' ')
+  const citoRibbonLines = txt.main.citoTag ? txt.main.citoTag.split(' ') : ['']
 
   const handlePackageClick = (path: string) => {
     navigate(path)
