@@ -90,6 +90,13 @@ export function PremiumConfigurator() {
     setPremiumBathAreas(next.map(v => parseFloat(v) || 0))
   }
 
+  // Validation helpers used for input highlighting
+  const kitchenNums = premiumKitchenAreasRaw.map(v => parseFloat(v) || 0)
+  const bathNums = premiumBathAreasRaw.map(v => parseFloat(v) || 0)
+  const hasKitchen = kitchenNums.some(x => x > 0)
+  const hasBath = bathNums.some(x => x > 0)
+  const totalProvided = premiumTotalM2Raw.trim() !== '' && premiumTotalM2 > 0
+
   return (
     <main className="pt-32 pb-24 px-6">
       <div className="max-w-4xl mx-auto">
@@ -146,7 +153,7 @@ export function PremiumConfigurator() {
                       setPremiumTotalM2(parseFloat(v) || 0)
                     }}
                     placeholder="0"
-                    className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
+                    className={`w-full text-2xl bg-transparent border-b ${!totalProvided ? 'border-red-500' : 'border-[#E5DED4]'} pb-2 outline-none focus:border-[#8C7E6A] font-light`}
                   />
                 </div>
                 <div className="card-choice p-8 rounded-[2rem]">
@@ -154,18 +161,18 @@ export function PremiumConfigurator() {
                   <div className="space-y-3">
                     {premiumKitchenAreasRaw.map((val, idx) => (
                       <div key={idx} className="flex items-center gap-3">
-                        <input
-                          type="number"
-                          aria-label={txt.premium.kitchenAriaLabel(idx)}
-                          value={val}
-                          onChange={(e) => {
-                            const next = [...premiumKitchenAreasRaw]
-                            next[idx] = e.target.value
-                            setPremiumKitchenAreasRaw(next)
-                          }}
-                          placeholder="0"
-                          className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-                        />
+                  <input
+                    type="number"
+                    aria-label={txt.premium.kitchenAriaLabel(idx)}
+                    value={val}
+                    onChange={(e) => {
+                      const next = [...premiumKitchenAreasRaw]
+                      next[idx] = e.target.value
+                      setPremiumKitchenAreasRaw(next)
+                    }}
+                    placeholder="0"
+                    className={`w-full text-2xl bg-transparent border-b ${!hasKitchen ? 'border-red-500' : 'border-[#E5DED4]'} pb-2 outline-none focus:border-[#8C7E6A] font-light`}
+                  />
                         {idx > 0 && (
                           <button type="button" onClick={() => removeKitchen(idx)} aria-label={txt.premium.removeKitchenAriaLabel(idx)} className="text-red-500">−</button>
                         )}
@@ -179,18 +186,18 @@ export function PremiumConfigurator() {
                   <div className="space-y-3">
                     {premiumBathAreasRaw.map((val, idx) => (
                       <div key={idx} className="flex items-center gap-3">
-                        <input
-                          type="number"
-                          aria-label={txt.premium.bathAriaLabel(idx)}
-                          value={val}
-                          onChange={(e) => {
-                            const next = [...premiumBathAreasRaw]
-                            next[idx] = e.target.value
-                            setPremiumBathAreasRaw(next)
-                          }}
-                          placeholder="0"
-                          className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-                        />
+                          <input
+                            type="number"
+                            aria-label={txt.premium.bathAriaLabel(idx)}
+                            value={val}
+                            onChange={(e) => {
+                              const next = [...premiumBathAreasRaw]
+                              next[idx] = e.target.value
+                              setPremiumBathAreasRaw(next)
+                            }}
+                            placeholder="0"
+                            className={`w-full text-2xl bg-transparent border-b ${!hasBath ? 'border-red-500' : 'border-[#E5DED4]'} pb-2 outline-none focus:border-[#8C7E6A] font-light`}
+                          />
                         {idx > 0 && (
                           <button type="button" onClick={() => removeBath(idx)} aria-label={txt.premium.removeBathAriaLabel(idx)} className="text-red-500">−</button>
                         )}
@@ -206,14 +213,36 @@ export function PremiumConfigurator() {
           </div>
 
           {/* Non-sticky continue button only (hide the black sticky panel) */}
-          <div className="mt-8 flex justify-center">
-            <button
-              onClick={goToFinalStep}
-              disabled={premiumTotalM2 <= 0}
-              className="w-full md:w-auto btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
-            >
-              {txt.common.continue}
-            </button>
+          <div className="mt-8 flex flex-col items-center gap-3">
+            {/* Validation: require total area provided and at least one kitchen and one bath with >0 area */}
+            {(() => {
+              const kitchenNums = premiumKitchenAreasRaw.map(v => parseFloat(v) || 0)
+              const bathNums = premiumBathAreasRaw.map(v => parseFloat(v) || 0)
+              const hasKitchen = kitchenNums.some(x => x > 0)
+              const hasBath = bathNums.some(x => x > 0)
+              const totalProvided = premiumTotalM2Raw.trim() !== '' && premiumTotalM2 > 0
+              const isPremiumValid = totalProvided && hasKitchen && hasBath
+
+              return (
+                <>
+                  <button
+                    onClick={goToFinalStep}
+                    disabled={!isPremiumValid}
+                    className="w-full md:w-auto btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
+                  >
+                    {txt.common.continue}
+                  </button>
+
+                  {!isPremiumValid && (
+                    <div className="text-sm text-red-500 mt-2 text-center">
+                      {!totalProvided && <div>Wprowadź powierzchnię całkowitą.</div>}
+                      {!hasKitchen && <div>Wprowadź przynajmniej jedną kuchnię o dodatniej powierzchni.</div>}
+                      {!hasBath && <div>Wprowadź przynajmniej jedną łazienkę o dodatniej powierzchni.</div>}
+                    </div>
+                  )}
+                </>
+              )
+            })()}
           </div>
         </div>
       </div>

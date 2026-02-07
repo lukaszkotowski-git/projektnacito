@@ -55,8 +55,7 @@ export const pl = {
     consultTitle: 'Konsultacja',
     consultDesc: 'Szybka porada ekspercka online. Idealne rozwiązanie na konkretne dylematy.',
     consultCta: 'Umów się',
-    checkPackagesBanner: 'SPRAWDŹ ZAWARTOŚĆ PAKIETÓW',
-    checkPackagesHint: 'Szczegóły pakietów znajdziesz w zakładce Oferta.',
+    checkPackagesBanner: '* Szczegóły pakietów znajdziesz w zakładce',
   },
 
   // Cito Configurator
