@@ -46,12 +46,12 @@ export function MainView() {
         </div>
       </section>
 
-      {/* Subtle one-line info + CTA (centered, single line) */}
+      {/* One-line info: hint on the left, CTA on the right */}
       <section className="px-6 mb-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-center gap-3 whitespace-nowrap">
-            <span className="text-sm text-gray-600 uppercase tracking-widest">{txt.main.checkPackagesBanner}</span>
-            <a href="/offer" aria-label="Przejdź do oferty" className="text-[#8C7E6A] font-semibold uppercase text-sm">{txt.nav.offer} →</a>
+          <div className="flex items-center justify-between gap-3 whitespace-nowrap">
+            <p className="text-sm text-gray-600 truncate max-w-[65%]">{txt.main.checkPackagesHint}</p>
+            <a href="/offer" aria-label="Przejdź do oferty" className="text-[#8C7E6A] font-semibold uppercase text-sm">{txt.main.checkPackagesBanner} →</a>
           </div>
         </div>
       </section>
