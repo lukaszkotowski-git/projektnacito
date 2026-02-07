@@ -18,9 +18,12 @@ export function MainView() {
           {txt.main.headline} <br /><span className="italic text-[#8C7E6A]">{txt.main.headlineAccent}</span>
         </h1>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-            <div onClick={() => handleChoice('/offer/cito')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
-            <div className="inline-block mb-4 px-3 py-1 rounded-full bg-[#FDFBF7] text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A]">{txt.main.citoTag}</div>
-            <h3 className="text-3xl font-serif mb-4">{txt.main.citoTitle}</h3>
+            <div onClick={() => handleChoice('/offer/cito')} className="card-choice relative overflow-visible p-10 rounded-[2.5rem] cursor-pointer text-left group">
+              {/* Ribbon */}
+              <div className="absolute top-0 right-0 pointer-events-none">
+                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-5 transform translate-x-1/2 -translate-y-1/2 rotate-45 shadow-sm">{txt.main.citoTag}</span>
+              </div>
+              <h3 className="text-3xl font-serif mb-4">{txt.main.citoTitle}</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-8">{txt.main.citoDesc}</p>
             <span className="text-[10px] font-bold uppercase tracking-widest flex items-center">
               {txt.main.citoCta} <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
