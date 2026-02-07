@@ -58,7 +58,7 @@ export function OfferOverview() {
               className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group" style={{ animationDelay: '0.1s' }}
             >
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.premiumTitle}</div>
-              <p className="mb-4 text-gray-700 whitespace-pre-line">{txt.offerOverview.premiumIntro}</p>
+              {/* Premium intro removed on overview per request */}
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
                 {txt.offerOverview.premiumItems.map((item, idx) => (
                   <li key={idx}><b>{item.title}</b><br/>{item.desc}</li>
@@ -89,14 +89,7 @@ export function OfferOverview() {
           </div>
         </div>
 
-        <div className="mt-20 text-center">
-          <button
-            onClick={() => setCurrentView('main')}
-            className="px-8 py-3 bg-[#8C7E6A] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#7A6C58] transition-colors"
-          >
-            {txt.common.backToHome}
-          </button>
-        </div>
+        {/* Back-to-home button removed as requested */}
       </section>
     </main>
   )
