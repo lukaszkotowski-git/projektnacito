@@ -12,10 +12,14 @@ export interface CitoDetails {
 
 export interface PremiumDetails {
   totalM2: number
-  kitchenM2: number
-  bathM2: number
+  // Legacy aggregated fields (kept for backward compatibility with n8n/workflows)
+  kitchenM2?: number
+  bathM2?: number
   kitchenCount?: number
   bathCount?: number
+  // New per-unit arrays
+  kitchenAreas?: number[]
+  bathAreas?: number[]
 }
 
 export interface SubmissionData {

@@ -28,10 +28,16 @@ interface AppState {
   setPremiumKitchenM2: (val: number) => void
   premiumBathM2: number
   setPremiumBathM2: (val: number) => void
+  // Legacy aggregated values (kept for compatibility)
   premiumKitchenCount: number
   setPremiumKitchenCount: (val: number) => void
   premiumBathCount: number
   setPremiumBathCount: (val: number) => void
+  // New per-unit arrays
+  premiumKitchenAreas: number[]
+  setPremiumKitchenAreas: (vals: number[]) => void
+  premiumBathAreas: number[]
+  setPremiumBathAreas: (vals: number[]) => void
 
   lastSubmissionId: string | null
   setLastSubmissionId: (id: string | null) => void
@@ -57,6 +63,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [premiumBathM2, setPremiumBathM2] = useState(0)
   const [premiumKitchenCount, setPremiumKitchenCount] = useState(0)
   const [premiumBathCount, setPremiumBathCount] = useState(0)
+  const [premiumKitchenAreas, setPremiumKitchenAreas] = useState<number[]>([0])
+  const [premiumBathAreas, setPremiumBathAreas] = useState<number[]>([0])
   const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null)
 
     const resetState = () => {
@@ -70,6 +78,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setPremiumBathM2(0)
       setPremiumKitchenCount(0)
       setPremiumBathCount(0)
+      setPremiumKitchenAreas([0])
+      setPremiumBathAreas([0])
     setCurrentPrice(0)
     setCurrentPackage(null)
   }
@@ -90,6 +100,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     ,
     kitchenCount: premiumKitchenCount,
     bathCount: premiumBathCount
+    ,
+    kitchenAreas: premiumKitchenAreas,
+    bathAreas: premiumBathAreas
   })
 
   return (
@@ -107,6 +120,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       premiumBathM2, setPremiumBathM2,
       premiumKitchenCount, setPremiumKitchenCount,
       premiumBathCount, setPremiumBathCount,
+      premiumKitchenAreas, setPremiumKitchenAreas,
+      premiumBathAreas, setPremiumBathAreas,
       lastSubmissionId, setLastSubmissionId,
       resetState,
       getCitoDetails,

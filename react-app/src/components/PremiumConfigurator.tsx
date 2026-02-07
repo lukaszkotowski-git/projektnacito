@@ -8,40 +8,50 @@ export function PremiumConfigurator() {
   const {
     resetState,
     premiumTotalM2, setPremiumTotalM2,
-    premiumKitchenM2, setPremiumKitchenM2,
-    premiumBathM2, setPremiumBathM2,
+    setPremiumKitchenM2,
+    setPremiumBathM2,
     setPremiumKitchenCount,
     setPremiumBathCount,
+    setPremiumKitchenAreas,
+    setPremiumBathAreas,
     setCurrentPrice,
     setCurrentPackage,
     setCurrentView
   } = useAppContext()
 
   // track raw input strings so we can distinguish "user didn't type anything" from numeric 0
-  const [premiumTotalM2Raw, setPremiumTotalM2Raw] = useState('')
-  const [premiumKitchenM2Raw, setPremiumKitchenM2Raw] = useState('')
-  const [premiumBathM2Raw, setPremiumBathM2Raw] = useState('')
-  const [premiumKitchenCountRaw, setPremiumKitchenCountRaw] = useState('')
-  const [premiumBathCountRaw, setPremiumBathCountRaw] = useState('')
+  // raw string for total area and raw string arrays for per-unit inputs
+  const [premiumTotalM2Raw, setPremiumTotalM2Raw] = useState<string>(String(premiumTotalM2 || ''))
+  const [premiumKitchenAreasRaw, setPremiumKitchenAreasRaw] = useState<string[]>([''])
+  const [premiumBathAreasRaw, setPremiumBathAreasRaw] = useState<string[]>([''])
 
   useEffect(() => {
-    const allFilled = premiumTotalM2Raw.trim() !== '' && premiumKitchenM2Raw.trim() !== '' && premiumBathM2Raw.trim() !== '' && premiumKitchenCountRaw.trim() !== '' && premiumBathCountRaw.trim() !== ''
-    if (!allFilled) {
-      // don't calculate / show price until user filled all three fields
-      setCurrentPrice(0)
-      return
-    }
+    // Parse arrays into numbers (treat empty as 0)
+    const kitchenNums = premiumKitchenAreasRaw.map(v => parseFloat(v) || 0)
+    const bathNums = premiumBathAreasRaw.map(v => parseFloat(v) || 0)
+    const sumKitchen = kitchenNums.reduce((s, x) => s + x, 0)
+    const sumBath = bathNums.reduce((s, x) => s + x, 0)
 
-    // Compute net area excluding kitchen and bathrooms, then apply base rate.
-    const k = parseInt(premiumKitchenCountRaw) || 0
-    const l = parseInt(premiumBathCountRaw) || 0
-    const netArea = Math.max(0, premiumTotalM2 - premiumKitchenM2 * k - premiumBathM2 * l)
+    const k = kitchenNums.length
+    const l = bathNums.length
+
+    // keep legacy aggregated values in sync for backwards compatibility
+    // keep legacy aggregated state in context for backward compatibility
+    // update context aggregated helpers if present
+    // call aggregated setters if available
+    if (typeof setPremiumKitchenM2 === 'function') setPremiumKitchenM2(sumKitchen)
+    if (typeof setPremiumBathM2 === 'function') setPremiumBathM2(sumBath)
+    if (typeof setPremiumKitchenCount === 'function') setPremiumKitchenCount(k)
+    if (typeof setPremiumBathCount === 'function') setPremiumBathCount(l)
+    if (typeof setPremiumKitchenAreas === 'function') setPremiumKitchenAreas(kitchenNums)
+    if (typeof setPremiumBathAreas === 'function') setPremiumBathAreas(bathNums)
+
+    const netArea = Math.max(0, premiumTotalM2 - sumKitchen - sumBath)
     let total = netArea * PRICING.premium.basePerM2
-    // Kitchens and bathrooms charged per unit
     total += k * 2500
     total += l * 2500
     setCurrentPrice(total)
-  }, [premiumTotalM2Raw, premiumKitchenM2Raw, premiumBathM2Raw, premiumKitchenCountRaw, premiumBathCountRaw, premiumTotalM2, premiumKitchenM2, premiumBathM2, setCurrentPrice])
+  }, [premiumKitchenAreasRaw, premiumBathAreasRaw, premiumTotalM2, setCurrentPrice])
 
   const goToMain = () => {
     resetState()
@@ -51,6 +61,31 @@ export function PremiumConfigurator() {
   const goToFinalStep = () => {
     setCurrentPackage('premium')
     navigate('/final')
+  }
+
+  // helpers to manage dynamic per-unit inputs
+  const addKitchen = () => {
+    const next = [...premiumKitchenAreasRaw, '']
+    setPremiumKitchenAreasRaw(next)
+    setPremiumKitchenAreas(next.map(v => parseFloat(v) || 0))
+  }
+  const removeKitchen = (idx: number) => {
+    if (premiumKitchenAreasRaw.length <= 1) return
+    const next = premiumKitchenAreasRaw.filter((_, i) => i !== idx)
+    setPremiumKitchenAreasRaw(next)
+    setPremiumKitchenAreas(next.map(v => parseFloat(v) || 0))
+  }
+
+  const addBath = () => {
+    const next = [...premiumBathAreasRaw, '']
+    setPremiumBathAreasRaw(next)
+    setPremiumBathAreas(next.map(v => parseFloat(v) || 0))
+  }
+  const removeBath = (idx: number) => {
+    if (premiumBathAreasRaw.length <= 1) return
+    const next = premiumBathAreasRaw.filter((_, i) => i !== idx)
+    setPremiumBathAreasRaw(next)
+    setPremiumBathAreas(next.map(v => parseFloat(v) || 0))
   }
 
   return (
@@ -106,69 +141,67 @@ export function PremiumConfigurator() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="card-choice p-8 rounded-[2rem]">
                   <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia całkowita (m²)</label>
-                  <input 
-                    type="number" 
+                  <input
+                    type="number"
                     value={premiumTotalM2Raw}
                     onChange={(e) => {
                       const v = e.target.value
                       setPremiumTotalM2Raw(v)
                       setPremiumTotalM2(parseFloat(v) || 0)
                     }}
-                    placeholder="0" 
+                    placeholder="0"
                     className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
                   />
                 </div>
                 <div className="card-choice p-8 rounded-[2rem]">
-                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia kuchni (m²)</label>
-                  <input 
-                    type="number" 
-                    value={premiumKitchenM2Raw}
-                    onChange={(e) => {
-                      const v = e.target.value
-                      setPremiumKitchenM2Raw(v)
-                      setPremiumKitchenM2(parseFloat(v) || 0)
-                    }}
-                    placeholder="0" 
-                    className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-                  />
-                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4 mt-4">Ilość kuchni</label>
-                  <input
-                    type="number"
-                    value={premiumKitchenCountRaw}
-                    onChange={(e) => {
-                      const v = e.target.value
-                      setPremiumKitchenCountRaw(v)
-                      setPremiumKitchenCount(parseInt(v) || 0)
-                    }}
-                    placeholder="0"
-                    className="w-full text-lg bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-                  />
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnie kuchni (m²)</label>
+                  <div className="space-y-3">
+                    {premiumKitchenAreasRaw.map((val, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <input
+                          type="number"
+                          aria-label={`Powierzchnia kuchni ${idx+1} (m²)`}
+                          value={val}
+                          onChange={(e) => {
+                            const next = [...premiumKitchenAreasRaw]
+                            next[idx] = e.target.value
+                            setPremiumKitchenAreasRaw(next)
+                          }}
+                          placeholder="0"
+                          className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
+                        />
+                        {idx > 0 && (
+                          <button type="button" onClick={() => removeKitchen(idx)} aria-label={`Usuń kuchnię ${idx+1}`} className="text-red-500">−</button>
+                        )}
+                      </div>
+                    ))}
+                    <button type="button" onClick={addKitchen} className="mt-2 text-sm text-[#8C7E6A]">+ Add kitchen</button>
+                  </div>
                 </div>
                 <div className="card-choice p-8 rounded-[2rem]">
-                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia łazienek (m²)</label>
-                  <input 
-                    type="number" 
-                    value={premiumBathM2Raw}
-                    onChange={(e) => {
-                      const v = e.target.value
-                      setPremiumBathM2Raw(v)
-                      setPremiumBathM2(parseFloat(v) || 0)
-                    }}
-                    placeholder="0" 
-                    className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-                  />
-                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4 mt-4">Ilość łazienek</label>
-                  <input
-                    type="number"
-                    value={premiumBathCountRaw}
-                    onChange={(e) => {
-                      const v = e.target.value
-                      setPremiumBathCountRaw(v)
-                      setPremiumBathCount(parseInt(v) || 0)
-                    }}
-                    placeholder="0"
-                    className="w-full text-lg bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
-                  />
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnie łazienek (m²)</label>
+                  <div className="space-y-3">
+                    {premiumBathAreasRaw.map((val, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <input
+                          type="number"
+                          aria-label={`Powierzchnia łazienki ${idx+1} (m²)`}
+                          value={val}
+                          onChange={(e) => {
+                            const next = [...premiumBathAreasRaw]
+                            next[idx] = e.target.value
+                            setPremiumBathAreasRaw(next)
+                          }}
+                          placeholder="0"
+                          className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
+                        />
+                        {idx > 0 && (
+                          <button type="button" onClick={() => removeBath(idx)} aria-label={`Usuń łazienkę ${idx+1}`} className="text-red-500">−</button>
+                        )}
+                      </div>
+                    ))}
+                    <button type="button" onClick={addBath} className="mt-2 text-sm text-[#8C7E6A]">+ Add bathroom</button>
+                  </div>
                 </div>
               </div>
             </div>
