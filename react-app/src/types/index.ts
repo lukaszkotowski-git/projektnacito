@@ -14,6 +14,8 @@ export interface PremiumDetails {
   totalM2: number
   kitchenM2: number
   bathM2: number
+  kitchenCount?: number
+  bathCount?: number
 }
 
 export interface SubmissionData {

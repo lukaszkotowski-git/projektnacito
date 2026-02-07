@@ -10,6 +10,8 @@ export function PremiumConfigurator() {
     premiumTotalM2, setPremiumTotalM2,
     premiumKitchenM2, setPremiumKitchenM2,
     premiumBathM2, setPremiumBathM2,
+    setPremiumKitchenCount,
+    setPremiumBathCount,
     setCurrentPrice,
     setCurrentPackage,
     setCurrentView
@@ -19,9 +21,11 @@ export function PremiumConfigurator() {
   const [premiumTotalM2Raw, setPremiumTotalM2Raw] = useState('')
   const [premiumKitchenM2Raw, setPremiumKitchenM2Raw] = useState('')
   const [premiumBathM2Raw, setPremiumBathM2Raw] = useState('')
+  const [premiumKitchenCountRaw, setPremiumKitchenCountRaw] = useState('')
+  const [premiumBathCountRaw, setPremiumBathCountRaw] = useState('')
 
   useEffect(() => {
-    const allFilled = premiumTotalM2Raw.trim() !== '' && premiumKitchenM2Raw.trim() !== '' && premiumBathM2Raw.trim() !== ''
+    const allFilled = premiumTotalM2Raw.trim() !== '' && premiumKitchenM2Raw.trim() !== '' && premiumBathM2Raw.trim() !== '' && premiumKitchenCountRaw.trim() !== '' && premiumBathCountRaw.trim() !== ''
     if (!allFilled) {
       // don't calculate / show price until user filled all three fields
       setCurrentPrice(0)
@@ -29,13 +33,15 @@ export function PremiumConfigurator() {
     }
 
     // Compute net area excluding kitchen and bathrooms, then apply base rate.
-    const netArea = Math.max(0, premiumTotalM2 - premiumKitchenM2 - premiumBathM2)
+    const k = parseInt(premiumKitchenCountRaw) || 0
+    const l = parseInt(premiumBathCountRaw) || 0
+    const netArea = Math.max(0, premiumTotalM2 - premiumKitchenM2 * k - premiumBathM2 * l)
     let total = netArea * PRICING.premium.basePerM2
-    // Kitchens and bathrooms are charged as fixed flats if present
-    if (premiumKitchenM2 > 0) total += PRICING.premium.kitchenFlat
-    if (premiumBathM2 > 0) total += PRICING.premium.bathFlat
+    // Kitchens and bathrooms charged per unit
+    total += k * 2500
+    total += l * 2500
     setCurrentPrice(total)
-  }, [premiumTotalM2Raw, premiumKitchenM2Raw, premiumBathM2Raw, premiumTotalM2, premiumKitchenM2, premiumBathM2, setCurrentPrice])
+  }, [premiumTotalM2Raw, premiumKitchenM2Raw, premiumBathM2Raw, premiumKitchenCountRaw, premiumBathCountRaw, premiumTotalM2, premiumKitchenM2, premiumBathM2, setCurrentPrice])
 
   const goToMain = () => {
     resetState()
@@ -125,6 +131,18 @@ export function PremiumConfigurator() {
                     placeholder="0" 
                     className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
                   />
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4 mt-4">Ilość kuchni</label>
+                  <input
+                    type="number"
+                    value={premiumKitchenCountRaw}
+                    onChange={(e) => {
+                      const v = e.target.value
+                      setPremiumKitchenCountRaw(v)
+                      setPremiumKitchenCount(parseInt(v) || 0)
+                    }}
+                    placeholder="0"
+                    className="w-full text-lg bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
+                  />
                 </div>
                 <div className="card-choice p-8 rounded-[2rem]">
                   <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia łazienek (m²)</label>
@@ -138,6 +156,18 @@ export function PremiumConfigurator() {
                     }}
                     placeholder="0" 
                     className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
+                  />
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4 mt-4">Ilość łazienek</label>
+                  <input
+                    type="number"
+                    value={premiumBathCountRaw}
+                    onChange={(e) => {
+                      const v = e.target.value
+                      setPremiumBathCountRaw(v)
+                      setPremiumBathCount(parseInt(v) || 0)
+                    }}
+                    placeholder="0"
+                    className="w-full text-lg bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
                   />
                 </div>
               </div>

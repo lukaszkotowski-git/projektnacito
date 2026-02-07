@@ -19,7 +19,8 @@ export const PRICING = {
   } as Record<string, number>,
   electricPerM2: 15,
   premium: {
-    basePerM2: 150,
+    // basePerM2 used by Premium calculator (zł per m2)
+    basePerM2: 200,
     kitchenFlat: 2500,
     bathFlat: 2500
   }

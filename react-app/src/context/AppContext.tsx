@@ -28,6 +28,10 @@ interface AppState {
   setPremiumKitchenM2: (val: number) => void
   premiumBathM2: number
   setPremiumBathM2: (val: number) => void
+  premiumKitchenCount: number
+  setPremiumKitchenCount: (val: number) => void
+  premiumBathCount: number
+  setPremiumBathCount: (val: number) => void
 
   lastSubmissionId: string | null
   setLastSubmissionId: (id: string | null) => void
@@ -51,6 +55,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [premiumTotalM2, setPremiumTotalM2] = useState(0)
   const [premiumKitchenM2, setPremiumKitchenM2] = useState(0)
   const [premiumBathM2, setPremiumBathM2] = useState(0)
+  const [premiumKitchenCount, setPremiumKitchenCount] = useState(0)
+  const [premiumBathCount, setPremiumBathCount] = useState(0)
   const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null)
 
     const resetState = () => {
@@ -62,6 +68,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setPremiumTotalM2(0)
       setPremiumKitchenM2(0)
       setPremiumBathM2(0)
+      setPremiumKitchenCount(0)
+      setPremiumBathCount(0)
     setCurrentPrice(0)
     setCurrentPackage(null)
   }
@@ -79,6 +87,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     totalM2: premiumTotalM2,
     kitchenM2: premiumKitchenM2,
     bathM2: premiumBathM2
+    ,
+    kitchenCount: premiumKitchenCount,
+    bathCount: premiumBathCount
   })
 
   return (
@@ -94,6 +105,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       premiumTotalM2, setPremiumTotalM2,
       premiumKitchenM2, setPremiumKitchenM2,
       premiumBathM2, setPremiumBathM2,
+      premiumKitchenCount, setPremiumKitchenCount,
+      premiumBathCount, setPremiumBathCount,
       lastSubmissionId, setLastSubmissionId,
       resetState,
       getCitoDetails,
