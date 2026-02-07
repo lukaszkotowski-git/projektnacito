@@ -236,20 +236,22 @@ export function CitoConfigurator() {
             </aside>
 
           </div>
-            <div className="sticky bottom-6 bg-[#33302E] text-white p-8 rounded-[2rem] shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6">
-              <div>
-                <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">{txt.cito.estimatedCost}</span>
-                <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> {txt.common.currency} <span className="text-sm text-gray-400">{txt.common.net}</span></div>
+            <div className="mt-8">
+              <div className="p-6 rounded-2xl bg-[#33302E] text-white shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                  <span className="text-[10px] uppercase tracking-widest text-gray-200 block mb-1">{txt.cito.estimatedCost}</span>
+                  <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> {txt.common.currency} <span className="text-sm text-gray-300">{txt.common.net}</span></div>
+                </div>
+                <button 
+                  onClick={goToFinalStep} 
+                  disabled={
+                    currentPrice === 0 || (electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0))
+                  }
+                  className="btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
+                >
+                  {txt.common.continue}
+                </button>
               </div>
-              <button 
-                onClick={goToFinalStep} 
-                disabled={
-                  currentPrice === 0 || (electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0))
-                }
-                className="btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
-              >
-                {txt.common.continue}
-              </button>
             </div>
         </div>
       </div>
