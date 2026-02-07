@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const FAQ_DATA = [
   {
@@ -115,6 +115,13 @@ Dzięki temu dokładnie wiecie, co kupić, gdzie i w jakiej cenie.`
 
 export function Faq() {
   const [openIndex, setOpenIndex] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#faq') {
+      const el = document.getElementById('faq');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
 
   const handleToggle = (idx) => setOpenIndex(idx === openIndex ? null : idx);
 

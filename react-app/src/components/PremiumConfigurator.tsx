@@ -11,7 +11,8 @@ export function PremiumConfigurator() {
     premiumKitchenM2, setPremiumKitchenM2,
     premiumBathM2, setPremiumBathM2,
     setCurrentPrice,
-    setCurrentPackage
+    setCurrentPackage,
+    setCurrentView
   } = useAppContext()
 
   // track raw input strings so we can distinguish "user didn't type anything" from numeric 0
@@ -55,6 +56,23 @@ export function PremiumConfigurator() {
         <header className="mb-12">
           <h2 className="text-4xl font-serif mb-2">Konfigurator Pakietu Premium</h2>
           <p className="text-gray-500 max-w-2xl text-sm leading-relaxed">Wprowadź metraże — otrzymasz szczegółową wycenę na podany adres e-mail.</p>
+          <div className="mt-4 flex justify-end md:mt-0 md:fixed md:right-6 md:top-32 lg:right-8 lg:top-40 xl:right-12 xl:top-48 z-50 group">
+            <button
+              onClick={() => { setCurrentView('faq'); navigate('/faq#faq') }}
+              className="inline-flex items-center gap-3 bg-[#8C7E6A] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#7A6C58] transition-shadow shadow-md"
+              aria-label="Masz pytanie? Przejdź do FAQ"
+              aria-describedby="faq-cta-desc-premium"
+            >
+              <span className="text-sm font-semibold text-white animate-pulse">Masz pytanie?</span>
+            </button>
+            <div
+              id="faq-cta-desc-premium"
+              role="tooltip"
+              className="absolute right-0 top-full mt-2 w-48 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none"
+            >
+              Przejdź do najczęściej zadawanych pytań (FAQ).
+            </div>
+          </div>
         </header>
         <div className="space-y-8">
             <div className="md:flex md:items-start md:gap-8">
