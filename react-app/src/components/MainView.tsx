@@ -5,7 +5,7 @@ import { t } from '../i18n'
 export function MainView() {
   const navigate = useNavigate()
   const txt = t()
-  const packagesHint = (txt.main as any).checkPackagesHint || 'Szczegóły pakietów znajdziesz w zakładce Oferta.'
+  const packagesHint = (txt.main as any).checkPackagesHint
 
   const handleChoice = (path: string) => {
     navigate(path)

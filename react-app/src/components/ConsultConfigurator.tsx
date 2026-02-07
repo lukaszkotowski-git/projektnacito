@@ -155,7 +155,8 @@ export function ConsultConfigurator() {
                 <select
                   value={preferredTime}
                   onChange={(e) => setPreferredTime(e.target.value)}
-                  className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A] bg-white"
+                  className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A] bg-white appearance-none -webkit-appearance-none -moz-appearance:none pr-10" 
+                  style={{ backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 24 24'><path fill='%238C7E6A' d='M7 10l5 5 5-5z'/></svg>")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '12px 8px' }}
                 >
                   <option value="">{txt.consult.preferredTimePlaceholder}</option>
                   <option value="morning">Rano</option>

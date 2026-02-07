@@ -231,6 +231,8 @@ export const pl = {
     contact: 'Kontakt',
     klaudia: 'Klaudia: 698 354 726',
     angelika: 'Angelika: 697 909 309',
+    project: 'Projekt i realizacja  ',
+    siteAuthor: ' @Łukasz Kotowski',
   },
 
   // Accessibility / aria labels

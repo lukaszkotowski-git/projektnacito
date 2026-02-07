@@ -12,6 +12,10 @@ export function Footer(): JSX.Element {
           <span className="hidden md:inline">|</span>
           <a href="tel:+48697909309" aria-label={txt.aria.callAngelika} className="hover:text-[#7A6C58]">{txt.footer.angelika}</a>
         </div>
+        <div className="w-full flex items-center justify-center gap-2 md:gap-2 pt-2">
+          <span className="font-semibold">{txt.footer.project}</span>
+          <a href="mailto:lukasz.kotowski@icloud.com" className="text-xs text-[#6B7280] hover:text-[#7A6C58]"> {txt.footer.siteAuthor}</a>
+        </div>
       </div>
     </footer>
   );
