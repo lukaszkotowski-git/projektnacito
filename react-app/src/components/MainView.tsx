@@ -19,7 +19,7 @@ export function MainView() {
         </h1>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             <div onClick={() => handleChoice('/offer/cito')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-6">{txt.main.citoTag}</div>
+            <div className="inline-block mb-4 px-3 py-1 rounded-full bg-[#FDFBF7] text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A]">{txt.main.citoTag}</div>
             <h3 className="text-3xl font-serif mb-4">{txt.main.citoTitle}</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-8">{txt.main.citoDesc}</p>
             <span className="text-[10px] font-bold uppercase tracking-widest flex items-center">

@@ -32,7 +32,7 @@ export function OfferOverview() {
               onClick={() => handlePackageClick('/offer/cito')}
               className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group"
             >
-              <div className="text-[10px] uppercase tracking-widest font-bold text-[#8C7E6A] mb-2">{txt.main.citoTag}</div>
+              <div className="inline-block mb-2 px-3 py-1 rounded-full bg-[#FDFBF7] text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A]">{txt.main.citoTag}</div>
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.citoTitle}</div>
               <p className="mb-4 text-gray-700 whitespace-pre-line">{txt.offerOverview.citoIntro}</p>
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
