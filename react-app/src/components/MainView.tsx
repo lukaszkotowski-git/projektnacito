@@ -46,11 +46,13 @@ export function MainView() {
         </div>
       </section>
 
-      {/* Info banner: check package contents (inserted under packages, above carousel) */}
-      <section className="px-6 mb-12">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="inline-block bg-[#FDFBF7] border border-[#E5DED4] rounded-2xl px-6 py-4 font-bold text-[#8C7E6A]">{txt.main.checkPackagesBanner}</div>
-          <p className="mt-3 text-sm text-gray-600">{txt.main.checkPackagesHint || 'Szczegóły pakietów znajdziesz w zakładce Oferta.'}</p>
+      {/* Subtle one-line info + CTA (centered, single line) */}
+      <section className="px-6 mb-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-center gap-3 whitespace-nowrap">
+            <span className="text-sm text-gray-600 uppercase tracking-widest">{txt.main.checkPackagesBanner}</span>
+            <a href="/offer" aria-label="Przejdź do oferty" className="text-[#8C7E6A] font-semibold uppercase text-sm">{txt.nav.offer} →</a>
+          </div>
         </div>
       </section>
 
