@@ -6,6 +6,7 @@ export function OfferOverview() {
   const { setCurrentView } = useAppContext()
   const navigate = useNavigate()
   const txt = t()
+  const citoRibbonLines = txt.main.citoTag.split(' ')
 
   const handlePackageClick = (path: string) => {
     navigate(path)
@@ -34,7 +35,9 @@ export function OfferOverview() {
             >
               {/* Ribbon - smaller and inside corner */}
               <div className="hidden md:block absolute top-3 right-3 pointer-events-none">
-                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-4 transform rotate-45 shadow-sm">{txt.main.citoTag}</span>
+                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-4 transform rotate-45 shadow-sm leading-none text-center">
+                  {citoRibbonLines[0]}<br />{citoRibbonLines.slice(1).join(' ')}
+                </span>
               </div>
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.citoTitle}</div>
               <p className="mb-4 text-gray-700 whitespace-pre-line">{txt.offerOverview.citoIntro}</p>
