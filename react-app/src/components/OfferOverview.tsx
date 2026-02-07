@@ -23,29 +23,7 @@ export function OfferOverview() {
         </div>
 
 
-        <div className="relative flex flex-col gap-16 mb-24 pl-12">
-
-          <div className="hidden md:block absolute left-24 top-8 bottom-8 w-1 bg-gradient-to-b from-[#E5DED4] to-[#8C7E6A] animate-growLine" />
-          {txt.offerOverview.stages.map((stage, i) => (
-            <div className={`relative flex ${i % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center gap-7`} key={stage.number}>
-    
-              <div className="relative z-10 flex-shrink-0 w-16 h-16 rounded-full bg-white shadow flex items-center justify-center text-3xl font-bold text-[#8C7E6A] border-2 border-[#E5DED4] animate-bounceIn">
-                {stage.number}
-              </div>
-    
-              <div className={`md:hidden absolute left-8 right-8 top-16 bottom-0 w-1 bg-gradient-to-b from-[#E5DED4] to-[#8C7E6A]`} />
-    
-              <div className={`rounded-xl bg-white/95 shadow-lg p-8 flex-1 ${i % 2 === 0 ? 'animate-fadeInLeft' : 'animate-fadeInRight'}`} style={{ animationDelay: `${i * 0.13}s` }}>
-                <h2 className="text-2xl md:text-3xl font-serif mb-4 text-[#8C7E6A]">{stage.title}</h2>
-                <ul className="list-disc pl-6 space-y-2 text-gray-700 text-lg">
-                  {stage.points.map((point, idx) => (
-                    <li key={idx}>{point}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Stages timeline removed as requested */}
 
 
         <div className="mb-14">

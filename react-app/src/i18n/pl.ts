@@ -172,34 +172,7 @@ export const pl = {
     headline: 'Proces',
     headlineAccent: 'projektowy',
     intro: 'Nasze pakiety projektowe możesz dobrać do własnych potrzeb – od szybkiego projektu, przez pełną obsługę i wsparcie.',
-    stages: [
-      {
-        number: 1,
-        title: 'Pierwszy etap',
-        points: [
-          'Układ funkcjonalny w formacie rzutu technicznego 2D.',
-          'Wizualizacje wnętrz – materiały, kolory, meble (na wymiar i gotowe).',
-        ],
-      },
-      {
-        number: 2,
-        title: 'Drugi etap',
-        points: [
-          'Rysunki wykonawcze – szczegółowy zestaw techniczny dla wykonawców.',
-          'Dobór elementów wyposażenia wnętrza.',
-          'Kosztorys – szczegółowa wycena i zestawienie elementów.',
-        ],
-      },
-      {
-        number: 3,
-        title: 'Trzeci etap',
-        points: [
-          'Nadzór autorski – koordynacja zamówień, wizyty na budowie.',
-          'Stylizacja wnętrza.',
-          'Dokumentacja fotograficzna przestrzeni.',
-        ],
-      },
-    ],
+    // stages removed
     packagesTitle: 'Pakiety',
     // Cito package
     citoTitle: 'Cito',
