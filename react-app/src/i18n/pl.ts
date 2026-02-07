@@ -55,6 +55,8 @@ export const pl = {
     consultTitle: 'Konsultacja',
     consultDesc: 'Szybka porada ekspercka online. Idealne rozwiązanie na konkretne dylematy.',
     consultCta: 'Umów się',
+    checkPackagesBanner: 'SPRAWDŹ ZAWARTOŚĆ PAKIETÓW',
+    checkPackagesHint: 'Szczegóły pakietów znajdziesz w zakładce Oferta.',
   },
 
   // Cito Configurator
@@ -208,6 +210,9 @@ export const pl = {
     ],
     premiumCost: 'Koszt tego opracowania to 150 zł za m² projektowanej powierzchni.\nKuchnia i łazienka liczona każda za 2500zł.\nNadzór wyceniany jest indywidualnie zależnie od jego zakresu i rozliczany stawką godzinową.',
     premiumCta: 'Oblicz wycenę',
+    validation_totalAreaRequired: 'Wprowadź powierzchnię całkowitą.',
+    validation_kitchenRequired: 'Wprowadź przynajmniej jedną kuchnię o dodatniej powierzchni.',
+    validation_bathRequired: 'Wprowadź przynajmniej jedną łazienkę o dodatniej powierzchni.',
     // Consult package
     consultTitle: 'Konsultacja',
     consultIntro: 'Jeżeli potrzebujesz szybkiej i kompleksowej porady, to konsultacja jest rozwiązaniem dla Ciebie.\nMoże ona polegać na:',

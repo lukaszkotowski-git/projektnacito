@@ -46,6 +46,14 @@ export function MainView() {
         </div>
       </section>
 
+      {/* Info banner: check package contents (inserted under packages, above carousel) */}
+      <section className="px-6 mb-12">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="inline-block bg-[#FDFBF7] border border-[#E5DED4] rounded-2xl px-6 py-4 font-bold text-[#8C7E6A]">{txt.main.checkPackagesBanner}</div>
+          <p className="mt-3 text-sm text-gray-600">{txt.main.checkPackagesHint || 'Szczegóły pakietów znajdziesz w zakładce Oferta.'}</p>
+        </div>
+      </section>
+
       {/* Carousel inserted under packages */}
       <RealizacjeCarousel />
     </main>
