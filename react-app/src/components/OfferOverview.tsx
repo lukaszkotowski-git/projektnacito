@@ -30,11 +30,11 @@ export function OfferOverview() {
 
             <div 
               onClick={() => handlePackageClick('/offer/cito')}
-              className="flex-1 min-w-[280px] relative bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group overflow-visible"
+              className="flex-1 min-w-[280px] relative bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group overflow-hidden"
             >
-              {/* Ribbon */}
-              <div className="absolute top-0 right-0 pointer-events-none">
-                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-5 transform translate-x-1/2 -translate-y-1/2 rotate-45 shadow-sm">{txt.main.citoTag}</span>
+              {/* Ribbon - smaller and inside corner */}
+              <div className="hidden md:block absolute top-3 right-3 pointer-events-none">
+                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-4 transform rotate-45 shadow-sm">{txt.main.citoTag}</span>
               </div>
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.citoTitle}</div>
               <p className="mb-4 text-gray-700 whitespace-pre-line">{txt.offerOverview.citoIntro}</p>
