@@ -49,9 +49,9 @@ export function MainView() {
       {/* One-line info: hint on the left, CTA on the right */}
       <section className="px-6 mb-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between gap-3 whitespace-nowrap">
-            <p className="text-sm text-gray-600 truncate max-w-[65%]">{txt.main.checkPackagesHint}</p>
+          <div className="flex items-center justify-start gap-4 whitespace-nowrap">
             <a href="/offer" aria-label="Przejdź do oferty" className="text-[#8C7E6A] font-semibold uppercase text-sm">{txt.main.checkPackagesBanner} →</a>
+            <p className="text-sm text-gray-600 truncate max-w-[70%]">{txt.main.checkPackagesHint}</p>
           </div>
         </div>
       </section>
