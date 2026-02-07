@@ -5,6 +5,7 @@ import { t } from '../i18n'
 export function MainView() {
   const navigate = useNavigate()
   const txt = t()
+  const packagesHint = (txt.main as any).checkPackagesHint || 'Szczegóły pakietów znajdziesz w zakładce Oferta.'
 
   const handleChoice = (path: string) => {
     navigate(path)
@@ -52,7 +53,7 @@ export function MainView() {
           <div className="flex items-center justify-start gap-4 whitespace-nowrap">
             <span className="text-xs text-gray-600 uppercase tracking-wide">{txt.main.checkPackagesBanner}</span>
             <a href="/offer" aria-label="Przejdź do oferty" className="text-[#8C7E6A] font-semibold uppercase text-sm">{txt.nav.offer}</a>
-            <p className="text-sm text-gray-600 truncate max-w-[70%]">{txt.main.checkPackagesHint}</p>
+            <p className="text-sm text-gray-600 truncate max-w-[70%]">{packagesHint}</p>
           </div>
         </div>
       </section>
