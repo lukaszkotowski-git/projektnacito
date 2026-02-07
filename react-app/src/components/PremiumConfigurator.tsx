@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import { PRICING } from '../constants'
+import { t } from '../i18n'
 
 export function PremiumConfigurator() {
   const navigate = useNavigate()
+  const txt = t()
   const {
     resetState,
     premiumTotalM2, setPremiumTotalM2,
@@ -92,26 +94,26 @@ export function PremiumConfigurator() {
     <main className="pt-32 pb-24 px-6">
       <div className="max-w-4xl mx-auto">
         <button onClick={goToMain} className="text-[10px] uppercase tracking-widest font-bold flex items-center mb-8 hover:text-[#8C7E6A] transition">
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> Wróć do wyboru
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> {txt.common.backToSelection}
         </button>
         <header className="mb-12">
-          <h2 className="text-4xl font-serif mb-2">Konfigurator Pakietu Premium</h2>
-          <p className="text-gray-500 max-w-2xl text-sm leading-relaxed">Wprowadź metraże — otrzymasz szczegółową wycenę na podany adres e-mail.</p>
+          <h2 className="text-4xl font-serif mb-2">{txt.premium.title}</h2>
+          <p className="text-gray-500 max-w-2xl text-sm leading-relaxed">{txt.premium.subtitle}</p>
           <div className="mt-4 flex justify-end md:mt-0 md:fixed md:right-6 md:top-32 lg:right-8 lg:top-40 xl:right-12 xl:top-48 z-50 group">
             <button
               onClick={() => { setCurrentView('faq'); navigate('/faq#faq') }}
               className="inline-flex items-center gap-3 bg-[#8C7E6A] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#7A6C58] transition-shadow shadow-md"
-              aria-label="Masz pytanie? Przejdź do FAQ"
+              aria-label={txt.common.haveQuestion}
               aria-describedby="faq-cta-desc-premium"
             >
-              <span className="text-sm font-semibold text-white animate-pulse">Masz pytanie?</span>
+              <span className="text-sm font-semibold text-white animate-pulse">{txt.common.haveQuestion}</span>
             </button>
             <div
               id="faq-cta-desc-premium"
               role="tooltip"
               className="absolute right-0 top-full mt-2 w-48 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none"
             >
-              Przejdź do najczęściej zadawanych pytań (FAQ).
+              {txt.common.faqTooltip}
             </div>
           </div>
         </header>
@@ -121,18 +123,12 @@ export function PremiumConfigurator() {
               {/* Show aside content above inputs on all screen sizes when requested */}
               <div className="mb-6">
                 <div className="p-6 rounded-2xl bg-white border border-[#E5DED4] shadow-sm">
-                  <h3 className="text-lg font-semibold text-[#8C7E6A] mb-2">Pakiet Premium — w pigułce</h3>
-                  <p className="mb-4 text-gray-700">Chcesz cieszyć się realizacją projektu Twojego wymarzonego wnętrza pod czujnym okiem inżyniera budowy i architekta wnętrz? Projekt rozszerzony jest dla Ciebie!<br/>W jego skład wchodzi:</p>
+                  <h3 className="text-lg font-semibold text-[#8C7E6A] mb-2">{txt.premium.summaryTitle}</h3>
+                  <p className="mb-4 text-gray-700">{txt.premium.summaryIntro.split('\n').map((line, i) => <span key={i}>{line}<br/></span>)}</p>
                   <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-sm mb-2">
-                    <li><b>Inwentaryzacja</b><br/>Pomiary całej projektowanej części.</li>
-                    <li><b>Układ funkcjonalny</b><br/>Rzut z propozycją układu elementów we wnętrzu.</li>
-                    <li><b>Aranżacja</b><br/>Model 3D prezentujący proponowane rozwiązania estetyczne.</li>
-                    <li><b>Zestawienie materiałów i sprzętów</b><br/>Lista konkretnych materiałów z ich cenami i linkami do sklepów.</li>
-                    <li><b>Wizualizacje</b><br/>Fotorealistyczne przedstawienie wnętrza.</li>
-                    <li><b>Projekt meblowy</b><br/>Kompletny projekt zabudowy meblowej.</li>
-                    <li><b>Projekt wykonawczy</b><br/>Rzuty podłóg i sufitów, rzuty instalacji wod-kan, rzuty instalacji elektrycznej, wentylacji, CO oraz rysunki detali.</li>
-                    <li><b>Oferty od wykonawców</b><br/>Oferta od np. stolarza, budowlańca, instalatora na zastosowane w projekcie rozwiązania.</li>
-                    <li><b>Nadzór autorski</b><br/>Pilnowanie przebiegu prac projektowych i ich zgodności z projektem, kontrolowanie zamówień, oglądanie i wybieranie elementów wyposażenia.</li>
+                    {txt.premium.summaryItems.map((item, idx) => (
+                      <li key={idx}><b>{item.title}</b><br/>{item.desc}</li>
+                    ))}
                   </ol>
 
                 </div>
@@ -140,7 +136,7 @@ export function PremiumConfigurator() {
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="card-choice p-8 rounded-[2rem]">
-                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnia całkowita (m²)</label>
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">{txt.premium.totalAreaLabel}</label>
                   <input
                     type="number"
                     value={premiumTotalM2Raw}
@@ -154,13 +150,13 @@ export function PremiumConfigurator() {
                   />
                 </div>
                 <div className="card-choice p-8 rounded-[2rem]">
-                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnie kuchni (m²)</label>
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">{txt.premium.kitchenAreaLabel}</label>
                   <div className="space-y-3">
                     {premiumKitchenAreasRaw.map((val, idx) => (
                       <div key={idx} className="flex items-center gap-3">
                         <input
                           type="number"
-                          aria-label={`Powierzchnia kuchni ${idx+1} (m²)`}
+                          aria-label={txt.premium.kitchenAriaLabel(idx)}
                           value={val}
                           onChange={(e) => {
                             const next = [...premiumKitchenAreasRaw]
@@ -171,21 +167,21 @@ export function PremiumConfigurator() {
                           className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
                         />
                         {idx > 0 && (
-                          <button type="button" onClick={() => removeKitchen(idx)} aria-label={`Usuń kuchnię ${idx+1}`} className="text-red-500">−</button>
+                          <button type="button" onClick={() => removeKitchen(idx)} aria-label={txt.premium.removeKitchenAriaLabel(idx)} className="text-red-500">−</button>
                         )}
                       </div>
                     ))}
-                    <button type="button" onClick={addKitchen} className="mt-2 text-sm text-[#8C7E6A]">+ Add kitchen</button>
+                    <button type="button" onClick={addKitchen} className="mt-2 text-sm text-[#8C7E6A]">{txt.premium.addKitchen}</button>
                   </div>
                 </div>
                 <div className="card-choice p-8 rounded-[2rem]">
-                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">Powierzchnie łazienek (m²)</label>
+                  <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">{txt.premium.bathAreaLabel}</label>
                   <div className="space-y-3">
                     {premiumBathAreasRaw.map((val, idx) => (
                       <div key={idx} className="flex items-center gap-3">
                         <input
                           type="number"
-                          aria-label={`Powierzchnia łazienki ${idx+1} (m²)`}
+                          aria-label={txt.premium.bathAriaLabel(idx)}
                           value={val}
                           onChange={(e) => {
                             const next = [...premiumBathAreasRaw]
@@ -196,11 +192,11 @@ export function PremiumConfigurator() {
                           className="w-full text-2xl bg-transparent border-b border-[#E5DED4] pb-2 outline-none focus:border-[#8C7E6A] font-light"
                         />
                         {idx > 0 && (
-                          <button type="button" onClick={() => removeBath(idx)} aria-label={`Usuń łazienkę ${idx+1}`} className="text-red-500">−</button>
+                          <button type="button" onClick={() => removeBath(idx)} aria-label={txt.premium.removeBathAriaLabel(idx)} className="text-red-500">−</button>
                         )}
                       </div>
                     ))}
-                    <button type="button" onClick={addBath} className="mt-2 text-sm text-[#8C7E6A]">+ Add bathroom</button>
+                    <button type="button" onClick={addBath} className="mt-2 text-sm text-[#8C7E6A]">{txt.premium.addBath}</button>
                   </div>
                 </div>
               </div>
@@ -216,7 +212,7 @@ export function PremiumConfigurator() {
               disabled={premiumTotalM2 <= 0}
               className="w-full md:w-auto btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
             >
-              Kontynuuj
+              {txt.common.continue}
             </button>
           </div>
         </div>

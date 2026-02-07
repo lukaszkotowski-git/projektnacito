@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import { PRICING } from '../constants'
+import { t } from '../i18n'
 
 interface RoomCardProps {
   room: string
@@ -40,6 +41,7 @@ function RoomCard({ room, price, count, selected, onToggle, onCountChange }: Roo
 
 export function CitoConfigurator() {
   const navigate = useNavigate()
+  const txt = t()
   const {
     resetState,
     selectedRoomsCito, setSelectedRoomsCito,
@@ -112,27 +114,27 @@ export function CitoConfigurator() {
         <div className="flex items-center justify-between mb-8">
           <button onClick={goToMain} className="text-[10px] uppercase tracking-widest font-bold flex items-center hover:text-[#8C7E6A] transition">
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            Wróć do wyboru
+            {txt.common.backToSelection}
           </button>
         </div>
           <header className="mb-12">
-          <h2 className="text-4xl font-serif mb-2">Konfigurator Pakietu na Cito</h2>
-          <p className="text-gray-500">Zaznacz pomieszczenia, które wymagają projektu.</p>
+          <h2 className="text-4xl font-serif mb-2">{txt.cito.title}</h2>
+          <p className="text-gray-500">{txt.cito.subtitle}</p>
           <div className="mt-4 flex justify-end md:mt-0 md:fixed md:right-6 md:top-32 lg:right-8 lg:top-40 xl:right-12 xl:top-48 z-50 group">
             <button
               onClick={() => { setCurrentView('faq'); navigate('/faq#faq') }}
               className="inline-flex items-center gap-3 bg-[#8C7E6A] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#7A6C58] transition-shadow shadow-md"
-              aria-label="Masz pytanie? Przejdź do FAQ"
+              aria-label={txt.common.haveQuestion}
               aria-describedby="faq-cta-desc"
             >
-              <span className="text-sm font-semibold text-white animate-pulse">Masz pytanie?</span>
+              <span className="text-sm font-semibold text-white animate-pulse">{txt.common.haveQuestion}</span>
             </button>
             <div
               id="faq-cta-desc"
               role="tooltip"
               className="absolute right-0 top-full mt-2 w-48 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none"
             >
-              Przejdź do najczęściej zadawanych pytań (FAQ).
+              {txt.common.faqTooltip}
             </div>
           </div>
         </header>
@@ -163,12 +165,12 @@ export function CitoConfigurator() {
                     className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A] focus:ring-[#8C7E6A]"
                   />
                   <div className="flex-1">
-                    <label htmlFor="electric-project" className="font-semibold block">Projekt instalacji elektrycznej</label>
-                    <p className="text-sm text-gray-500 mb-4">Określa rozmieszczenie gniazdek, włączników, punktów świetlnych.</p>
+                    <label htmlFor="electric-project" className="font-semibold block">{txt.cito.electricProject}</label>
+                    <p className="text-sm text-gray-500 mb-4">{txt.cito.electricDesc}</p>
                     {electricProject && (
                       <div className="relative">
                         <div className="animate-in duration-300 visible">
-                          <label htmlFor="electric-m2-input" className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">POWIERZCHNIA PROJEKTU (M²)</label>
+                          <label htmlFor="electric-m2-input" className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">{txt.cito.electricAreaLabel}</label>
                           <input
                             id="electric-m2-input"
                             type="number"
@@ -179,17 +181,17 @@ export function CitoConfigurator() {
                               setElectricM2(localElectricM2 === '' ? 0 : parseFloat(localElectricM2))
                             }}
                             onKeyDown={(e) => { if (e.key === 'Enter') { (e.target as HTMLInputElement).blur() } }}
-                            placeholder="m²"
+                            placeholder={txt.common.perM2}
                             min="0"
                             step="0.1"
-                            aria-label="Powierzchnia projektu m2"
+                            aria-label={txt.cito.electricAreaLabel}
                             aria-describedby="electric-m2-help"
                             aria-invalid={electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0)}
                             className={`relative z-10 pointer-events-auto w-32 bg-[#FDFBF7] rounded-xl px-4 py-2 outline-none focus:border-[#8C7E6A] ${electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0) ? 'border border-red-500' : 'border border-[#E5DED4]'}`}
                           />
-                          <p id="electric-m2-help" className="text-xs text-gray-400 mt-2">Wprowadź powierzchnię w m²</p>
+                          <p id="electric-m2-help" className="text-xs text-gray-400 mt-2">{txt.cito.electricAreaHelp}</p>
                           {electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0) && touchedElectric && (
-                            <p className="text-xs text-red-500 mt-2">Wprowadź poprawną powierzchnię projektu (więcej niż 0 m²)</p>
+                            <p className="text-xs text-red-500 mt-2">{txt.cito.electricAreaError}</p>
                           )}
                         </div>
                       </div>
@@ -203,16 +205,16 @@ export function CitoConfigurator() {
                   <label className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#E5DED4]">
                     <input type="checkbox" checked={furnitureProject} onChange={(e) => setFurnitureProject(e.target.checked)} className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A]" />
                     <div>
-                      <div className="font-semibold">Projekt zabudowy meblowej</div>
-                      <div className="text-sm text-gray-500">Opcjonalny projekt mebli na wymiar.</div>
+                      <div className="font-semibold">{txt.cito.furnitureProject}</div>
+                      <div className="text-sm text-gray-500">{txt.cito.furnitureDesc}</div>
                     </div>
                   </label>
 
                   <label className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#E5DED4]">
                     <input type="checkbox" checked={plumbingProject} onChange={(e) => setPlumbingProject(e.target.checked)} className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A]" />
                     <div>
-                      <div className="font-semibold">Projekt instalacji wodno-kanalizacyjnych</div>
-                      <div className="text-sm text-gray-500">Opcjonalny projekt instalacji wodno-kanalizacyjnej.</div>
+                      <div className="font-semibold">{txt.cito.plumbingProject}</div>
+                      <div className="text-sm text-gray-500">{txt.cito.plumbingDesc}</div>
                     </div>
                   </label>
                 </div>
@@ -222,25 +224,22 @@ export function CitoConfigurator() {
             {/* Condensed side panel with package summary (visible on md+) */}
             <aside className="hidden md:block w-80 shrink-0 mt-0">
             <div className="p-6 rounded-2xl bg-white border border-[#E5DED4] shadow-sm">
-                <h3 className="text-lg font-semibold text-[#8C7E6A] mb-2">Pakiet Cito — w pigułce</h3>
-                <p className="mb-4 text-gray-700">W jego skład wchodzi wszystko, co niezbędne do zrealizowania projektu wnętrza:</p>
+                <h3 className="text-lg font-semibold text-[#8C7E6A] mb-2">{txt.cito.summaryTitle}</h3>
+                <p className="mb-4 text-gray-700">{txt.cito.summaryIntro}</p>
                 <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-sm mb-2">
-                  <li><b>Układ funkcjonalny</b><br/>Rzut z propozycją układu elementów we wnętrzu.</li>
-                  <li><b>Aranżacja</b><br/>Model 3D prezentujący proponowane rozwiązania estetyczne.</li>
-                  <li><b>Zestawienie materiałów i sprzętów</b><br/>Lista konkretnych materiałów z ich cenami i linkami do sklepów.</li>
-                  <li><b>Wizualizacje</b><br/>Fotorealistyczne przedstawienie wnętrza.</li>
-                  <li><b>Schemat meblowy</b><br/>Rzuty i przekroje mebli z ich podstawowymi wymiarami.</li>
-                  <li><b>Oferty od wykonawców</b><br/>Oferta od np. stolarza, budowlańca, instalatora klimatyzacji na zastosowane w projekcie rozwiązania.</li>
+                  {txt.cito.summaryItems.map((item, idx) => (
+                    <li key={idx}><b>{item.title}</b><br/>{item.desc}</li>
+                  ))}
                 </ol>
-                <p className="mt-2 text-gray-600 text-xs">Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu.</p>
+                <p className="mt-2 text-gray-600 text-xs">{txt.cito.summaryNote}</p>
               </div>
             </aside>
 
           </div>
             <div className="sticky bottom-6 bg-[#33302E] text-white p-8 rounded-[2rem] shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Szacunkowy koszt projektu</span>
-                <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> zł <span className="text-sm text-gray-400">netto</span></div>
+                <span className="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">{txt.cito.estimatedCost}</span>
+                <div className="text-3xl font-light"><span>{currentPrice.toLocaleString()}</span> {txt.common.currency} <span className="text-sm text-gray-400">{txt.common.net}</span></div>
               </div>
               <button 
                 onClick={goToFinalStep} 
@@ -249,7 +248,7 @@ export function CitoConfigurator() {
                 }
                 className="btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
               >
-                Kontynuuj
+                {txt.common.continue}
               </button>
             </div>
         </div>
