@@ -75,7 +75,7 @@ export function OfferOverview() {
               className="flex-1 min-w-[280px] bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group" style={{ animationDelay: '0.15s' }}
             >
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.consultTitle}</div>
-              <p className="mb-4 text-gray-700 whitespace-pre-line">{txt.offerOverview.consultIntro}</p>
+              {/* Consult intro removed on overview per request */}
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
                 {txt.offerOverview.consultItems.map((item, idx) => (
                   <li key={idx}><b>{item.title}</b><br/>{item.desc}</li>
