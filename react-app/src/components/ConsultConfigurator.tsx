@@ -25,6 +25,8 @@ export function ConsultConfigurator() {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [notes, setNotes] = useState('')
+  const [suggestedDate, setSuggestedDate] = useState('')
+  const [preferredTime, setPreferredTime] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: FormEvent) => {
@@ -39,6 +41,8 @@ export function ConsultConfigurator() {
       userPhone: phone,
       userEmail: email || undefined,
       notes: notes || undefined,
+      suggestedDate: suggestedDate || undefined,
+      preferredTime: preferredTime || undefined,
       rate: "250 zł / h"
     }
 
@@ -131,6 +135,34 @@ export function ConsultConfigurator() {
                 placeholder={txt.consult.notesPlaceholder}
                 className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A] h-28 resize-none"
               />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">{txt.consult.suggestedDateLabel}</label>
+                <input
+                  type="date"
+                  value={suggestedDate}
+                  onChange={(e) => setSuggestedDate(e.target.value)}
+                  min={new Date().toISOString().split('T')[0]}
+                  placeholder={txt.consult.suggestedDatePlaceholder}
+                  className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">{txt.consult.preferredTimeLabel}</label>
+                <select
+                  value={preferredTime}
+                  onChange={(e) => setPreferredTime(e.target.value)}
+                  className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A] bg-white"
+                >
+                  <option value="">{txt.consult.preferredTimePlaceholder}</option>
+                  <option value="morning">Rano</option>
+                  <option value="daytime">W ciągu dnia</option>
+                  <option value="evening">Wieczorem</option>
+                </select>
+              </div>
             </div>
             <button 
               type="submit" 

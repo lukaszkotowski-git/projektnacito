@@ -127,6 +127,10 @@ export const pl = {
     emailPlaceholder: 'np. imie@domena.pl',
     notesLabel: 'Dodatkowe informacje / notatka',
     notesPlaceholder: 'Opcjonalne informacje dla konsultanta...',
+    suggestedDateLabel: 'Sugerowana data kontaktu',
+    suggestedDatePlaceholder: 'Wybierz datę kontaktu',
+    preferredTimeLabel: 'Kiedy dzwonić',
+    preferredTimePlaceholder: 'Wybierz porę dnia',
     submitBtn: 'Poproś o termin',
   },
 
