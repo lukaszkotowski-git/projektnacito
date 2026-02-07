@@ -101,7 +101,6 @@ export const pl = {
     bathAriaLabel: (idx: number) => `Powierzchnia łazienki ${idx + 1} (m²)`,
     // Side panel
     summaryTitle: 'Pakiet Premium — w pigułce',
-    summaryIntro: 'Chcesz cieszyć się realizacją projektu Twojego wymarzonego wnętrza pod czujnym okiem inżyniera budowy i architekta wnętrz? Projekt rozszerzony jest dla Ciebie!\nW jego skład wchodzi:',
     summaryItems: [
       { title: 'Inwentaryzacja', desc: 'Pomiary całej projektowanej części.' },
       { title: 'Układ funkcjonalny', desc: 'Rzut z propozycją układu elementów we wnętrzu.' },
@@ -195,7 +194,7 @@ export const pl = {
     citoCta: 'Oblicz wycenę',
     // Premium package
     premiumTitle: 'Premium',
-    premiumIntro: 'Chcesz cieszyć się realizacją projektu Twojego wymarzonego wnętrza pod czujnym okiem inżyniera budowy i architekta wnętrz? Projekt rozszerzony jest dla Ciebie!\nW jego skład wchodzi:',
+    // premiumIntro removed per request
     premiumItems: [
       { title: 'Inwentaryzacja', desc: 'Pomiary całej projektowanej części.' },
       { title: 'Układ funkcjonalny', desc: 'Rzut z propozycją układu elementów we wnętrzu.' },

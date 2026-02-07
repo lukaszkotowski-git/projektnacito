@@ -125,23 +125,10 @@ export function PremiumConfigurator() {
           </div>
         </header>
         <div className="space-y-8">
-            <div className="md:flex md:items-start md:gap-8">
-            <div className="flex-1">
-              {/* Show aside content above inputs on all screen sizes when requested */}
-              <div className="mb-6">
-                <div className="p-6 rounded-2xl bg-white border border-[#E5DED4] shadow-sm">
-                  <h3 className="text-lg font-semibold text-[#8C7E6A] mb-2">{txt.premium.summaryTitle}</h3>
-                  <p className="mb-4 text-gray-700">{txt.premium.summaryIntro.split('\n').map((line, i) => <span key={i}>{line}<br/></span>)}</p>
-                  <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-sm mb-2">
-                    {txt.premium.summaryItems.map((item, idx) => (
-                      <li key={idx}><b>{item.title}</b><br/>{item.desc}</li>
-                    ))}
-                  </ol>
-
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 md:gap-8 items-start">
+            {/* Left column: stacked inputs */}
+            <div className="md:col-span-1">
+              <div className="flex flex-col gap-6">
                 <div className="card-choice p-8 rounded-[2rem]">
                   <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">{txt.premium.totalAreaLabel}</label>
                   <input
@@ -156,23 +143,24 @@ export function PremiumConfigurator() {
                     className={`w-full text-2xl bg-transparent border-b ${!totalProvided ? 'border-red-500' : 'border-[#E5DED4]'} pb-2 outline-none focus:border-[#8C7E6A] font-light`}
                   />
                 </div>
+
                 <div className="card-choice p-8 rounded-[2rem]">
                   <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">{txt.premium.kitchenAreaLabel}</label>
-                  <div className="space-y-3">
+                  <div className="flex flex-col space-y-3">
                     {premiumKitchenAreasRaw.map((val, idx) => (
                       <div key={idx} className="flex items-center gap-3">
-                  <input
-                    type="number"
-                    aria-label={txt.premium.kitchenAriaLabel(idx)}
-                    value={val}
-                    onChange={(e) => {
-                      const next = [...premiumKitchenAreasRaw]
-                      next[idx] = e.target.value
-                      setPremiumKitchenAreasRaw(next)
-                    }}
-                    placeholder="0"
-                    className={`w-full text-2xl bg-transparent border-b ${!hasKitchen ? 'border-red-500' : 'border-[#E5DED4]'} pb-2 outline-none focus:border-[#8C7E6A] font-light`}
-                  />
+                        <input
+                          type="number"
+                          aria-label={txt.premium.kitchenAriaLabel(idx)}
+                          value={val}
+                          onChange={(e) => {
+                            const next = [...premiumKitchenAreasRaw]
+                            next[idx] = e.target.value
+                            setPremiumKitchenAreasRaw(next)
+                          }}
+                          placeholder="0"
+                          className={`w-full text-2xl bg-transparent border-b ${!hasKitchen ? 'border-red-500' : 'border-[#E5DED4]'} pb-2 outline-none focus:border-[#8C7E6A] font-light`}
+                        />
                         {idx > 0 && (
                           <button type="button" onClick={() => removeKitchen(idx)} aria-label={txt.premium.removeKitchenAriaLabel(idx)} className="text-red-500">−</button>
                         )}
@@ -181,23 +169,24 @@ export function PremiumConfigurator() {
                     <button type="button" onClick={addKitchen} className="mt-2 text-sm text-[#8C7E6A]">{txt.premium.addKitchen}</button>
                   </div>
                 </div>
+
                 <div className="card-choice p-8 rounded-[2rem]">
                   <label className="text-[10px] uppercase tracking-widest text-[#8C7E6A] font-bold block mb-4">{txt.premium.bathAreaLabel}</label>
-                  <div className="space-y-3">
+                  <div className="flex flex-col space-y-3">
                     {premiumBathAreasRaw.map((val, idx) => (
                       <div key={idx} className="flex items-center gap-3">
-                          <input
-                            type="number"
-                            aria-label={txt.premium.bathAriaLabel(idx)}
-                            value={val}
-                            onChange={(e) => {
-                              const next = [...premiumBathAreasRaw]
-                              next[idx] = e.target.value
-                              setPremiumBathAreasRaw(next)
-                            }}
-                            placeholder="0"
-                            className={`w-full text-2xl bg-transparent border-b ${!hasBath ? 'border-red-500' : 'border-[#E5DED4]'} pb-2 outline-none focus:border-[#8C7E6A] font-light`}
-                          />
+                        <input
+                          type="number"
+                          aria-label={txt.premium.bathAriaLabel(idx)}
+                          value={val}
+                          onChange={(e) => {
+                            const next = [...premiumBathAreasRaw]
+                            next[idx] = e.target.value
+                            setPremiumBathAreasRaw(next)
+                          }}
+                          placeholder="0"
+                          className={`w-full text-2xl bg-transparent border-b ${!hasBath ? 'border-red-500' : 'border-[#E5DED4]'} pb-2 outline-none focus:border-[#8C7E6A] font-light`}
+                        />
                         {idx > 0 && (
                           <button type="button" onClick={() => removeBath(idx)} aria-label={txt.premium.removeBathAriaLabel(idx)} className="text-red-500">−</button>
                         )}
@@ -209,7 +198,17 @@ export function PremiumConfigurator() {
               </div>
             </div>
 
-            {/* Right aside removed — single shared panel is shown above inputs */}
+            {/* Right column: package summary */}
+            <aside className="md:col-span-2">
+              <div className="p-6 rounded-2xl bg-white border border-[#E5DED4] shadow-sm">
+                <h3 className="text-lg font-semibold text-[#8C7E6A] mb-2">{txt.premium.summaryTitle}</h3>
+                <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-sm mb-2">
+                  {txt.premium.summaryItems.map((item, idx) => (
+                    <li key={idx}><b>{item.title}</b><br/>{item.desc}</li>
+                  ))}
+                </ol>
+              </div>
+            </aside>
           </div>
 
           {/* Non-sticky continue button only (hide the black sticky panel) */}
