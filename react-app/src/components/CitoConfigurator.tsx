@@ -223,7 +223,7 @@ export function CitoConfigurator() {
             <aside className="hidden md:block w-80 shrink-0 mt-0">
             <div className="p-6 rounded-2xl bg-white border border-[#E5DED4] shadow-sm">
                 <h3 className="text-lg font-semibold text-[#8C7E6A] mb-2">Pakiet Cito — w pigułce</h3>
-                <p className="mb-4 text-gray-700">Każdy powinien móc mieszkać w pięknym, funkcjonalnym i dostosowanym do jego potrzeb wnętrzu, dlatego powstał Projekt na CITO.<br/>W jego skład wchodzi wszystko, co niezbędne do zrealizowania projektu wnętrza:</p>
+                <p className="mb-4 text-gray-700">W jego skład wchodzi wszystko, co niezbędne do zrealizowania projektu wnętrza:</p>
                 <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-sm mb-2">
                   <li><b>Układ funkcjonalny</b><br/>Rzut z propozycją układu elementów we wnętrzu.</li>
                   <li><b>Aranżacja</b><br/>Model 3D prezentujący proponowane rozwiązania estetyczne.</li>
@@ -232,8 +232,7 @@ export function CitoConfigurator() {
                   <li><b>Schemat meblowy</b><br/>Rzuty i przekroje mebli z ich podstawowymi wymiarami.</li>
                   <li><b>Oferty od wykonawców</b><br/>Oferta od np. stolarza, budowlańca, instalatora klimatyzacji na zastosowane w projekcie rozwiązania.</li>
                 </ol>
-                <p className="mt-2 text-gray-600 text-xs">Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu. Obmiar projektowanej przestrzeni wraz z przedstawieniem danych na rzucie.</p>
-                <div className="font-bold text-[#8C7E6A] text-sm mt-2">Koszt projektu to 500 zł za pomieszczenie o jednej funkcji.</div>
+                <p className="mt-2 text-gray-600 text-xs">Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu.</p>
               </div>
             </aside>
 
