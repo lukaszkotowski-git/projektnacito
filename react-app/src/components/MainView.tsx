@@ -22,7 +22,7 @@ export function MainView() {
             <div onClick={() => handleChoice('/offer/cito')} className="card-choice relative overflow-hidden p-10 rounded-[2.5rem] cursor-pointer text-left group">
               {/* Ribbon - smaller, anchored inside corner */}
               <div className="hidden md:block absolute top-3 right-3 pointer-events-none">
-                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 transform origin-top-right rotate-45 shadow-sm w-20 text-center leading-tight z-10">
+                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[11px] font-semibold uppercase tracking-widest py-1 px-3 rounded-md shadow-sm text-center leading-tight z-10">
                   {citoRibbonLines[0]}<br />{citoRibbonLines.slice(1).join(' ')}
                 </span>
               </div>
