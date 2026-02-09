@@ -59,3 +59,38 @@ Husky pre-push:
 Contact / next steps
 --------------------
 If you want a more detailed AGENTS.md (per-file responsibilities, run scripts, TODOs, or to open a PR with this file), tell me and I will prepare it.
+
+Recent changes (summary)
+------------------------
+- Feature branch: feat/remove-darkmode-email-phone
+- Husky branch: chore/husky-prepush
+
+Files touched (high level)
+- react-app/src/components/ui/EmailInput.tsx — new EmailInput component with real-time validation and aria attributes
+- react-app/src/components/ui/PhoneInput.tsx — phone formatting/validation; removed positive success highlight
+- react-app/src/components/FinalStep.tsx — replaced raw email input with EmailInput; wired validation into submit flow
+- react-app/src/components/ConsultConfigurator.tsx — replaced raw email input, adjusted date/time layout to share available width
+- react-app/src/components/ui/index.ts — exported EmailInput
+- react-app/src/components/Navigation.tsx — removed ThemeToggle and dark: classes
+- react-app/src/context/ThemeContext.tsx — removed (dark mode)
+
+How to open the PR
+------------------
+I prepared PR_BODY.md in the repo and a PR template. The feature branch is pushed to origin. Open the PR using the GitHub UI or run `gh pr create` locally. Git printed the URL when pushing:
+
+https://github.com/lukaszkotowski-git/projektnacito/pull/new/feat/remove-darkmode-email-phone
+
+Manual QA checklist (static checks run)
+-------------------------------------
+Automated/static checks performed:
+- Type-check (tsc --noEmit) — OK
+- Vite build — OK
+- Unit tests (PhoneInput/EmailInput) — OK
+- Code grep for aria-invalid and layout classes — found expected usages in EmailInput, PhoneInput, and ConsultConfigurator
+
+Manual interactive checks to run locally (recommended):
+1. cd react-app && npm install && npm run dev
+2. Test PhoneInput: invalid input shows red error and aria-invalid; valid input does not show green success highlight and onChange emits digits-only
+3. Test EmailInput: invalid email shows red error and aria-invalid; valid email shows no success message
+4. Test ConsultConfigurator: on wide view date and time are on same row and use full width; on mobile they stack
+5. Test Navigation: mobile menu works and no ThemeToggle present
