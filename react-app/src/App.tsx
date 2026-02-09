@@ -1,5 +1,6 @@
 import { Footer } from './components/Footer'
 import { AppProvider, useAppContext } from './context/AppContext'
+import { ThemeProvider } from './context/ThemeContext'
 import { NotificationProvider } from './components/notifications'
 import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigurator, ConsultConfigurator, FinalStep, ONas, Realizacje, Faq } from './components'
 import SubmissionSuccess from './components/SubmissionSuccess'
@@ -67,15 +68,17 @@ function RouteSync() {
 
 export default function App() {
   return (
-    <NotificationProvider>
-      <AppProvider>
-        <div className="min-h-screen flex flex-col">
-          <main className="flex-1">
-            <AppContent />
-          </main>
-          <Footer />
-        </div>
-      </AppProvider>
-    </NotificationProvider>
+    <ThemeProvider>
+      <NotificationProvider>
+        <AppProvider>
+          <div className="min-h-screen flex flex-col bg-[#FDFBF7] dark:bg-[#1a1a1a] transition-colors">
+            <main className="flex-1">
+              <AppContent />
+            </main>
+            <Footer />
+          </div>
+        </AppProvider>
+      </NotificationProvider>
+    </ThemeProvider>
   )
 }
