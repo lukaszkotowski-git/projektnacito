@@ -50,10 +50,10 @@ export function MainView() {
       {/* One-line info: hint on the left, CTA on the right */}
       <section className="px-6 mb-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-start gap-4 whitespace-nowrap">
+          <div className="flex items-center justify-start gap-4 flex-wrap md:whitespace-nowrap">
             <span className="text-xs text-gray-600 uppercase tracking-wide">{txt.main.checkPackagesBanner}</span>
-            <a href="/offer" aria-label="Przejdź do oferty" className="text-[#8C7E6A] font-semibold uppercase text-sm">{txt.nav.offer}</a>
-            <p className="text-sm text-gray-600 truncate max-w-[70%]">{packagesHint}</p>
+            <a href="/offer" aria-label="Przejdź do oferty" className="text-[#8C7E6A] font-semibold uppercase text-sm flex-shrink-0">{txt.nav.offer}</a>
+            <p className="text-sm text-gray-600 md:truncate md:max-w-[70%] max-w-full">{packagesHint}</p>
           </div>
         </div>
       </section>
