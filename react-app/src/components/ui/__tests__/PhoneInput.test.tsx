@@ -1,4 +1,4 @@
-import React from 'react'
+// React import not required in newer JSX runtimes; keep file strict for TS checks
 import { render, screen, fireEvent } from '@testing-library/react'
 import { PhoneInput } from '../PhoneInput'
 
