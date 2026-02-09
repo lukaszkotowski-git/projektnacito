@@ -26,7 +26,7 @@ export function ConsultConfigurator() {
   const [email, setEmail] = useState('')
   const [notes, setNotes] = useState('')
   const [suggestedDate, setSuggestedDate] = useState('')
-  const [preferredTime, setPreferredTime] = useState('')
+  const [suggestedHour, setSuggestedHour] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: FormEvent) => {
@@ -34,17 +34,17 @@ export function ConsultConfigurator() {
     setIsSubmitting(true)
 
     // For consult package email is optional — include if provided
-    const data = {
-      submissionId,
-      packageType: 'consult',
-      userName: name,
-      userPhone: phone,
-      userEmail: email || undefined,
-      notes: notes || undefined,
-      suggestedDate: suggestedDate || undefined,
-      preferredTime: preferredTime || undefined,
-      rate: "250 zł / h"
-    }
+      const data = {
+        submissionId,
+        packageType: 'consult',
+        userName: name,
+        userPhone: phone,
+        userEmail: email || undefined,
+        notes: notes || undefined,
+        suggestedDate: suggestedDate || undefined,
+        suggestedHour: suggestedHour || undefined,
+        rate: "250 zł / h"
+      }
 
     try {
       const response = await fetch(API_URL, {
@@ -140,30 +140,29 @@ export function ConsultConfigurator() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">{txt.consult.suggestedDateLabel}</label>
-                <input
-                  type="date"
-                  value={suggestedDate}
-                  onChange={(e) => setSuggestedDate(e.target.value)}
-                  min={new Date().toISOString().split('T')[0]}
-                  placeholder={txt.consult.suggestedDatePlaceholder}
-                  className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
-                />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                  <input
+                    type="date"
+                    value={suggestedDate}
+                    onChange={(e) => setSuggestedDate(e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
+                    placeholder={txt.consult.suggestedDatePlaceholder}
+                    className="w-full sm:w-1/2 border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A]"
+                  />
+
+                  <div className="w-full sm:w-1/2 mt-3 sm:mt-0">
+                    <label className="sr-only">{txt.consult.suggestedHourLabel}</label>
+                    <input
+                      type="time"
+                      value={suggestedHour}
+                      onChange={(e) => setSuggestedHour(e.target.value)}
+                      className="w-full border border-[#E5DED4] rounded-2xl px-6 py-3 outline-none focus:border-[#8C7E6A] bg-white"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">{txt.consult.preferredTimeLabel}</label>
-                <select
-                  value={preferredTime}
-                  onChange={(e) => setPreferredTime(e.target.value)}
-                  className="w-full border border-[#E5DED4] rounded-2xl px-6 py-4 outline-none focus:border-[#8C7E6A] bg-white appearance-none -webkit-appearance-none -moz-appearance:none pr-10" 
-                  style={{ backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 24 24'><path fill='%238C7E6A' d='M7 10l5 5 5-5z'/></svg>")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '12px 8px' }}
-                >
-                  <option value="">{txt.consult.preferredTimePlaceholder}</option>
-                  <option value="morning">Rano</option>
-                  <option value="daytime">W ciągu dnia</option>
-                  <option value="evening">Wieczorem</option>
-                </select>
-              </div>
+              {/* preferredTime removed per request */}
             </div>
             <button 
               type="submit" 

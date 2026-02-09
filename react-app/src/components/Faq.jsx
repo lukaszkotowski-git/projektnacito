@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const FAQ_DATA = [
   {
@@ -110,6 +110,11 @@ Dzięki temu dokładnie wiecie, co kupić, gdzie i w jakiej cenie.`
   {
     question: '21. Czy wystawiacie fakturę?',
     answer: `Tak — wystawiamy fakturę.`
+  }
+  ,
+  {
+    question: '22. Co powinien zawierać rysunek projektowanej przestrzeni?',
+    answer: `Rysunek powinien pokazywać wymiary ścian, wysokość pomieszczenia, wysokości nadproży, odległości do okien i drzwi, wysokości parapetów oraz podstawowe punkty instalacyjne, które nie ulegają zmianie. Powinien przypominać standardowy rzut deweloperski.`
   }
 ];
 

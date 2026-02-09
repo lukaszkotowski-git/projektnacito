@@ -129,8 +129,8 @@ export const pl = {
     notesPlaceholder: 'Opcjonalne informacje dla konsultanta...',
     suggestedDateLabel: 'Sugerowana data kontaktu',
     suggestedDatePlaceholder: 'Wybierz datę kontaktu',
-    preferredTimeLabel: 'Kiedy dzwonić',
-    preferredTimePlaceholder: 'Wybierz porę dnia',
+    suggestedHourLabel: 'Sugerowana godzina kontaktu',
+    suggestedHourPlaceholder: 'Wprowadź godzinę i minuty',
     submitBtn: 'Poproś o termin',
   },
 
@@ -180,7 +180,6 @@ export const pl = {
     packagesTitle: 'Pakiety',
     // Cito package
     citoTitle: 'Cito',
-    citoIntro: 'Każdy powinien móc mieszkać w pięknym, funkcjonalnym i dostosowanym do jego potrzeb wnętrzu, dlatego powstał Projekt na CITO.\nW jego skład wchodzi wszystko, co niezbędne do zrealizowania projektu wnętrza:',
     citoItems: [
       { title: 'Układ funkcjonalny', desc: 'Rzut z propozycją układu elementów we wnętrzu.' },
       { title: 'Aranżacja', desc: 'Model 3D prezentujący proponowane rozwiązania estetyczne.' },
@@ -231,7 +230,7 @@ export const pl = {
     contact: 'Kontakt',
     klaudia: 'Klaudia: 698 354 726',
     angelika: 'Angelika: 697 909 309',
-    project: 'Projekt i realizacja  ',
+    project: 'Projekt i realizacja www ',
     siteAuthor: ' @Łukasz Kotowski',
   },
 

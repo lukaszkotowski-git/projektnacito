@@ -40,7 +40,6 @@ export function OfferOverview() {
                 </span>
               </div>
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.citoTitle}</div>
-              <p className="mb-4 text-gray-700 whitespace-pre-line">{txt.offerOverview.citoIntro}</p>
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
                 {txt.offerOverview.citoItems.map((item, idx) => (
                   <li key={idx}><b>{item.title}</b><br/>{item.desc}</li>
