@@ -47,6 +47,15 @@ Pre-push linting policy
 - Recommended simple implementation: use Husky to add a pre-push hook that runs `cd react-app && npm run lint`.
 - If you prefer, I can add Husky and configure the hook for you — tell me and I'll add it on a branch and open a PR.
 
+Current status:
+- Feature branch `feat/remove-darkmode-email-phone` created and pushed to origin
+- Changes committed locally and pushed
+- A PR body file (PR_BODY.md) was prepared for easy copy/paste into GitHub
+
+Husky pre-push:
+- .husky/pre-push already exists and runs `cd react-app && npm run lint` to enforce type-check before pushes
+- Husky is added to devDependencies in react-app/package.json but local `npx husky install` may be required for contributors to enable hooks on their machines
+
 Contact / next steps
 --------------------
 If you want a more detailed AGENTS.md (per-file responsibilities, run scripts, TODOs, or to open a PR with this file), tell me and I will prepare it.

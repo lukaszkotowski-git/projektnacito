@@ -44,13 +44,13 @@ export function OrderSummaryModal({
       />
 
       <div 
-        className="relative bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-lg animate-slideUp overflow-hidden"
+        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg animate-slideUp overflow-hidden"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
       >
         <div className="px-8 pt-8 pb-4">
-          <h3 id="modal-title" className="text-2xl font-serif text-center text-gray-900 dark:text-white">
+          <h3 id="modal-title" className="text-2xl font-serif text-center text-gray-900">
             {title}
           </h3>
         </div>
@@ -63,7 +63,7 @@ export function OrderSummaryModal({
                 className={`flex justify-between items-center py-2 ${
                   item.highlight
                     ? 'text-[#8C7E6A] font-semibold'
-                    : 'text-gray-600 dark:text-gray-400'
+                    : 'text-gray-600'
                 }`}
               >
                 <span className="text-sm">{item.label}</span>
@@ -72,10 +72,10 @@ export function OrderSummaryModal({
             ))}
           </div>
 
-          <div className="my-4 border-t border-gray-200 dark:border-gray-700" />
+          <div className="my-4 border-t border-gray-200" />
 
           <div className="flex justify-between items-center py-2">
-            <span className="text-lg font-semibold text-gray-900 dark:text-white">
+            <span className="text-lg font-semibold text-gray-900">
               {totalLabel}
             </span>
             <span className="text-xl font-bold text-[#8C7E6A]">{totalValue}</span>
@@ -84,12 +84,12 @@ export function OrderSummaryModal({
           {children}
         </div>
 
-        <div className="px-8 py-6 bg-gray-50 dark:bg-gray-800/50 flex gap-4">
+        <div className="px-8 py-6 bg-gray-50 flex gap-4">
           <button
             type="button"
             onClick={onClose}
             disabled={isLoading}
-            className="flex-1 py-4 px-6 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold uppercase tracking-wider text-xs hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors disabled:opacity-50"
+            className="flex-1 py-4 px-6 rounded-full border border-gray-300 text-gray-700 font-semibold uppercase tracking-wider text-xs hover:bg-gray-100 transition-colors disabled:opacity-50"
           >
             {cancelLabel}
           </button>
@@ -97,7 +97,7 @@ export function OrderSummaryModal({
             type="button"
             onClick={onConfirm}
             disabled={isLoading}
-            className="flex-1 py-4 px-6 rounded-full bg-[#33302E] dark:bg-[#8C7E6A] text-white font-semibold uppercase tracking-wider text-xs hover:bg-black dark:hover:bg-[#7a6d5c] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+            className="flex-1 py-4 px-6 rounded-full bg-[#33302E] text-white font-semibold uppercase tracking-wider text-xs hover:bg-black transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {isLoading && (
               <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">

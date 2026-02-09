@@ -5,7 +5,6 @@ interface PhoneInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'o
   onChange: (value: string, isValid: boolean) => void
   label?: string
   errorMessage?: string
-  successMessage?: string
 }
 
 const POLISH_PHONE_LENGTH = 9
@@ -16,7 +15,6 @@ export function PhoneInput({
   onChange,
   label,
   errorMessage = 'Nieprawidłowy numer telefonu',
-  successMessage = 'Numer telefonu poprawny',
   className = '',
   ...props
 }: PhoneInputProps) {
@@ -72,17 +70,16 @@ export function PhoneInput({
   }, [value, displayValue])
 
   const showError = isTouched && displayValue.length > 0 && !isValid
-  const showSuccess = isTouched && isValid
 
   return (
     <div className="space-y-2">
       {label && (
-        <label className="text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-500 font-bold ml-1">
+        <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold ml-1">
           {label}
         </label>
       )}
       <div className="relative">
-        <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 font-medium">
+        <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-medium">
           +48
         </div>
         <input
@@ -92,25 +89,16 @@ export function PhoneInput({
           onChange={handleChange}
           onBlur={handleBlur}
           aria-invalid={showError}
-          aria-describedby={showError ? 'phone-error' : showSuccess ? 'phone-success' : undefined}
+          aria-describedby={showError ? 'phone-error' : undefined}
           className={`w-full border rounded-2xl pl-14 pr-12 py-4 outline-none transition-colors ${
-            showError
-              ? 'border-red-500 focus:border-red-500 bg-red-50 dark:bg-red-900/10'
-              : showSuccess
-              ? 'border-green-500 focus:border-green-500 bg-green-50 dark:bg-green-900/10'
-              : 'border-[#E5DED4] dark:border-gray-700 focus:border-[#8C7E6A] bg-white dark:bg-gray-800'
-          } dark:text-white ${className}`}
+            showError ? 'border-red-500 focus:border-red-500 bg-red-50' : 'border-[#E5DED4] focus:border-[#8C7E6A] bg-white'
+          } ${className}`}
           {...props}
         />
         <div className="absolute right-4 top-1/2 -translate-y-1/2">
           {showError && (
             <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          )}
-          {showSuccess && (
-            <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           )}
         </div>
@@ -123,14 +111,7 @@ export function PhoneInput({
           {errorMessage}
         </p>
       )}
-      {showSuccess && (
-        <p id="phone-success" className="text-xs text-green-600 dark:text-green-400 ml-1 flex items-center gap-1">
-          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-          {successMessage}
-        </p>
-      )}
+      
     </div>
   )
 }
