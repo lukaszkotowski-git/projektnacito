@@ -6,12 +6,12 @@ export function ONas(): JSX.Element {
   const txt = t()
 
   return (
-    <main className="pt-32 pb-24 dark:bg-gray-900 min-h-screen">
+    <main className="pt-32 pb-24 min-h-screen">
       <section className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="order-2 md:order-1">
             <h1 className="text-4xl md:text-5xl font-serif mb-4 text-[#8C7E6A]">{txt.about.title}</h1>
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{txt.about.description}</p>
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">{txt.about.description}</p>
           </div>
 
           <div className="order-1 md:order-2 flex justify-center md:justify-end">

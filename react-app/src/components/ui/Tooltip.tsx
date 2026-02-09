@@ -35,7 +35,7 @@ export function Tooltip({ children, content, position = 'top' }: TooltipProps) {
       {isVisible && (
         <div
           role="tooltip"
-          className={`absolute z-50 px-3 py-2 text-xs text-white bg-gray-800 dark:bg-gray-700 rounded-lg shadow-lg whitespace-nowrap animate-fadeIn ${positionClasses[position]}`}
+          className={`absolute z-50 px-3 py-2 text-xs text-white bg-gray-800 rounded-lg shadow-lg whitespace-nowrap animate-fadeIn ${positionClasses[position]}`}
         >
           {content}
           <div className={`absolute w-0 h-0 border-4 ${arrowClasses[position]}`} />
@@ -48,7 +48,7 @@ export function Tooltip({ children, content, position = 'top' }: TooltipProps) {
 export function InfoIcon({ className = '' }: { className?: string }) {
   return (
     <svg
-      className={`w-4 h-4 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 cursor-help transition-colors ${className}`}
+      className={`w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help transition-colors ${className}`}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
