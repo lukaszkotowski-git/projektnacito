@@ -34,11 +34,11 @@ export function OfferOverview() {
               className="flex-1 min-w-[280px] relative bg-white/95 rounded-2xl shadow-xl p-8 animate-slideIn cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group overflow-hidden"
             >
               {/* Ribbon - smaller and inside corner */}
-              <div className="hidden md:block absolute top-3 right-3 pointer-events-none">
-                <span aria-hidden className="block bg-[#8C7E6A] text-white text-[11px] font-semibold uppercase tracking-widest py-1 px-3 rounded-md shadow-sm text-center leading-tight z-10">
-                  {citoRibbonLines[0]}<br />{citoRibbonLines.slice(1).join(' ')}
-                </span>
-              </div>
+                <div className="hidden md:block absolute top-3 right-3 pointer-events-none">
+                 <span aria-hidden className="block bg-[#8C7E6A] text-white text-[10px] font-semibold uppercase tracking-widest py-1 px-3 rounded-md shadow-sm text-center leading-tight z-10">
+                   {citoRibbonLines[0]}<br />{citoRibbonLines.slice(1).join(' ')}
+                 </span>
+               </div>
               <div className="text-xl font-bold text-[#8C7E6A] mb-3">{txt.offerOverview.citoTitle}</div>
               <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-base mb-2">
                 {txt.offerOverview.citoItems.map((item, idx) => (
@@ -47,9 +47,10 @@ export function OfferOverview() {
               </ol>
               <p className="mt-2 text-gray-600 text-sm">{txt.offerOverview.citoNote}</p>
               <div className="font-bold text-[#8C7E6A] text-lg mt-2">{txt.offerOverview.citoCost}</div>
-              <span className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
-                {txt.offerOverview.citoCta} <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </span>
+               <div className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
+                 <span className="inline-block mr-2">{txt.offerOverview.citoCta}</span>
+                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+               </div>
             </div>
 
             <div 
@@ -64,9 +65,10 @@ export function OfferOverview() {
                 ))}
               </ol>
               {/* Premium cost intentionally hidden on overview page */}
-              <span className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
-                {txt.offerOverview.premiumCta} <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </span>
+              <div className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
+                 <span className="inline-block mr-2">{txt.offerOverview.premiumCta}</span>
+                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+               </div>
             </div>
 
             <div 
@@ -81,9 +83,10 @@ export function OfferOverview() {
                 ))}
               </ol>
               <div className="font-bold text-[#8C7E6A] text-lg mt-2">{txt.offerOverview.consultCost}</div>
-              <span className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
-                {txt.offerOverview.consultCta} <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </span>
+              <div className="mt-4 text-[10px] font-bold uppercase tracking-widest flex items-center text-[#8C7E6A]">
+                 <span className="inline-block mr-2">{txt.offerOverview.consultCta}</span>
+                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+               </div>
             </div>
           </div>
         </div>

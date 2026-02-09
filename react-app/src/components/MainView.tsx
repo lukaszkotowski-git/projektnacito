@@ -18,8 +18,9 @@ export function MainView() {
         <h1 className="text-5xl md:text-7xl font-serif mb-8 fade-in visible">
           {txt.main.headline} <br /><span className="italic text-[#8C7E6A]">{txt.main.headlineAccent}</span>
         </h1>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             <div onClick={() => handleChoice('/offer/cito')} className="card-choice relative overflow-hidden p-10 rounded-[2.5rem] cursor-pointer text-left group">
+              <div className="text-[9px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-4">{txt.main.citoTag}</div>
               <h3 className="text-3xl font-serif mb-4">{txt.main.citoTitle}</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-8">{txt.main.citoDesc}</p>
             <span className="text-[10px] font-bold uppercase tracking-widest flex items-center">
@@ -27,8 +28,8 @@ export function MainView() {
             </span>
           </div>
 
-          <div onClick={() => handleChoice('/offer/premium')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-6">{txt.main.premiumTag}</div>
+            <div onClick={() => handleChoice('/offer/premium')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
+            <div className="text-[9px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-4">{txt.main.premiumTag}</div>
             <h3 className="text-3xl font-serif mb-4">{txt.main.premiumTitle}</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-8">{txt.main.premiumDesc}</p>
             <span className="text-[10px] font-bold uppercase tracking-widest flex items-center">
@@ -36,8 +37,8 @@ export function MainView() {
             </span>
           </div>
 
-          <div onClick={() => handleChoice('/offer/consult')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-6">{txt.main.consultTag}</div>
+            <div onClick={() => handleChoice('/offer/consult')} className="card-choice p-10 rounded-[2.5rem] cursor-pointer text-left group">
+            <div className="text-[9px] font-bold uppercase tracking-widest text-[#8C7E6A] mb-4">{txt.main.consultTag}</div>
             <h3 className="text-3xl font-serif mb-4">{txt.main.consultTitle}</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-8">{txt.main.consultDesc}</p>
             <span className="text-[10px] font-bold uppercase tracking-widest flex items-center">
