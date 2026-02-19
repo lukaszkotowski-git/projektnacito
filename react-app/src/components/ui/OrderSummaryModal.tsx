@@ -56,25 +56,23 @@ export function OrderSummaryModal({
         </div>
 
           <div className="px-8 py-4">
-          <div className="space-y-3">
-            {items.map((item, index) => (
-              <div
-                key={index}
-                className={`flex justify-between items-center py-2 ${
-                  item.highlight
-                    ? 'text-[#8C7E6A] font-semibold'
-                    : 'text-gray-600'
-                }`}
-              >
-                <span className="text-sm">{item.label}</span>
-                <span className="text-sm font-medium">{item.value}</span>
-              </div>
-            ))}
-          </div>
+            <div className="space-y-3">
+              {items.map((item, index) => (
+                <div
+                  key={index}
+                  className={`flex justify-between items-center py-2 ${
+                    item.highlight
+                      ? 'text-[#8C7E6A] font-semibold'
+                      : 'text-gray-600'
+                  }`}
+                >
+                  <span className="text-sm">{item.label}</span>
+                  <span className="text-sm font-medium">{item.value}</span>
+                </div>
+              ))}
+            </div>
 
-          {children}
-
-          <div className="my-4 border-t border-gray-200" />
+            <div className="my-4 border-t border-gray-200" />
 
           <div className="flex justify-between items-center py-2">
             <span className="text-lg font-semibold text-gray-900">

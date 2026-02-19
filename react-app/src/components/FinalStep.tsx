@@ -283,25 +283,22 @@ export function FinalStep() {
         cancelLabel="Wróć do edycji"
         isLoading={isSubmitting}
         >
-        <div className="mt-4 space-y-3">
-          {productLines.length === 0 && (
+        <div className="mt-4">
+          {productLines.length === 0 ? (
             <div className="text-sm text-gray-600">Brak wybranych produktów</div>
-          )}
-
-          {productLines.map((p, idx) => (
-            <div key={idx} className="flex justify-between items-center">
-              <div className="flex flex-col text-left">
-                <span className="text-sm font-semibold">{p.name}</span>
-                <span className="text-xs text-gray-500">{typeof p.qty === 'number' ? `${p.qty} ${p.unit ?? ''}` : p.qty}</span>
-              </div>
-              <div className="text-right">
-                {p.unitPrice ? (
-                  <div className="text-sm">{p.unitPrice.toLocaleString()} zł / {p.unit ?? ''}</div>
-                ) : null}
-                <div className="text-sm font-semibold">{p.subtotal.toLocaleString()} zł</div>
-              </div>
+          ) : (
+            <div className="space-y-2">
+              {productLines.map((p, idx) => (
+                <div key={idx} className="flex justify-between items-center py-2">
+                  <div className="text-sm">
+                    <div className="font-semibold">{p.name}</div>
+                    <div className="text-xs text-gray-400">{typeof p.qty === 'number' ? `${p.qty} ${p.unit ?? ''}` : p.qty}</div>
+                  </div>
+                  <div className="text-sm font-semibold">{p.subtotal.toLocaleString()} zł</div>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       </OrderSummaryModal>
     </main>
