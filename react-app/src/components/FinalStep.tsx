@@ -287,14 +287,19 @@ export function FinalStep() {
           {productLines.length === 0 ? (
             <div className="text-sm text-gray-600">Brak wybranych produktów</div>
           ) : (
-            <ul className="space-y-1 text-sm">
-              {productLines.map((p, idx) => (
-                <li key={idx} className="flex justify-between items-center py-0.5">
-                  <span className="font-medium">{p.name}</span>
-                  <span className="text-xs text-gray-400">{typeof p.qty === 'number' ? `${p.qty} ${p.unit ?? ''}` : p.qty}</span>
-                </li>
-              ))}
-            </ul>
+            (() => {
+              const twoColumn = productLines.length >= 8
+              return (
+                <ul className={`${twoColumn ? 'grid grid-cols-2 gap-x-4 gap-y-1' : 'space-y-1'} text-sm`}>
+                  {productLines.map((p, idx) => (
+                    <li key={idx} className="flex justify-between items-center py-0.5">
+                      <span className="font-medium truncate">{p.name}</span>
+                      <span className="text-xs text-gray-400 ml-2">{typeof p.qty === 'number' ? `${p.qty} ${p.unit ?? ''}` : p.qty}</span>
+                    </li>
+                  ))}
+                </ul>
+              )
+            })()
           )}
         </div>
       </OrderSummaryModal>
