@@ -36,7 +36,7 @@ export function OrderSummaryModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fadeIn"
         onClick={onClose}
@@ -44,7 +44,7 @@ export function OrderSummaryModal({
       />
 
       <div
-        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg animate-slideUp overflow-hidden flex flex-col max-h-[calc(100vh-4rem)]"
+        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl md:max-w-5xl lg:max-w-6xl animate-slideUp overflow-hidden flex flex-col max-h-[calc(100vh-4rem)]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
