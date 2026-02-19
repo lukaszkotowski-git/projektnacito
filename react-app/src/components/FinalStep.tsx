@@ -1,7 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
-import { API_URL } from '../constants'
+import { API_URL, PRICING } from '../constants'
 import { useNotification } from './notifications'
 import { t } from '../i18n'
 import { ProgressBar, PhoneInput, OrderSummaryModal, EmailInput } from './ui'
@@ -137,6 +137,62 @@ export function FinalStep() {
     { label: 'Załącznik', value: file?.name || '-' },
   ]
 
+  const productLines = (() => {
+    const lines: { name: string; qty: number | string; unitPrice?: number; subtotal: number; unit?: string }[] = []
+
+    if (currentPackage === 'cito') {
+      const details = getCitoDetails()
+      const rooms = details.rooms || {}
+      Object.keys(rooms).forEach(room => {
+        const qty = rooms[room] || 0
+        const unitPrice = PRICING.cito[room] ?? 0
+        lines.push({ name: room, qty, unitPrice, subtotal: qty * unitPrice, unit: 'szt.' })
+      })
+
+      if (details.electricProject) {
+        const m2 = details.electricM2 || 0
+        const unitPrice = PRICING.electricPerM2
+        lines.push({ name: 'Projekt elektryczny', qty: m2, unitPrice, subtotal: m2 * unitPrice, unit: 'm2' })
+      }
+
+      if (details.furnitureProject) {
+        lines.push({ name: 'Projekt mebli', qty: 1, subtotal: 0 })
+      }
+
+      if (details.plumbingProject) {
+        lines.push({ name: 'Projekt instalacji wod.-kan.', qty: 1, subtotal: 0 })
+      }
+    }
+
+    if (currentPackage === 'premium') {
+      const details = getPremiumDetails()
+      const totalM2 = details.totalM2 || 0
+      const kitchenAreas = details.kitchenAreas || []
+      const bathAreas = details.bathAreas || []
+      const sumKitchenAreas = kitchenAreas.reduce((s, x) => s + (x || 0), 0)
+      const sumBathAreas = bathAreas.reduce((s, x) => s + (x || 0), 0)
+      const netArea = Math.max(0, totalM2 - sumKitchenAreas - sumBathAreas)
+
+      const basePerM2 = PRICING.premium.basePerM2
+      if (netArea > 0) {
+        lines.push({ name: 'Powierzchnia bazowa', qty: netArea, unitPrice: basePerM2, subtotal: netArea * basePerM2, unit: 'm2' })
+      }
+
+      const kitchenCount = details.kitchenCount ?? kitchenAreas.length
+      const bathCount = details.bathCount ?? bathAreas.length
+      if (kitchenCount > 0) {
+        const unitPrice = PRICING.premium.kitchenFlat
+        lines.push({ name: 'Kuchnie', qty: kitchenCount, unitPrice, subtotal: kitchenCount * unitPrice, unit: 'szt.' })
+      }
+      if (bathCount > 0) {
+        const unitPrice = PRICING.premium.bathFlat
+        lines.push({ name: 'Łazienki', qty: bathCount, unitPrice, subtotal: bathCount * unitPrice, unit: 'szt.' })
+      }
+    }
+
+    return lines
+  })()
+
   return (
     <main className="pt-32 pb-24 px-6 min-h-screen">
       <div className="max-w-4xl mx-auto">
@@ -224,6 +280,29 @@ export function FinalStep() {
         confirmLabel={isSubmitting ? txt.common.sending : 'Potwierdź i wyślij'}
         cancelLabel="Wróć do edycji"
         isLoading={isSubmitting}
+        >
+        {/* Product list */}
+        <div className="mt-4 space-y-3">
+          {productLines.length === 0 && (
+            <div className="text-sm text-gray-600">Brak wybranych produktów</div>
+          )}
+
+          {productLines.map((p, idx) => (
+            <div key={idx} className="flex justify-between items-center">
+              <div className="flex flex-col text-left">
+                <span className="text-sm font-semibold">{p.name}</span>
+                <span className="text-xs text-gray-500">{typeof p.qty === 'number' ? `${p.qty} ${p.unit ?? ''}` : p.qty}</span>
+              </div>
+              <div className="text-right">
+                {p.unitPrice ? (
+                  <div className="text-sm">{p.unitPrice.toLocaleString()} zł / {p.unit ?? ''}</div>
+                ) : null}
+                <div className="text-sm font-semibold">{p.subtotal.toLocaleString()} zł</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </OrderSummaryModal>
       />
     </main>
   )

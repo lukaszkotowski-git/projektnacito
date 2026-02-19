@@ -55,7 +55,7 @@ export function OrderSummaryModal({
           </h3>
         </div>
 
-        <div className="px-8 py-4">
+          <div className="px-8 py-4">
           <div className="space-y-3">
             {items.map((item, index) => (
               <div
@@ -71,6 +71,8 @@ export function OrderSummaryModal({
               </div>
             ))}
           </div>
+
+          {children}
 
           <div className="my-4 border-t border-gray-200" />
 
