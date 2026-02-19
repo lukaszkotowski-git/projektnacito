@@ -138,7 +138,8 @@ export function FinalStep() {
   ]
 
   const productLines = (() => {
-    const lines: { name: string; qty: number | string; unitPrice?: number; subtotal: number; unit?: string }[] = []
+    type Line = { name: string; qty: number | string; unitPrice?: number; subtotal: number; unit?: string; selected: boolean }
+    const lines: Line[] = []
 
     if (currentPackage === 'cito') {
       const details = getCitoDetails()
@@ -146,21 +147,22 @@ export function FinalStep() {
       Object.keys(rooms).forEach(room => {
         const qty = rooms[room] || 0
         const unitPrice = PRICING.cito[room] ?? 0
-        lines.push({ name: room, qty, unitPrice, subtotal: qty * unitPrice, unit: 'szt.' })
+        const subtotal = qty * unitPrice
+        lines.push({ name: room, qty, unitPrice, subtotal, unit: 'szt.', selected: qty > 0 })
       })
 
-      if (details.electricProject) {
-        const m2 = details.electricM2 || 0
+      const m2 = details.electricProject ? (details.electricM2 || 0) : 0
+      if (details.electricProject && m2 > 0) {
         const unitPrice = PRICING.electricPerM2
-        lines.push({ name: 'Projekt elektryczny', qty: m2, unitPrice, subtotal: m2 * unitPrice, unit: 'm2' })
+        lines.push({ name: 'Projekt elektryczny', qty: m2, unitPrice, subtotal: m2 * unitPrice, unit: 'm2', selected: true })
       }
 
       if (details.furnitureProject) {
-        lines.push({ name: 'Projekt mebli', qty: 1, subtotal: 0 })
+        lines.push({ name: 'Projekt mebli', qty: 1, subtotal: 0, selected: true })
       }
 
       if (details.plumbingProject) {
-        lines.push({ name: 'Projekt instalacji wod.-kan.', qty: 1, subtotal: 0 })
+        lines.push({ name: 'Projekt instalacji wod.-kan.', qty: 1, subtotal: 0, selected: true })
       }
     }
 
@@ -175,22 +177,22 @@ export function FinalStep() {
 
       const basePerM2 = PRICING.premium.basePerM2
       if (netArea > 0) {
-        lines.push({ name: 'Powierzchnia bazowa', qty: netArea, unitPrice: basePerM2, subtotal: netArea * basePerM2, unit: 'm2' })
+        lines.push({ name: 'Powierzchnia bazowa', qty: netArea, unitPrice: basePerM2, subtotal: netArea * basePerM2, unit: 'm2', selected: true })
       }
 
       const kitchenCount = details.kitchenCount ?? kitchenAreas.length
       const bathCount = details.bathCount ?? bathAreas.length
       if (kitchenCount > 0) {
         const unitPrice = PRICING.premium.kitchenFlat
-        lines.push({ name: 'Kuchnie', qty: kitchenCount, unitPrice, subtotal: kitchenCount * unitPrice, unit: 'szt.' })
+        lines.push({ name: 'Kuchnie', qty: kitchenCount, unitPrice, subtotal: kitchenCount * unitPrice, unit: 'szt.', selected: true })
       }
       if (bathCount > 0) {
         const unitPrice = PRICING.premium.bathFlat
-        lines.push({ name: 'Łazienki', qty: bathCount, unitPrice, subtotal: bathCount * unitPrice, unit: 'szt.' })
+        lines.push({ name: 'Łazienki', qty: bathCount, unitPrice, subtotal: bathCount * unitPrice, unit: 'szt.', selected: true })
       }
     }
 
-    return lines
+    return lines.filter(l => l.selected)
   })()
 
   return (
