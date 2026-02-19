@@ -281,7 +281,6 @@ export function FinalStep() {
         cancelLabel="Wróć do edycji"
         isLoading={isSubmitting}
         >
-        {/* Product list */}
         <div className="mt-4 space-y-3">
           {productLines.length === 0 && (
             <div className="text-sm text-gray-600">Brak wybranych produktów</div>
@@ -303,7 +302,6 @@ export function FinalStep() {
           ))}
         </div>
       </OrderSummaryModal>
-      />
     </main>
   )
 }
