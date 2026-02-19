@@ -287,16 +287,14 @@ export function FinalStep() {
           {productLines.length === 0 ? (
             <div className="text-sm text-gray-600">Brak wybranych produktów</div>
           ) : (
-            <div className="grid gap-1">
+            <ul className="space-y-1 text-sm">
               {productLines.map((p, idx) => (
-                <div key={idx} className="flex justify-between items-center py-1">
-                  <div className="text-sm">
-                    <div className="font-semibold">{p.name} <span className="text-xs text-gray-400">· {typeof p.qty === 'number' ? `${p.qty} ${p.unit ?? ''}` : p.qty}</span></div>
-                  </div>
-                  <div className="text-sm font-semibold">{p.subtotal.toLocaleString()} zł</div>
-                </div>
+                <li key={idx} className="flex justify-between items-center py-0.5">
+                  <span className="font-medium">{p.name}</span>
+                  <span className="text-xs text-gray-400">{typeof p.qty === 'number' ? `${p.qty} ${p.unit ?? ''}` : p.qty}</span>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </div>
       </OrderSummaryModal>
