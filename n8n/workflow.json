@@ -11,8 +11,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        3824,
-        1272
+        3840,
+        1280
       ]
     },
     {
@@ -26,8 +26,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1,
       "position": [
-        3600,
-        1280
+        3616,
+        1296
       ],
       "webhookId": "0d133324-5240-4d05-bd6d-64dd75be4f43",
       "credentials": {
@@ -40,7 +40,7 @@
     {
       "parameters": {
         "sendTo": "={{ $('Webhook').item.json.body.data.userEmail }}",
-        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Projekt na Cito - Wstępna umowa",
+        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Projekt na Cito",
         "message": "=<p>Dzień dobry {{ $('Webhook').item.json.body.data.userName }},</p>\n\n<p>Dziękujemy za zaufanie i cieszymy się na współpracę przy projektowaniu Państwa wnętrza.\n</p>\n\n<p>W najbliższych dniach skontaktujemy się z Państwem telefonicznie  i prześlemy umowę, która zawierać będzie kwoty brutto i szczegółowo opisane warunki współpracy.</p>\n\n<p>Po zaakceptowaniu będziemy prosić o jej podpisanie i odesłanie.</p>\n\n<p>Potwierdzamy, że wartość projektu w ustalonym zakresie wynosi <strong>{{ $('Webhook').item.json.body.data.estimatedPrice }} zł netto</strong>.</p>\n\n<p>Jeżeli w dokumencie zaznaczyli Państwo dodatkową opcję obejmującą opracowanie projektu zabudowy meblowej i/ lub instalacji wodno-kanalizacyjnej zaktualizujemy końcową wycenę projektu po ustaleniu zakresu.\n</p>\n\n<p>Pozostajemy do Państwa dyspozycji – w razie pytań lub wątpliwości prosimy o kontakt telefoniczny.</p>\n\n<p>Pozdrawiamy serdecznie,<br>Zespół Projekt na CITO</p>\n\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: Arial, sans-serif; font-size: 13px; color: #000000;\">\n  <tr>\n    <td style=\"padding-right: 20px; vertical-align: middle; border-right: 2px solid #000000;\">\n      <!-- Logo CITO -->\n      <img src=\"https://projektnacito.com.pl/logo/logo.png\" alt=\"Projekt na CITO\" width=\"180\" style=\"display: block;\" />\n    </td>\n    <td style=\"padding-left: 20px; vertical-align: top;\">\n      <!-- Nazwa firmy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 20px; font-weight: 700; color: #000000; line-height: 1.2;\">Projekt na CITO</p>\n      <p style=\"margin: 0 0 6px 0; font-size: 12px; font-weight: 400; color: #000000; line-height: 1.2;\">Studio projektowania wnętrz</p>\n\n      <!-- Social media -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-bottom: 3px; vertical-align: middle;\">\n            <a href=\"https://www.instagram.com/projektna_cito/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios/50/000000/instagram-new.png\" alt=\"Instagram\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">projektna_cito</span>\n            </a>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"vertical-align: middle;\">\n            <a href=\"https://www.facebook.com/people/Projekt-na-CITO/61552032200917/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios-filled/50/000000/facebook-new.png\" alt=\"Facebook\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">Projekt na CITO</span>\n            </a>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Kontakty -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-right: 20px; vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Angelika Kłos</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 697 909 309</p>\n          </td>\n          <td style=\"vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Klaudia Kołakowska</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 698 354 726</p>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Godziny pracy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 11px; color: #555555; line-height: 1.2;\">godziny pracy</p>\n      <p style=\"margin: 0; font-size: 11px; color: #555555; line-height: 1.2;\">pon–pt 10:00–18:00</p>\n    </td>\n  </tr>\n</table>\n",
         "options": {
           "appendAttribution": false,
@@ -52,8 +52,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        3376,
-        1200
+        3392,
+        1216
       ],
       "webhookId": "251c4e6f-b05b-46a0-a512-165fe04f99bb",
       "credentials": {
@@ -78,8 +78,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        2928,
-        1272
+        2944,
+        1280
       ],
       "webhookId": "e8ec8260-a220-4d12-a4fe-156f64556fe7",
       "credentials": {
@@ -296,8 +296,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        2704,
-        1272
+        2720,
+        1280
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -326,8 +326,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2480,
-        1200
+        2496,
+        1216
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -345,8 +345,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2032,
-        1272
+        2048,
+        1280
       ]
     },
     {
@@ -363,8 +363,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        1808,
-        1272
+        1824,
+        1280
       ],
       "webhookId": "projektnacito-form"
     },
@@ -396,8 +396,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        2256,
-        1272
+        2272,
+        1280
       ],
       "id": "f3075408-a624-4a3b-9482-f0554ff86cb5",
       "name": "If"
@@ -430,11 +430,37 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        3152,
-        1272
+        3168,
+        1280
       ],
       "id": "b58838fd-5dee-4d74-97a4-a6dc7f9443c2",
       "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.data.userEmail }}",
+        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Projekt na Cito - Konsultacja",
+        "message": "=<p>Dzień dobry {{ $('Webhook').item.json.body.data.userName }},</p>\n\n<p>Otrzymaliśmy Państwa zgłoszenie. Skontatujemy się telefonicznie w celu umówienia konsultacji.\n</p>\n\n<p>Pozdrawiamy serdecznie,<br>Zespół Projekt na CITO</p>\n\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: Arial, sans-serif; font-size: 13px; color: #000000;\">\n  <tr>\n    <td style=\"padding-right: 20px; vertical-align: middle; border-right: 2px solid #000000;\">\n      <!-- Logo CITO -->\n      <img src=\"https://projektnacito.com.pl/logo/logo.png\" alt=\"Projekt na CITO\" width=\"180\" style=\"display: block;\" />\n    </td>\n    <td style=\"padding-left: 20px; vertical-align: top;\">\n      <!-- Nazwa firmy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 20px; font-weight: 700; color: #000000; line-height: 1.2;\">Projekt na CITO</p>\n      <p style=\"margin: 0 0 6px 0; font-size: 12px; font-weight: 400; color: #000000; line-height: 1.2;\">Studio projektowania wnętrz</p>\n\n      <!-- Social media -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-bottom: 3px; vertical-align: middle;\">\n            <a href=\"https://www.instagram.com/projektna_cito/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios/50/000000/instagram-new.png\" alt=\"Instagram\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">projektna_cito</span>\n            </a>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"vertical-align: middle;\">\n            <a href=\"https://www.facebook.com/people/Projekt-na-CITO/61552032200917/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios-filled/50/000000/facebook-new.png\" alt=\"Facebook\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">Projekt na CITO</span>\n            </a>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Kontakty -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-right: 20px; vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Angelika Kłos</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 697 909 309</p>\n          </td>\n          <td style=\"vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Klaudia Kołakowska</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 698 354 726</p>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Godziny pracy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 11px; color: #555555; line-height: 1.2;\">godziny pracy</p>\n      <p style=\"margin: 0; font-size: 11px; color: #555555; line-height: 1.2;\">pon–pt 10:00–18:00</p>\n    </td>\n  </tr>\n</table>\n",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Projekt na Cito"
+        }
+      },
+      "id": "49200098-48a0-4f07-8e73-8d1842f0bf9b",
+      "name": "Gmail (konsultacje)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        3392,
+        1472
+      ],
+      "webhookId": "251c4e6f-b05b-46a0-a512-165fe04f99bb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "connections": {
@@ -542,6 +568,17 @@
             "index": 0
           }
         ],
+        [
+          {
+            "node": "Gmail (konsultacje)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail (konsultacje)": {
+      "main": [
         [
           {
             "node": "Telegram",
