@@ -1,8 +1,10 @@
 import { useAppContext } from '../context/AppContext'
 import { t } from '../i18n'
+import { useNavigate } from 'react-router-dom'
 
 export default function SubmissionSuccess() {
-  const { lastSubmissionId, setCurrentView, currentPackage } = useAppContext()
+  const { lastSubmissionId, setCurrentView, currentPackage, resetState } = useAppContext()
+  const navigate = useNavigate()
   const txt = t()
 
   return (
@@ -13,13 +15,15 @@ export default function SubmissionSuccess() {
         <div className="space-y-4 mb-10">
           <p className="text-xl">
             {txt.success.messageSent}
-            {currentPackage !== 'consult' && lastSubmissionId && (
+            {currentPackage === 'consult' ? null : lastSubmissionId && (
               <span className="block mt-2 font-medium">
                 {txt.success.submissionNumber} {lastSubmissionId}
               </span>
             )}
           </p>
-          {currentPackage !== 'consult' ? (
+          {currentPackage === 'consult' ? (
+            <p className="text-gray-600">{txt.success.consultThanks}</p>
+          ) : (
             <>
               <p className="text-gray-600">
                 {txt.success.contactSoon}
@@ -29,13 +33,15 @@ export default function SubmissionSuccess() {
                 {txt.success.spamNote}
               </p>
             </>
-          ) : (
-            <p className="text-gray-600">{txt.success.consultThanks}</p>
           )}
         </div>
 
         <button
-          onClick={() => setCurrentView('main')}
+          onClick={() => {
+            resetState()
+            setCurrentView('main')
+            navigate('/')
+          }}
           className="bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-colors duration-300"
         >
           {txt.common.backToHome}
