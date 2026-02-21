@@ -2,107 +2,90 @@
   "nodes": [
     {
       "parameters": {
-        "httpMethod": "POST",
-        "path": "init",
-        "responseMode": "responseNode",
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, message: 'Zgłoszenie zostało przyjęte' }) }}",
+        "options": {}
+      },
+      "id": "c7eb6107-7990-4841-8246-fde6e1f8ba07",
+      "name": "Odpowiedź (z plikiem)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3824,
+        1272
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "-5216597047",
+        "text": "=Nowe zgłoszenie z formularza: {{ $('Webhook').item.json.body.data.submissionId }}\n\nImię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}\nTelefon: {{ $('Webhook').item.json.body.data.userPhone }}\nEmail: {{ $('Webhook').item.json.body.data.userEmail }}\n\n{{$('Konwertuj Base64 na plik').item.json.file ? $('Google Drive - Upload').item.json.webContentLink : \"Notatka: \" + $('Webhook').item.json.body.data.notes }}",
+        "additionalFields": {}
+      },
+      "id": "83671dcf-3078-4d64-986f-464b25ef53d1",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        3600,
+        1280
+      ],
+      "webhookId": "0d133324-5240-4d05-bd6d-64dd75be4f43",
+      "credentials": {
+        "telegramApi": {
+          "id": "YwIYvsgq3gsVlysO",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.data.userEmail }}",
+        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Projekt na Cito - Wstępna umowa",
+        "message": "=<p>Dzień dobry {{ $('Webhook').item.json.body.data.userName }},</p>\n\n<p>Dziękujemy za zaufanie i cieszymy się na współpracę przy projektowaniu Państwa wnętrza.\n</p>\n\n<p>W najbliższych dniach skontaktujemy się z Państwem telefonicznie  i prześlemy umowę, która zawierać będzie kwoty brutto i szczegółowo opisane warunki współpracy.</p>\n\n<p>Po zaakceptowaniu będziemy prosić o jej podpisanie i odesłanie.</p>\n\n<p>Potwierdzamy, że wartość projektu w ustalonym zakresie wynosi <strong>{{ $('Webhook').item.json.body.data.estimatedPrice }} zł netto</strong>.</p>\n\n<p>Jeżeli w dokumencie zaznaczyli Państwo dodatkową opcję obejmującą opracowanie projektu zabudowy meblowej i/ lub instalacji wodno-kanalizacyjnej zaktualizujemy końcową wycenę projektu po ustaleniu zakresu.\n</p>\n\n<p>Pozostajemy do Państwa dyspozycji – w razie pytań lub wątpliwości prosimy o kontakt telefoniczny.</p>\n\n<p>Pozdrawiamy serdecznie,<br>Zespół Projekt na CITO</p>\n\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: Arial, sans-serif; font-size: 13px; color: #000000;\">\n  <tr>\n    <td style=\"padding-right: 20px; vertical-align: middle; border-right: 2px solid #000000;\">\n      <!-- Logo CITO -->\n      <img src=\"https://projektnacito.com.pl/logo/logo.png\" alt=\"Projekt na CITO\" width=\"180\" style=\"display: block;\" />\n    </td>\n    <td style=\"padding-left: 20px; vertical-align: top;\">\n      <!-- Nazwa firmy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 20px; font-weight: 700; color: #000000; line-height: 1.2;\">Projekt na CITO</p>\n      <p style=\"margin: 0 0 6px 0; font-size: 12px; font-weight: 400; color: #000000; line-height: 1.2;\">Studio projektowania wnętrz</p>\n\n      <!-- Social media -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-bottom: 3px; vertical-align: middle;\">\n            <a href=\"https://www.instagram.com/projektna_cito/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios/50/000000/instagram-new.png\" alt=\"Instagram\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">projektna_cito</span>\n            </a>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"vertical-align: middle;\">\n            <a href=\"https://www.facebook.com/people/Projekt-na-CITO/61552032200917/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios-filled/50/000000/facebook-new.png\" alt=\"Facebook\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">Projekt na CITO</span>\n            </a>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Kontakty -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-right: 20px; vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Angelika Kłos</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 697 909 309</p>\n          </td>\n          <td style=\"vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Klaudia Kołakowska</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 698 354 726</p>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Godziny pracy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 11px; color: #555555; line-height: 1.2;\">godziny pracy</p>\n      <p style=\"margin: 0; font-size: 11px; color: #555555; line-height: 1.2;\">pon–pt 10:00–18:00</p>\n    </td>\n  </tr>\n</table>\n",
         "options": {
-          "rawBody": false
+          "appendAttribution": false,
+          "senderName": "Projekt na Cito"
         }
       },
-      "id": "6cea6f30-4398-4c1b-8359-d73213618638",
-      "name": "Webhook",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
+      "id": "4c22cd8d-3297-485a-9912-9bac709849d5",
+      "name": "Gmail (do klienta)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
       "position": [
-        1808,
-        1488
+        3376,
+        1200
       ],
-      "webhookId": "projektnacito-form"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Konwertuj base64 na binarny plik (bezpieczne - obsługuje brak załącznika)\nconst input = $input.first();\nconst attachment = input.json && input.json.body && input.json.body.attachment;\n\nif (!attachment || !attachment.data) {\n  // Brak załącznika - zwróć item bez pola binary oraz oznacz brak załącznika\n  return {\n    json: {\n      ...input.json,\n      hasAttachment: false\n    }\n  };\n}\n\n// Przekonwertuj base64 na Buffer\nconst binaryData = Buffer.from(attachment.data, 'base64');\n\n// Przygotuj binarny plik i zwróć item z binary\nconst prepared = await this.helpers.prepareBinaryData(binaryData, attachment.filename, attachment.mimeType);\nreturn {\n  json: {\n    ...input.json,\n    hasAttachment: true\n  },\n  binary: {\n    data: prepared\n  }\n};"
-      },
-      "id": "1ac88426-3f15-47a6-8c9d-9116e32e5da4",
-      "name": "Konwertuj Base64 na plik",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2032,
-        1488
-      ]
-    },
-    {
-      "parameters": {
-        "rules": [
-          {
-            "value1": "={{ $json.hasAttachment }}",
-            "operation": "isTrue"
-          }
-        ],
-        "combineOperation": "any"
-      },
-      "id": "7e9f3c26-5c1b-4fef-9b77-3a38bdf7e2f5",
-      "name": "If has attachment?",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 1,
-      "position": [
-        2180,
-        1488
-      ]
-    },
-    {
-      "parameters": {
-        "values": {
-          "json": [
-            {
-              "name": "webContentLink",
-              "value": "-"
-            },
-            {
-              "name": "createdTime",
-              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "c1d9fb0a-8d5a-4f43-b8ee-9c11a4e2be21",
-      "name": "Set placeholder link",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 1,
-      "position": [
-        2180,
-        1620
-      ]
-    },
-    {
-      "parameters": {
-        "name": "={{ $json.body.data.packageType }}_{{ $now.format('yyyy-MM-dd_HH-mm') }}_{{ $json.body.data.userName.replace(' ', '_') }}.{{ $json.body.attachment.filename.split('.').pop() }}",
-        "driveId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
-        },
-        "folderId": {
-          "__rl": true,
-          "value": "1jyIrAqhfeIx6yVmBxK2Aqzpy-XvL6cey",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "id": "db8c3a83-c981-4661-8fc7-d139c7f4dada",
-      "name": "Google Drive - Upload",
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        2256,
-        1488
-      ],
+      "webhookId": "251c4e6f-b05b-46a0-a512-165fe04f99bb",
       "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "rDUDzSbGgZOID1m3",
-          "name": "Google Drive account"
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "projektnacitobiuro@gmail.com",
+        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}",
+        "message": "=<h2>Nowe zgłoszenie z formularza Projekt na Cito</h2>\n\n<p><strong>Pakiet:</strong> {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Premium' : 'Konsultacja' }}</p>\n\n<p><strong>Dane klienta:</strong></p>\n<ul>\n<li>Imię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}</li>\n<li>Telefon: {{ $('Webhook').item.json.body.data.userPhone }}</li>\n<li>Email: {{ $('Webhook').item.json.body.data.userEmail }}</li>\n</ul>\n\n<p><strong>Wycena:</strong> {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}</p>\n\n{{ $('Webhook').item.json.body.data.details?.rooms ? '<p><strong>Wybrane pomieszczenia:</strong> ' + Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') + '</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.electricProject ? '<p><strong>Projekt elektryczny:</strong> Tak (' + $('Webhook').item.json.body.data.details.electricM2 + ' m²)</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.furnitureProject ? '<p><strong>Projekt mebli:</strong> Tak</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.plumbingProject ? '<p><strong>Projekt instalacji wodno-kanalizacyjnych:</strong> Tak</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.totalM2 ? '<p><strong>Metraż:</strong> ' + $('Webhook').item.json.body.data.details.totalM2 + ' m² (kuchnia: ' + ($('Webhook').item.json.body.data.details.kitchenM2 || 0) + ' m², łazienki: ' + ($('Webhook').item.json.body.data.details.bathM2 || 0) + ' m²)</p>' : '' }}\n\n<p><strong>{{ $('Konwertuj Base64 na plik').item.json.file ? 'Załącznik:' : 'Notatka:' }}</strong> {{$('Konwertuj Base64 na plik').item.json.file ? $('Google Drive - Upload').item.json.webContentLink : $('Webhook').item.json.body.data.notes}}</p>\n\n\n<hr>\n<p><em>Wiadomość wygenerowana automatycznie przez system Projekt na Cito</em></p>\n\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: Arial, sans-serif; font-size: 13px; color: #000000;\">\n  <tr>\n    <td style=\"padding-right: 20px; vertical-align: middle; border-right: 2px solid #000000;\">\n      <!-- Logo CITO -->\n      <img src=\"https://projektnacito.com.pl/logo/logo.png\" alt=\"Projekt na CITO\" width=\"180\" style=\"display: block;\" />\n    </td>\n    <td style=\"padding-left: 20px; vertical-align: top;\">\n      <!-- Nazwa firmy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 20px; font-weight: 700; color: #000000; line-height: 1.2;\">Projekt na CITO</p>\n      <p style=\"margin: 0 0 6px 0; font-size: 12px; font-weight: 400; color: #000000; line-height: 1.2;\">Studio projektowania wnętrz</p>\n\n      <!-- Social media -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-bottom: 3px; vertical-align: middle;\">\n            <a href=\"https://www.instagram.com/projektna_cito/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios/50/000000/instagram-new.png\" alt=\"Instagram\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">projektna_cito</span>\n            </a>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"vertical-align: middle;\">\n            <a href=\"https://www.facebook.com/people/Projekt-na-CITO/61552032200917/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios-filled/50/000000/facebook-new.png\" alt=\"Facebook\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">Projekt na CITO</span>\n            </a>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Kontakty -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-right: 20px; vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Angelika Kłos</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 697 909 309</p>\n          </td>\n          <td style=\"vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Klaudia Kołakowska</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 698 354 726</p>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Godziny pracy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 11px; color: #555555; line-height: 1.2;\">godziny pracy</p>\n      <p style=\"margin: 0; font-size: 11px; color: #555555; line-height: 1.2;\">pon–pt 10:00–18:00</p>\n    </td>\n  </tr>\n</table>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Projekt na Cito"
+        }
+      },
+      "id": "76b96f8e-8f06-4665-8768-f6145bde4aa2",
+      "name": "Gmail (z plikiem)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2928,
+        1272
+      ],
+      "webhookId": "e8ec8260-a220-4d12-a4fe-156f64556fe7",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hJOKC0vaNcJfiaFS",
+          "name": "Gmail account"
         }
       }
     },
@@ -127,11 +110,11 @@
             "Pakiet": "={{ $('Webhook').item.json.body.data.packageType }}",
             "Telefon": "={{ $('Webhook').item.json.body.data.userPhone }}",
             "Imię i nazwisko": "={{ $('Webhook').item.json.body.data.userName || \"-\" }}",
-            "Cena netto (zł)": "={{ $('Webhook').item.json.body.data.estimatedPrice }}",
+            "Cena netto (zł)": "={{ $('Webhook').item.json.body.data.estimatedPrice || 0 }}",
             "Projekt elektryczny": "={{ $('Webhook').item.json.body.data.details.electricProject || \"-\" }}",
             "Metraż elektryczny": "={{ $('Webhook').item.json.body.data.details.electricM2 || \"-\" }}",
-            "Link do pliku": "={{ $json.webContentLink }}",
-            "Data": "={{ $json.createdTime }}",
+            "Link do pliku": "={{$('Konwertuj Base64 na plik').item.json.file ? $json.webContentLink : \"Notatka: \" + $('Konwertuj Base64 na plik').item.json.data.body.data.notes }}",
+            "Data": "={{ $now.format('yyyy-MM-dd_HH-mm') }}",
             "Pokoje": "={{ $('Webhook').item.json.body.data.details.rooms || \"-\" }}",
             "Metraż całkowity": "={{ $('Webhook').item.json.body.data.details.totalM2 || \"-\" }}",
             "Metraż kuchni": "={{ $('Webhook').item.json.body.data.details.kitchenM2 || \"-\" }}",
@@ -313,8 +296,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        2480,
-        1488
+        2704,
+        1272
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -325,173 +308,141 @@
     },
     {
       "parameters": {
-        "sendTo": "projektnacitobiuro@gmail.com",
-        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Nowe zgłoszenie: {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Pakiet Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Pakiet Premium' : 'Konsultacja' }} - {{ $('Webhook').item.json.body.data.userName }}",
-        "message": "=<h2>Nowe zgłoszenie z formularza Projekt na Cito</h2>\n\n<p><strong>Pakiet:</strong> {{ $('Webhook').item.json.body.data.packageType === 'cito' ? 'Cito' : $('Webhook').item.json.body.data.packageType === 'premium' ? 'Premium' : 'Konsultacja' }}</p>\n\n<p><strong>Dane klienta:</strong></p>\n<ul>\n<li>Imię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}</li>\n<li>Telefon: {{ $('Webhook').item.json.body.data.userPhone }}</li>\n<li>Email: {{ $('Webhook').item.json.body.data.userEmail }}</li>\n</ul>\n\n<p><strong>Wycena:</strong> {{ $('Webhook').item.json.body.data.estimatedPrice ? $('Webhook').item.json.body.data.estimatedPrice + ' zł netto' : $('Webhook').item.json.body.data.rate }}</p>\n\n{{ $('Webhook').item.json.body.data.details?.rooms ? '<p><strong>Wybrane pomieszczenia:</strong> ' + Object.entries($('Webhook').item.json.body.data.details.rooms).map(([k,v]) => k + ' x' + v).join(', ') + '</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.electricProject ? '<p><strong>Projekt elektryczny:</strong> Tak (' + $('Webhook').item.json.body.data.details.electricM2 + ' m²)</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.furnitureProject ? '<p><strong>Projekt mebli:</strong> Tak</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.plumbingProject ? '<p><strong>Projekt instalacji wodno-kanalizacyjnych:</strong> Tak</p>' : '' }}\n\n{{ $('Webhook').item.json.body.data.details?.totalM2 ? '<p><strong>Metraż:</strong> ' + $('Webhook').item.json.body.data.details.totalM2 + ' m² (kuchnia: ' + ($('Webhook').item.json.body.data.details.kitchenM2 || 0) + ' m², łazienki: ' + ($('Webhook').item.json.body.data.details.bathM2 || 0) + ' m²)</p>' : '' }}\n\n<p><strong>Załącznik:</strong> {{ $('Google Drive - Upload').item.json.webContentLink || 'Brak'}}</p>\n\n<hr>\n<p><em>Wiadomość wygenerowana automatycznie przez system Projekt na Cito</em></p>\n\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: Arial, sans-serif; font-size: 13px; color: #000000;\">\n  <tr>\n    <td style=\"padding-right: 20px; vertical-align: middle; border-right: 2px solid #000000;\">\n      <!-- Logo CITO -->\n      <img src=\"https://projektnacito.com.pl/logo/logo.png\" alt=\"Projekt na CITO\" width=\"180\" style=\"display: block;\" />\n    </td>\n    <td style=\"padding-left: 20px; vertical-align: top;\">\n      <!-- Nazwa firmy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 20px; font-weight: 700; color: #000000; line-height: 1.2;\">Projekt na CITO</p>\n      <p style=\"margin: 0 0 6px 0; font-size: 12px; font-weight: 400; color: #000000; line-height: 1.2;\">Studio projektowania wnętrz</p>\n\n      <!-- Social media -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-bottom: 3px; vertical-align: middle;\">\n            <a href=\"https://www.instagram.com/projektna_cito/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios/50/000000/instagram-new.png\" alt=\"Instagram\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">projektna_cito</span>\n            </a>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"vertical-align: middle;\">\n            <a href=\"https://www.facebook.com/people/Projekt-na-CITO/61552032200917/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios-filled/50/000000/facebook-new.png\" alt=\"Facebook\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">Projekt na CITO</span>\n            </a>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Kontakty -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-right: 20px; vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Angelika Kłos</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 697 909 309</p>\n          </td>\n          <td style=\"vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Klaudia Kołakowska</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 698 354 726</p>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Godziny pracy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 11px; color: #555555; line-height: 1.2;\">godziny pracy</p>\n      <p style=\"margin: 0; font-size: 11px; color: #555555; line-height: 1.2;\">pon–pt 10:00–18:00</p>\n    </td>\n  </tr>\n</table>",
-        "options": {
-          "appendAttribution": false,
-          "senderName": "Projekt na Cito"
-        }
-      },
-      "id": "76b96f8e-8f06-4665-8768-f6145bde4aa2",
-      "name": "Gmail (z plikiem)",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
-      "position": [
-        2704,
-        1488
-      ],
-      "webhookId": "e8ec8260-a220-4d12-a4fe-156f64556fe7",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "hJOKC0vaNcJfiaFS",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $('Webhook').item.json.body.data.userEmail }}",
-        "subject": "=[{{ $('Webhook').item.json.body.data.submissionId }}] Projekt na Cito - Wstępna umowa",
-        "message": "=<p>Dzień dobry {{ $('Webhook').item.json.body.data.userName }},</p>\n\n<p>Dziękujemy za zaufanie i cieszymy się na współpracę przy projektowaniu Państwa wnętrza.\n</p>\n\n<p>W najbliższych dniach skontaktujemy się z Państwem telefonicznie  i prześlemy umowę, która zawierać będzie kwoty brutto i szczegółowo opisane warunki współpracy.</p>\n\n<p>Po zaakceptowaniu będziemy prosić o jej podpisanie i odesłanie.</p>\n\n<p>Potwierdzamy, że wartość projektu w ustalonym zakresie wynosi <strong>{{ $('Webhook').item.json.body.data.estimatedPrice }} zł netto</strong>.</p>\n\n<p>Jeżeli w dokumencie zaznaczyli Państwo dodatkową opcję obejmującą opracowanie projektu zabudowy meblowej i/ lub instalacji wodno-kanalizacyjnej zaktualizujemy końcową wycenę projektu po ustaleniu zakresu.\n</p>\n\n<p>Pozostajemy do Państwa dyspozycji – w razie pytań lub wątpliwości prosimy o kontakt telefoniczny.</p>\n\n<p>Pozdrawiamy serdecznie,<br>Zespół Projekt na CITO</p>\n\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: Arial, sans-serif; font-size: 13px; color: #000000;\">\n  <tr>\n    <td style=\"padding-right: 20px; vertical-align: middle; border-right: 2px solid #000000;\">\n      <!-- Logo CITO -->\n      <img src=\"https://projektnacito.com.pl/logo/logo.png\" alt=\"Projekt na CITO\" width=\"180\" style=\"display: block;\" />\n    </td>\n    <td style=\"padding-left: 20px; vertical-align: top;\">\n      <!-- Nazwa firmy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 20px; font-weight: 700; color: #000000; line-height: 1.2;\">Projekt na CITO</p>\n      <p style=\"margin: 0 0 6px 0; font-size: 12px; font-weight: 400; color: #000000; line-height: 1.2;\">Studio projektowania wnętrz</p>\n\n      <!-- Social media -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-bottom: 3px; vertical-align: middle;\">\n            <a href=\"https://www.instagram.com/projektna_cito/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios/50/000000/instagram-new.png\" alt=\"Instagram\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">projektna_cito</span>\n            </a>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"vertical-align: middle;\">\n            <a href=\"https://www.facebook.com/people/Projekt-na-CITO/61552032200917/\" style=\"text-decoration: none; color: #000000; font-size: 12px;\">\n              <img src=\"https://img.icons8.com/ios-filled/50/000000/facebook-new.png\" alt=\"Facebook\" width=\"15\" height=\"15\" style=\"display: inline-block; vertical-align: middle; margin-right: 4px;\" />\n              <span style=\"vertical-align: middle;\">Projekt na CITO</span>\n            </a>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Kontakty -->\n      <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-bottom: 6px;\">\n        <tr>\n          <td style=\"padding-right: 20px; vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Angelika Kłos</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 697 909 309</p>\n          </td>\n          <td style=\"vertical-align: top;\">\n            <p style=\"margin: 0 0 1px 0; font-size: 13px; font-weight: 700; color: #000000; line-height: 1.2;\">Klaudia Kołakowska</p>\n            <p style=\"margin: 0; font-size: 12px; color: #000000; line-height: 1.2;\">+48 698 354 726</p>\n          </td>\n        </tr>\n      </table>\n\n      <!-- Godziny pracy -->\n      <p style=\"margin: 0 0 1px 0; font-size: 11px; color: #555555; line-height: 1.2;\">godziny pracy</p>\n      <p style=\"margin: 0; font-size: 11px; color: #555555; line-height: 1.2;\">pon–pt 10:00–18:00</p>\n    </td>\n  </tr>\n</table>\n",
-        "options": {
-          "appendAttribution": false,
-          "senderName": "Projekt na Cito"
-        }
-      },
-      "id": "4c22cd8d-3297-485a-9912-9bac709849d5",
-      "name": "Gmail (do klienta)",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
-      "position": [
-        2928,
-        1488
-      ],
-      "webhookId": "251c4e6f-b05b-46a0-a512-165fe04f99bb",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "hJOKC0vaNcJfiaFS",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "chatId": "-5216597047",
-        "text": "=Nowe zgłoszenie z formularza: {{ $('Webhook').item.json.body.data.submissionId }}\n\nImię i nazwisko: {{ $('Webhook').item.json.body.data.userName }}\nTelefon: {{ $('Webhook').item.json.body.data.userPhone }}\nEmail: {{ $('Webhook').item.json.body.data.userEmail }}\n\n{{ $('Google Drive - Upload').item.json.webContentLink }}",
-        "additionalFields": {}
-      },
-      "id": "83671dcf-3078-4d64-986f-464b25ef53d1",
-      "name": "Telegram",
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1,
-      "position": [
-        3152,
-        1488
-      ],
-      "webhookId": "0d133324-5240-4d05-bd6d-64dd75be4f43",
-      "credentials": {
-        "telegramApi": {
-          "id": "YwIYvsgq3gsVlysO",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ success: true, message: 'Zgłoszenie zostało przyjęte' }) }}",
+        "name": "={{ $json.body.data.packageType }}_{{ $now.format('yyyy-MM-dd_HH-mm') }}_{{ $json.body.data.userName.replace(' ', '_') }}.{{ $json.body.attachment.filename.split('.').pop() }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1jyIrAqhfeIx6yVmBxK2Aqzpy-XvL6cey",
+          "mode": "id"
+        },
         "options": {}
       },
-      "id": "c7eb6107-7990-4841-8246-fde6e1f8ba07",
-      "name": "Odpowiedź (z plikiem)",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
+      "id": "db8c3a83-c981-4661-8fc7-d139c7f4dada",
+      "name": "Google Drive - Upload",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
       "position": [
-        3376,
-        1488
+        2480,
+        1200
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "rDUDzSbGgZOID1m3",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Konwertuj base64 na binarny plik\nconst attachment = $input.first().json.body.attachment;\n\nif (!attachment || !attachment.data) {\n  return {\n  json: {\n    file: false,\n    data: $input.first().json\n  },\n  binary: {}\n};\n}\n\n// Przekonwertuj base64 na Buffer\nconst binaryData = Buffer.from(attachment.data, 'base64');\n\n// Zwróć item z binarnym plikiem\nreturn {\n    json: {\n    file: true,\n    data: $input.first().json\n  },\n  binary: {\n    data: await this.helpers.prepareBinaryData(\n      binaryData,\n      attachment.filename,\n      attachment.mimeType\n    )\n  }\n};"
+      },
+      "id": "1ac88426-3f15-47a6-8c9d-9116e32e5da4",
+      "name": "Konwertuj Base64 na plik",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        1272
       ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "init",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": false
+        }
+      },
+      "id": "6cea6f30-4398-4c1b-8359-d73213618638",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1808,
+        1272
+      ],
+      "webhookId": "projektnacito-form"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5c6feee5-9b11-48db-a90f-8b085cea4048",
+              "leftValue": "={{ $json.file }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2256,
+        1272
+      ],
+      "id": "f3075408-a624-4a3b-9482-f0554ff86cb5",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c6e4aa33-1fa3-477b-b034-f504a247973a",
+              "leftValue": "={{ $('Konwertuj Base64 na plik').item.json.file }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3152,
+        1272
+      ],
+      "id": "b58838fd-5dee-4d74-97a4-a6dc7f9443c2",
+      "name": "If1"
     }
   ],
   "connections": {
-    "Webhook": {
+    "Telegram": {
       "main": [
         [
           {
-            "node": "Konwertuj Base64 na plik",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Konwertuj Base64 na plik": {
-      "main": [
-        [
-          {
-            "node": "If has attachment?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If has attachment?": {
-      "main": [
-        [
-          {
-            "node": "Google Drive - Upload",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Set placeholder link",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set placeholder link": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets (z plikiem)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Drive - Upload": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets (z plikiem)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Sheets (z plikiem)": {
-      "main": [
-        [
-          {
-            "node": "Gmail (z plikiem)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Gmail (z plikiem)": {
-      "main": [
-        [
-          {
-            "node": "Gmail (do klienta)",
+            "node": "Odpowiedź (z plikiem)",
             "type": "main",
             "index": 0
           }
@@ -509,11 +460,91 @@
         ]
       ]
     },
-    "Telegram": {
+    "Gmail (z plikiem)": {
       "main": [
         [
           {
-            "node": "Odpowiedź (z plikiem)",
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (z plikiem)": {
+      "main": [
+        [
+          {
+            "node": "Gmail (z plikiem)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Upload": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (z plikiem)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Konwertuj Base64 na plik": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Konwertuj Base64 na plik",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Upload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets (z plikiem)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Gmail (do klienta)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram",
             "type": "main",
             "index": 0
           }
