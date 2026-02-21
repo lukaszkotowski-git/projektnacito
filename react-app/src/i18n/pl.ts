@@ -84,6 +84,7 @@ export const pl = {
       { title: 'Oferty od wykonawców', desc: 'Oferta od np. stolarza, budowlańca, instalatora klimatyzacji na zastosowane w projekcie rozwiązania.' },
     ],
     summaryNote: 'Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu.',
+    additionalWorkLabel: 'Zaznacz jakiego opracowania dodatkowego będziesz potrzebować (wyceniane na kolejnym etapie współpracy)',
   },
 
   // Premium Configurator

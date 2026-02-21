@@ -201,6 +201,9 @@ export function CitoConfigurator() {
                 
 
                 {/* Additional optional project checkboxes (no price impact) */}
+                <div className="mt-6 mb-2">
+                  <div className="text-sm text-gray-700">{txt.cito.additionalWorkLabel}</div>
+                </div>
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <label className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#E5DED4]">
                     <input type="checkbox" checked={furnitureProject} onChange={(e) => setFurnitureProject(e.target.checked)} className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A]" />
