@@ -1,0 +1,3 @@
+removeKitchenAriaLabel: Usuń kuchnię {{index1}}
+subtitle: Wprowadź metraże — otrzymasz szczegółową wycenę na podany adres e-mail.
+subtitle: Zostaw dane dla pakietu {{packageName}}.
