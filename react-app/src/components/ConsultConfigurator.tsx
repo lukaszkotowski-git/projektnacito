@@ -4,6 +4,7 @@ import { useAppContext } from '../context/AppContext'
 import { API_URL } from '../constants'
 import { useNotification } from './notifications'
 import { t } from '../i18n'
+import { getConsultationRateString } from '../api/rates'
 import { PhoneInput, EmailInput } from './ui'
 
 export function ConsultConfigurator() {
@@ -50,6 +51,7 @@ export function ConsultConfigurator() {
     setIsSubmitting(true)
 
     // For consult package email is optional — include if provided
+      const rateString = getConsultationRateString(txt.consult.rate)
       const data = {
         submissionId,
         packageType: 'consult',
@@ -59,7 +61,7 @@ export function ConsultConfigurator() {
         notes: notes || undefined,
         suggestedDate: suggestedDate || undefined,
         suggestedHour: suggestedHour || undefined,
-        rate: "250 zł / h"
+        rate: rateString
       }
 
     try {
