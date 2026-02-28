@@ -1,2 +1,0 @@
-VITE_DIRECTUS_URL=https://directus.projektnacito.com.pl
-VITE_DIRECTUS_URL=https://directus.projektnacito.com.pl
