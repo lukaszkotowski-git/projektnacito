@@ -11,3 +11,4 @@ react-app/.env.*.local
 .npm_cache/
 dist/
 .sisyphus/
+.mcp/
