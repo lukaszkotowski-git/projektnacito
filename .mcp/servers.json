@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "n8n-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "supergateway",
+        "--streamableHttp",
+        "https://n8n.projektnacito.com.pl/mcp-server/http",
+        "--header",
+        "authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MjBmNTkxMC02MzM0LTRmZmUtOWRlZC1jMTAwMDg4OTYxMzYiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6ImZkM2VjNzVjLTFmMjItNDg3OC1hMjg0LWNkZDZlYWQwMjNkNSIsImlhdCI6MTc3MjI5ODg0OX0.CfClDqxud8r6l5wlv0eprRDzyKkodOgWLQgOqMGyfW4"
+      ]
+    }
+  }
+}
