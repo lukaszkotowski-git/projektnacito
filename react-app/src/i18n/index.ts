@@ -1,4 +1,5 @@
 import { pl, Translations } from './pl'
+import { getConsultationRateString, fetchAndCacheConsultationRates } from '../api/rates'
 
 export type { Translations }
 export type Language = 'pl' | 'en'
@@ -23,3 +24,20 @@ export function t(): Translations {
 }
 
 export { pl }
+
+// Initialize consultation rate from cache synchronously so components get a correct value on first render.
+// Then fetch fresh rates in background and update the in-memory translation object for subsequent calls.
+try {
+  pl.consult.rate = getConsultationRateString(pl.consult.rate)
+} catch {
+  // ignore
+}
+
+// Start background refresh; when it completes we'll update the in-memory value for next renders
+void fetchAndCacheConsultationRates().then(() => {
+  try {
+    pl.consult.rate = getConsultationRateString(pl.consult.rate)
+  } catch {
+    // ignore
+  }
+})
