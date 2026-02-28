@@ -10,3 +10,4 @@ react-app/.env.*.local
 .DS_Store
 .npm_cache/
 dist/
+.sisyphus/
