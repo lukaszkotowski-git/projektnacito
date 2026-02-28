@@ -4,7 +4,7 @@ import { useAppContext } from '../context/AppContext'
 import { API_URL } from '../constants'
 import { useNotification } from './notifications'
 import { t } from '../i18n'
-import { getConsultationRateString } from '../api/rates'
+import { getConsultationRateString, getConsultationRateAmountString } from '../api/rates'
 import { PhoneInput, EmailInput } from './ui'
 
 export function ConsultConfigurator() {
@@ -69,7 +69,7 @@ export function ConsultConfigurator() {
         notes: notes || undefined,
         suggestedDate: suggestedDate || undefined,
         suggestedHour: suggestedHour || undefined,
-        rate: rateString
+        rate: displayRate
       }
 
     try {
@@ -117,7 +117,7 @@ export function ConsultConfigurator() {
             </div>
           )}
           <h2 className="text-4xl font-serif mb-4">{txt.consult.title}</h2>
-          <div className="inline-block bg-[#F2EBE1] text-[#8C7E6A] px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs mb-6">{rateString}</div>
+          <div className="inline-block bg-[#F2EBE1] text-[#8C7E6A] px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs mb-6">{displayRate}</div>
           <p className="text-gray-600 mb-8 leading-relaxed text-sm">{txt.consult.subtitle}</p>
           <form onSubmit={handleSubmit} className="text-left space-y-6">
             <div className="space-y-2">
