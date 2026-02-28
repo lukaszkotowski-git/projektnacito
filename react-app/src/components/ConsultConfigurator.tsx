@@ -10,6 +10,15 @@ import { PhoneInput, EmailInput } from './ui'
 export function ConsultConfigurator() {
   const navigate = useNavigate()
   const txt = t()
+
+  // Compute a user-facing rate string. If the translation contains the
+  // placeholder {{consultationRate}} (coming from Directus), substitute it
+  // synchronously from the cached rates (or fallback) so the UI never shows
+  // the raw template.
+  const template = (txt.consult && (txt.consult as any).rate) || 'Koszt: 250 zł / h'
+  const displayRate = template.includes('{{consultationRate}}')
+    ? template.replace('{{consultationRate}}', getConsultationRateAmountString(template))
+    : getConsultationRateString(template)
   const { setCurrentView, setLastSubmissionId, setCurrentPackage } = useAppContext()
   const { addToast: notify } = useNotification()
   
@@ -51,7 +60,6 @@ export function ConsultConfigurator() {
     setIsSubmitting(true)
 
     // For consult package email is optional — include if provided
-      const rateString = getConsultationRateString(txt.consult.rate)
       const data = {
         submissionId,
         packageType: 'consult',
@@ -109,7 +117,7 @@ export function ConsultConfigurator() {
             </div>
           )}
           <h2 className="text-4xl font-serif mb-4">{txt.consult.title}</h2>
-          <div className="inline-block bg-[#F2EBE1] text-[#8C7E6A] px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs mb-6">{txt.consult.rate}</div>
+          <div className="inline-block bg-[#F2EBE1] text-[#8C7E6A] px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs mb-6">{rateString}</div>
           <p className="text-gray-600 mb-8 leading-relaxed text-sm">{txt.consult.subtitle}</p>
           <form onSubmit={handleSubmit} className="text-left space-y-6">
             <div className="space-y-2">
