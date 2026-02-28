@@ -55,6 +55,27 @@ export function getConsultationRateString(fallback = 'Koszt: 250 zł / h'): stri
   return fallback
 }
 
+// Return the amount fragment (without the leading "Koszt:") that can be
+// substituted into a translation template like "Koszt: {{consultationRate}} / h".
+export function getConsultationRateAmountString(fallback = 'Koszt: 250 zł / h'): string {
+  const item = getCachedConsultationRate()
+  if (item) {
+    if (typeof item.hourly_rate === 'number') return `${item.hourly_rate} zł`
+    if (typeof item.fixed_fee === 'number') return `${item.fixed_fee} zł`
+  }
+
+  // Try to extract an amount like "250 zł" from the fallback string
+  try {
+    const m = (fallback || '').match(/([\d\s\.,]+)\s*zł/)
+    if (m && m[1]) return `${m[1].trim()} zł`
+  } catch {
+    // ignore
+  }
+
+  // Last-resort default
+  return '250 zł'
+}
+
 export async function fetchAndCacheConsultationRates(): Promise<void> {
   try {
     const base = (import.meta.env as any).VITE_DIRECTUS_URL as string
