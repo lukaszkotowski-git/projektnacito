@@ -79,6 +79,8 @@ export function getConsultationRateAmountString(fallback = 'Koszt: 250 zł / h')
 export async function fetchAndCacheConsultationRates(): Promise<void> {
   try {
     const base = (import.meta.env as any).VITE_DIRECTUS_URL as string
+    console.log('Fetching consultation rates from Directus...')
+    console.log('Base URL:', base)
     if (!base) return
     const url = `${base.replace(/\/$/, '')}/items/consultation_rates?limit=100`
     const res = await fetch(url)
