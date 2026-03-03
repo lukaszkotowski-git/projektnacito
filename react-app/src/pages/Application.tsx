@@ -13,7 +13,22 @@ export default function Application() {
     setLoading(true)
     try {
       const params = new URLSearchParams({ id, email })
-      const url = `https://n8n.projektnacito.com.pl/webhook-test/application?${params.toString()}`
+
+      // Resolve base URL from environment: prefer VITE_N8N_WEBHOOK_URL, then VITE_API_URL, then fallback
+      const baseUrlStr = import.meta.env.VITE_N8N_WEBHOOK_URL ?? import.meta.env.VITE_API_URL ?? 'https://n8n.projektnacito.com.pl/webhook-test/application'
+
+      // Build final URL robustly (handle absolute and relative base URLs)
+      let url: string
+      try {
+        const u = new URL(baseUrlStr, window.location.href)
+        // merge query params (overwriting any existing ones)
+        params.forEach((value, key) => u.searchParams.set(key, value))
+        url = u.toString()
+      } catch (e) {
+        // If URL parsing fails, fallback to simple concatenation
+        url = `${baseUrlStr}${baseUrlStr.includes('?') ? '&' : '?'}${params.toString()}`
+      }
+
       const res = await fetch(url, { headers: { Accept: 'application/json' } })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
@@ -26,7 +41,8 @@ export default function Application() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    // add top padding so content is not hidden under the fixed navigation
+    <div className="max-w-3xl mx-auto p-6 pt-24">
       <h1 className="text-2xl font-serif text-[#8C7E6A] mb-4">Aplikacja — wyszukaj dane</h1>
 
       <div className="space-y-4">

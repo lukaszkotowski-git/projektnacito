@@ -57,6 +57,7 @@ function RouteSync() {
     if (path.startsWith('/offer')) return 'offer-overview'
     if (path.startsWith('/about')) return 'onas'
     if (path.startsWith('/realizacje')) return 'realizacje'
+    if (path.startsWith('/application')) return 'application'
     if (path === '/' || path === '') return 'main'
     return 'main'
   }
