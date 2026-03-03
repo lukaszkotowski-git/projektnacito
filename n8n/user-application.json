@@ -1,0 +1,166 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "path": "application",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "id": "9134368d-9f71-4a5c-bc8e-40ae0644713e",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                -704,
+                112
+            ],
+            "webhookId": "a23391f9-352f-4c3e-ade0-1afc1a605fc0"
+        },
+        {
+            "parameters": {
+                "documentId": {
+                    "__rl": true,
+                    "value": "1QlSxoSbUVJD5QAPXANf4HMKGqxApqnA-8f351NsmTys",
+                    "mode": "id"
+                },
+                "sheetName": {
+                    "__rl": true,
+                    "value": "gid=0",
+                    "mode": "list",
+                    "cachedResultName": "Arkusz1",
+                    "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QlSxoSbUVJD5QAPXANf4HMKGqxApqnA-8f351NsmTys/edit#gid=0"
+                },
+                "filtersUI": {
+                    "values": [
+                        {
+                            "lookupColumn": "ID",
+                            "lookupValue": "={{ $json.query.id }}"
+                        },
+                        {
+                            "lookupColumn": "Email",
+                            "lookupValue": "={{ $json.query.email }}"
+                        }
+                    ]
+                },
+                "combineFilters": "AND",
+                "options": {}
+            },
+            "id": "efaec83d-d908-4124-a0ad-75bb2484552d",
+            "name": "Google Sheets",
+            "type": "n8n-nodes-base.googleSheets",
+            "typeVersion": 3,
+            "position": [
+                -480,
+                112
+            ],
+            "alwaysOutputData": true,
+            "credentials": {
+                "googleSheetsOAuth2Api": {
+                    "id": "TlGquhNuKtBM7aT5",
+                    "name": "Google Sheets account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{ $item(\"0\").$node[\"Google Sheets\"].json }}",
+                            "operation": "isNotEmpty"
+                        }
+                    ]
+                }
+            },
+            "id": "363d4d5a-8a30-479a-a9e7-f921b6abe67b",
+            "name": "IF",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                -256,
+                112
+            ]
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ $json }}",
+                "options": {
+                    "responseCode": 200
+                }
+            },
+            "id": "2d9003d6-e796-4b0d-b000-bdc8933b51a2",
+            "name": "Respond to Webhook (Sukces)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1,
+            "position": [
+                0,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "{\n  \"error\": \"Not found\"\n}",
+                "options": {
+                    "responseCode": 404
+                }
+            },
+            "id": "3132e31b-a665-42a3-9ddb-4003c0e0ffd8",
+            "name": "Respond to Webhook (Brak ID)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1,
+            "position": [
+                0,
+                208
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Google Sheets",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Google Sheets": {
+            "main": [
+                [
+                    {
+                        "node": "IF",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "IF": {
+            "main": [
+                [
+                    {
+                        "node": "Respond to Webhook (Sukces)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Respond to Webhook (Brak ID)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "e9696b3a570d6fcf2d2300f6666877d4d6947cf19d96f48d62d0972646fdaf29"
+    }
+}

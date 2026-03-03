@@ -1,0 +1,95 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "path": "files",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "id": "e1b28dcc-59d4-46e6-9205-37837ecc9ebe",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                0,
+                0
+            ],
+            "webhookId": "b09743dc-62a2-48d0-9e5f-1f820b596c6a"
+        },
+        {
+            "parameters": {
+                "resource": "fileFolder",
+                "queryString": "=",
+                "returnAll": true,
+                "filter": {
+                    "folderId": {
+                        "__rl": true,
+                        "value": "={{ $json.query.id }}",
+                        "mode": "id"
+                    }
+                },
+                "options": {}
+            },
+            "id": "557cd294-709f-4edf-8654-72fc6c032195",
+            "name": "Google Drive",
+            "type": "n8n-nodes-base.googleDrive",
+            "typeVersion": 3,
+            "position": [
+                224,
+                0
+            ],
+            "credentials": {
+                "googleDriveOAuth2Api": {
+                    "id": "rDUDzSbGgZOID1m3",
+                    "name": "Google Drive account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ Object.keys($input.all()[0].json).length === 0 ? [] : $input.all().map(item => item.json) }}",
+                "options": {
+                    "responseCode": 200
+                }
+            },
+            "id": "27fa4f3d-8aae-42d8-bfd2-8dc4fcce790f",
+            "name": "Respond to Webhook",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                448,
+                0
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Google Drive",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Google Drive": {
+            "main": [
+                [
+                    {
+                        "node": "Respond to Webhook",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "e9696b3a570d6fcf2d2300f6666877d4d6947cf19d96f48d62d0972646fdaf29"
+    }
+}
