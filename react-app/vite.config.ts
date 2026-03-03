@@ -1,14 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
 export default defineConfig({
+  // Load .env from the repository root during development/build so react-app can pick up variables
+  // placed in the project parent folder (e.g. ../.env).
+
+  envDir: resolve(__dirname, '..'),
   plugins: [react()],
   server: {
     proxy: {
       '/api': 'http://localhost:3000'
     },
-    // Allow loading env from parent directory during development by setting the root to the react-app folder
-    // Vite will still pick up import.meta.env from process.env at build time; ensure .env at project root is included in CI/build env
+    // Allow Vite dev server to access files in parent dir (used for static asset resolution)
     fs: {
       allow: ['..']
     }

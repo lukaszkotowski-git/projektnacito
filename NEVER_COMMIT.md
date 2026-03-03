@@ -47,3 +47,11 @@ W przypadku wątpliwości lub gdy działania automatyczne mogłyby naruszyć pol
 
 ---
 Plik wygenerowany przez asystenta na żądanie użytkownika. Nie wykonano żadnego commita ani pushu.
+
+---
+Uwaga użytkownika (zapisano automatycznie przez asystenta):
+
+> Pamiętaj, aby NIGDY nie wykonywać commitów automatycznie, o ile nie poproszę o to.
+> Każda prośba o commit jest jednorazowa i wymaga osobnego, wyraźnego potwierdzenia następnym razem.
+
+Ten wpis został dodany do pliku na wyraźne żądanie użytkownika i pozostaje w katalogu roboczym (working tree). Nie wykonano żadnego commita.
