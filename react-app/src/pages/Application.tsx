@@ -19,6 +19,11 @@ export default function Application() {
   const [filesLoading, setFilesLoading] = useState(false)
   const [filesError, setFilesError] = useState<string | null>(null)
   const filesFetchedRef = useRef(false)
+  const [catalogId, setCatalogId] = useState<string | null>(null)
+  const [selectedFiles, setSelectedFiles] = useState<File[] | null>(null)
+  const [uploading, setUploading] = useState(false)
+  type UploadStatus = { name: string; status: 'pending' | 'uploading' | 'done' | 'error'; message?: string }
+  const [uploadStatuses, setUploadStatuses] = useState<UploadStatus[]>([])
 
   const handleFetch = async (overrideId?: string, overrideEmail?: string) => {
     setError(null)
@@ -89,8 +94,9 @@ export default function Application() {
       setResult(data)
       // After successfully obtaining application data, try to extract catalog ID and fetch files
       try {
-        const catalogId = extractCatalogId(data)
+      const catalogId = extractCatalogId(data)
         if (catalogId) {
+          setCatalogId(catalogId)
           // reset files state before fetching
           setFiles(null)
           setFilesError(null)
@@ -235,6 +241,53 @@ export default function Application() {
     }
   }
 
+  async function handleUploadFiles() {
+    if (!catalogId) {
+      setFilesError('Brak ID katalogu. Nie można przesłać plików.')
+      return
+    }
+    if (!selectedFiles || selectedFiles.length === 0) {
+      setFilesError('Wybierz pliki do przesłania.')
+      return
+    }
+
+    setUploading(true)
+    setUploadStatuses(selectedFiles.map(f => ({ name: f.name, status: 'pending' })))
+    try {
+      const baseUrl = import.meta.env.VITE_API_URL
+      if (!baseUrl) throw new Error('Konfiguracja: VITE_API_URL nie jest ustawione (upload).')
+      const uploadUrl = baseUrl.replace(/\/+$/,'') + '/upload-file'
+
+      const statuses = [...uploadStatuses]
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i]
+        // optimistic update
+        statuses[i] = { name: file.name, status: 'uploading' }
+        setUploadStatuses([...statuses])
+
+        const form = new FormData()
+        form.append('file', file)
+        form.append('catalogId', catalogId)
+
+        const res = await fetch(uploadUrl, { method: 'POST', body: form })
+        const text = await res.text()
+        if (!res.ok) {
+          statuses[i] = { name: file.name, status: 'error', message: `HTTP ${res.status}: ${text}` }
+        } else {
+          statuses[i] = { name: file.name, status: 'done' }
+        }
+        setUploadStatuses([...statuses])
+      }
+
+      // refresh file list after upload
+      void handleFetchFiles(catalogId)
+    } catch (err: any) {
+      setFilesError(err?.message ?? String(err))
+    } finally {
+      setUploading(false)
+    }
+  }
+
   // If query params id & email are present, auto-trigger fetch and hide inputs/button
   useEffect(() => {
     const search = location.search || ''
@@ -327,7 +380,7 @@ export default function Application() {
         {result && (
           <div className="mt-4 bg-white p-6 border rounded">
             {/* Render structured fields when possible */}
-            <ApplicationDetails data={result} />
+          <ApplicationDetails data={result} />
             {/* Files list (if any) */}
             <div className="mt-4">
               <h3 className="font-medium mb-2">Załączone pliki</h3>
@@ -356,6 +409,48 @@ export default function Application() {
                   })}
                 </ul>
               )}
+              {/* Upload UI */}
+              <div className="mt-4">
+                <h4 className="font-medium mb-2">Prześlij dodatkowe dokumenty</h4>
+                <div className="border-2 border-dashed border-[#E5DED4] rounded-2xl p-6 text-center hover:bg-[#FDFBF7] transition-colors relative">
+                  <input
+                    type="file"
+                    multiple
+                    aria-label="Wybierz pliki"
+                    onChange={(e) => setSelectedFiles(e.target.files ? Array.from(e.target.files) : null)}
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                  />
+                  <svg className="w-8 h-8 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 4v16m8-8H4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <div className="text-xs text-gray-400">
+                    {selectedFiles && selectedFiles.length > 0 ? (
+                      selectedFiles.length === 1 ? selectedFiles[0].name : `${selectedFiles.length} pliki wybrane`
+                    ) : (
+                      'Kliknij tutaj lub przeciągnij pliki'
+                    )}
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <button
+                    onClick={() => void handleUploadFiles()}
+                    disabled={uploading || !catalogId}
+                    className="px-3 py-1 bg-[#8C7E6A] text-white rounded disabled:opacity-50"
+                  >
+                    {uploading ? 'Przesyłanie...' : 'Prześlij pliki'}
+                  </button>
+                </div>
+
+                {uploadStatuses && uploadStatuses.length > 0 && (
+                  <ul className="mt-2 text-sm">
+                    {uploadStatuses.map((us, i) => (
+                      <li key={i} className={`${us.status === 'error' ? 'text-red-600' : 'text-gray-700'}`}>
+                        {us.name}: {us.status}{us.message ? ` - ${us.message}` : ''}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
         )}

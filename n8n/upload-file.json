@@ -1,0 +1,136 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "upload-file",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "id": "a16ebd90-6481-404a-b4f7-4fe6d62fb122",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                -80,
+                64
+            ],
+            "webhookId": "0b5d81fc-8405-4370-a816-0ce0da1af3a6"
+        },
+        {
+            "parameters": {
+                "inputDataFieldName": "file",
+                "name": "={{ $binary.file.fileName }}",
+                "driveId": {
+                    "__rl": true,
+                    "value": "My Drive",
+                    "mode": "list",
+                    "cachedResultName": "My Drive",
+                    "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+                },
+                "folderId": {
+                    "__rl": true,
+                    "value": "={{ $json.body.catalogId }}",
+                    "mode": "id"
+                },
+                "options": {}
+            },
+            "id": "383fae60-58ca-42d5-822b-457b2e0e6523",
+            "name": "Google Drive",
+            "type": "n8n-nodes-base.googleDrive",
+            "typeVersion": 3,
+            "position": [
+                144,
+                64
+            ],
+            "credentials": {
+                "googleDriveOAuth2Api": {
+                    "id": "rDUDzSbGgZOID1m3",
+                    "name": "Google Drive account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "{\n  \"status\": \"success\"\n}",
+                "options": {
+                    "responseCode": 200
+                }
+            },
+            "id": "f5acd370-2ad2-4ceb-a2d1-98afa6a8e1c4",
+            "name": "Respond to Webhook",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                368,
+                64
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Google Drive",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Google Drive": {
+            "main": [
+                [
+                    {
+                        "node": "Respond to Webhook",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {
+        "Webhook": [
+            {
+                "headers": {
+                    "host": "n8n.projektnacito.com.pl",
+                    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+                    "content-length": "53117",
+                    "accept": "*/*",
+                    "accept-encoding": "gzip, deflate, br, zstd",
+                    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
+                    "content-type": "multipart/form-data; boundary=----WebKitFormBoundaryxv1Mva2rcyvDZNxK",
+                    "origin": "http://localhost:5173",
+                    "priority": "u=1, i",
+                    "referer": "http://localhost:5173/",
+                    "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\"",
+                    "sec-ch-ua-mobile": "?0",
+                    "sec-ch-ua-platform": "\"macOS\"",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "cross-site",
+                    "x-forwarded-for": "83.175.183.246",
+                    "x-forwarded-host": "n8n.projektnacito.com.pl",
+                    "x-forwarded-port": "443",
+                    "x-forwarded-proto": "https",
+                    "x-forwarded-server": "d89061d3703a",
+                    "x-real-ip": "83.175.183.246"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                    "catalogId": "1ySDHP7AUh05MtMUnK5iiDUdb8uHKQF72"
+                },
+                "webhookUrl": "https://n8n.projektnacito.com.pl/webhook/upload-file",
+                "executionMode": "production"
+            }
+        ]
+    },
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "e9696b3a570d6fcf2d2300f6666877d4d6947cf19d96f48d62d0972646fdaf29"
+    }
+}
