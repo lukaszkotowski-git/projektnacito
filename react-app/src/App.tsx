@@ -5,6 +5,7 @@ import { Navigation, MainView, OfferOverview, CitoConfigurator, PremiumConfigura
 import SubmissionSuccess from './components/SubmissionSuccess'
 import React from 'react'
 const Application = React.lazy(() => import('./pages/Application'))
+const Draft = React.lazy(() => import('./pages/Draft'))
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 
@@ -37,6 +38,7 @@ function AppContent() {
             <Route path="/realizacje" element={<Realizacje />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/application" element={<React.Suspense><Application /></React.Suspense>} />
+            <Route path="/draft" element={<React.Suspense><Draft /></React.Suspense>} />
             {/* legacy view-based fallback removed; RouteSync keeps internal view in sync */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
