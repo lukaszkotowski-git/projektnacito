@@ -13,7 +13,7 @@
             "typeVersion": 1.1,
             "position": [
                 -80,
-                64
+                160
             ],
             "webhookId": "0b5d81fc-8405-4370-a816-0ce0da1af3a6"
         },
@@ -41,7 +41,7 @@
             "typeVersion": 3,
             "position": [
                 144,
-                64
+                160
             ],
             "credentials": {
                 "googleDriveOAuth2Api": {
@@ -66,6 +66,31 @@
                 368,
                 64
             ]
+        },
+        {
+            "parameters": {
+                "chatId": "-5216597047",
+                "text": "=Nowy <a href=\"https://drive.google.com/drive/u/0/folders/{{ $('Webhook').item.json.body.catalogId }}\">załącznik</a> pojawił się na dysku google.\n\n",
+                "additionalFields": {
+                    "appendAttribution": false,
+                    "parse_mode": "HTML"
+                }
+            },
+            "id": "46fe4729-489a-491a-9033-2b2d6163b015",
+            "name": "Telegram",
+            "type": "n8n-nodes-base.telegram",
+            "typeVersion": 1,
+            "position": [
+                368,
+                256
+            ],
+            "webhookId": "b148b637-08e5-4c8d-8311-5f946783f191",
+            "credentials": {
+                "telegramApi": {
+                    "id": "YwIYvsgq3gsVlysO",
+                    "name": "Telegram account"
+                }
+            }
         }
     ],
     "connections": {
@@ -85,6 +110,11 @@
                 [
                     {
                         "node": "Respond to Webhook",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Telegram",
                         "type": "main",
                         "index": 0
                     }
