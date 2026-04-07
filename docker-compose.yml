@@ -6,6 +6,10 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
         - VITE_DIRECTUS_URL=${VITE_DIRECTUS_URL}
+        - VITE_CHAT_PROVIDER=${VITE_CHAT_PROVIDER}
+        - VITE_OPENROUTER_API_KEY=${VITE_OPENROUTER_API_KEY}
+        - VITE_OPENAI_API_KEY=${VITE_OPENAI_API_KEY}
+        - VITE_OPENAI_MODEL=${VITE_OPENAI_MODEL}
     env_file:
       - .env
     restart: unless-stopped
