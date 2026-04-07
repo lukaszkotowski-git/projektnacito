@@ -244,6 +244,18 @@ export const pl = {
     logoAlt: 'Projekt na Cito logo',
     aboutImageAlt: 'O nas',
   },
+
+  // Chat assistant
+  chat: {
+    title: 'Asystent Projekt na Cito',
+    welcome: 'Dzień dobry! Jestem wirtualnym asystentem AI "Projekt na Cito". Chętnie odpowiem na pytania dotyczące naszej oferty, pakietów projektowych i współpracy. W czym mogę pomóc?',
+    placeholder: 'Napisz wiadomość...',
+    send: 'Wyślij',
+    typing: 'Asystent pisze...',
+    errorGeneric: 'Wystąpił błąd. Spróbuj ponownie za chwilę.',
+    errorRateLimit: 'Osiągnięto dzienny limit zapytań. Prosimy o kontakt telefoniczny.',
+    errorNoKey: 'Usługa czatu jest tymczasowo niedostępna.',
+  },
 }
 
 export type Translations = typeof pl

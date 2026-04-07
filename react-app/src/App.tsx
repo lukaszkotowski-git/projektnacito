@@ -6,6 +6,7 @@ import SubmissionSuccess from './components/SubmissionSuccess'
 import React from 'react'
 const Application = React.lazy(() => import('./pages/Application'))
 const Draft = React.lazy(() => import('./pages/Draft'))
+const Chat = React.lazy(() => import('./pages/Chat'))
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 
@@ -13,7 +14,7 @@ function AppContent() {
   const { currentView } = useAppContext()
 
   useEffect(() => {
-    // Smooth scroll to top whenever the view changes
+    // Scroll to top on view change, then ensure the first heading is visible under the fixed nav.
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     }
@@ -39,6 +40,7 @@ function AppContent() {
             <Route path="/faq" element={<Faq />} />
             <Route path="/application" element={<React.Suspense><Application /></React.Suspense>} />
             <Route path="/draft" element={<React.Suspense><Draft /></React.Suspense>} />
+            <Route path="/chat" element={<React.Suspense><Chat /></React.Suspense>} />
             {/* legacy view-based fallback removed; RouteSync keeps internal view in sync */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
@@ -60,6 +62,7 @@ function RouteSync() {
     if (path.startsWith('/about')) return 'onas'
     if (path.startsWith('/realizacje')) return 'realizacje'
     if (path.startsWith('/application')) return 'application'
+    if (path.startsWith('/chat')) return 'chat'
     if (path === '/' || path === '') return 'main'
     return 'main'
   }
