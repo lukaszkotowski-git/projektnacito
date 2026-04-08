@@ -245,6 +245,106 @@ export const pl = {
     aboutImageAlt: 'O nas',
   },
 
+  // Privacy Policy
+  privacyPolicy: {
+    title: 'Polityka Prywatności',
+    lastUpdated: 'Ostatnia aktualizacja: 8 kwietnia 2026 r.',
+    intro: 'Niniejsza Polityka Prywatności określa zasady przetwarzania i ochrony danych osobowych użytkowników serwisu internetowego projektnacito.pl, prowadzonego przez studio projektowe „Projekt na Cito".',
+    sections: [
+      {
+        heading: '1. Administrator danych osobowych',
+        content: 'Administratorem danych osobowych jest studio projektowe „Projekt na Cito" prowadzone przez Klaudię Kołakowską i Angelikę Kłos. Kontakt z administratorem możliwy jest telefonicznie pod numerami: 698 354 726 (Klaudia) oraz 697 909 309 (Angelika).',
+      },
+      {
+        heading: '2. Zakres zbieranych danych',
+        content: 'W ramach korzystania z serwisu możemy zbierać następujące dane osobowe:\n• Imię i nazwisko — w celu identyfikacji klienta.\n• Adres e-mail — w celu komunikacji i przesyłania dokumentów.\n• Numer telefonu — w celu kontaktu zwrotnego.\n• Pliki załączone do formularzy (rzuty, rysunki) — w celu realizacji usługi projektowej.\n• Treść wiadomości w czacie z asystentem AI — w celu udzielenia odpowiedzi na pytania.',
+      },
+      {
+        heading: '3. Cel przetwarzania danych',
+        content: 'Dane osobowe przetwarzane są w celu:\n• Realizacji usług projektowych (na podstawie art. 6 ust. 1 lit. b RODO).\n• Kontaktu zwrotnego w odpowiedzi na zgłoszenie (na podstawie art. 6 ust. 1 lit. f RODO).\n• Przesyłania wycen i dokumentów umów (na podstawie art. 6 ust. 1 lit. b RODO).\n• Ewentualnego dochodzenia roszczeń (na podstawie art. 6 ust. 1 lit. f RODO).',
+      },
+      {
+        heading: '4. Okres przechowywania danych',
+        content: 'Dane osobowe przechowywane są przez okres niezbędny do realizacji usługi, a następnie przez okres wymagany przepisami prawa (w szczególności przepisami podatkowymi i rachunkowymi) lub do czasu przedawnienia ewentualnych roszczeń.',
+      },
+      {
+        heading: '5. Udostępnianie danych',
+        content: 'Dane osobowe mogą być udostępniane:\n• Podwykonawcom i współpracownikom biorącym udział w realizacji projektu.\n• Dostawcom usług IT (hosting, poczta e-mail).\n• Organom publicznym, jeżeli wynika to z obowiązujących przepisów prawa.\n\nDane nie są przekazywane do państw trzecich.',
+      },
+      {
+        heading: '6. Prawa użytkownika',
+        content: 'Każdy użytkownik ma prawo do:\n• Dostępu do swoich danych osobowych.\n• Sprostowania nieprawidłowych danych.\n• Usunięcia danych („prawo do bycia zapomnianym").\n• Ograniczenia przetwarzania.\n• Przenoszenia danych.\n• Wniesienia sprzeciwu wobec przetwarzania.\n• Wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.\n\nW celu realizacji powyższych praw prosimy o kontakt telefoniczny.',
+      },
+      {
+        heading: '7. Pliki cookies',
+        content: 'Serwis może wykorzystywać pliki cookies w celu zapewnienia prawidłowego działania strony i analizy ruchu. Użytkownik może w każdej chwili zmienić ustawienia cookies w swojej przeglądarce internetowej.',
+      },
+      {
+        heading: '8. Bezpieczeństwo danych',
+        content: 'Administrator stosuje odpowiednie środki techniczne i organizacyjne w celu ochrony danych osobowych przed nieuprawnionym dostępem, utratą lub zniszczeniem.',
+      },
+      {
+        heading: '9. Zmiany polityki prywatności',
+        content: 'Administrator zastrzega sobie prawo do wprowadzania zmian w niniejszej Polityce Prywatności. O wszelkich istotnych zmianach użytkownicy zostaną poinformowani za pośrednictwem serwisu.',
+      },
+    ],
+  },
+
+  // Terms of Service
+  termsOfService: {
+    title: 'Regulamin Serwisu',
+    lastUpdated: 'Ostatnia aktualizacja: 8 kwietnia 2026 r.',
+    intro: 'Niniejszy regulamin określa zasady korzystania z serwisu internetowego projektnacito.pl oraz świadczenia usług drogą elektroniczną przez studio projektowe „Projekt na Cito".',
+    sections: [
+      {
+        heading: '1. Postanowienia ogólne',
+        content: 'Serwis projektnacito.pl jest prowadzony przez studio projektowe „Projekt na Cito" (Klaudia Kołakowska i Angelika Kłos). Serwis umożliwia zapoznanie się z ofertą studia, konfigurację pakietów projektowych, przesyłanie zgłoszeń oraz kontakt z zespołem.',
+      },
+      {
+        heading: '2. Definicje',
+        content: '• Serwis — strona internetowa dostępna pod adresem projektnacito.pl.\n• Usługodawca — studio projektowe „Projekt na Cito".\n• Użytkownik — każda osoba korzystająca z serwisu.\n• Usługa — usługa projektowania wnętrz świadczona przez Usługodawcę.\n• Zgłoszenie — formularz wypełniony przez Użytkownika w celu zamówienia usługi lub konsultacji.',
+      },
+      {
+        heading: '3. Zakres usług',
+        content: 'Za pośrednictwem serwisu Usługodawca oferuje:\n• Pakiet na Cito — szybki projekt wnętrza online.\n• Pakiet Premium — kompleksowy projekt z inwentaryzacją i nadzorem autorskim.\n• Konsultacje — porada ekspercka online wyceniana godzinowo.\n\nSzczegółowy zakres każdego pakietu opisany jest na odpowiednich podstronach serwisu.',
+      },
+      {
+        heading: '4. Składanie zgłoszeń',
+        content: 'Wypełnienie formularza zgłoszeniowego w serwisie stanowi zapytanie ofertowe i nie jest równoznaczne z zawarciem umowy. Umowa o świadczenie usługi projektowej zawierana jest odrębnie, po ustaleniu szczegółów współpracy i podpisaniu stosownego dokumentu.',
+      },
+      {
+        heading: '5. Ceny i płatności',
+        content: 'Wszystkie ceny podane w serwisie są cenami netto (o ile nie zaznaczono inaczej). Ostateczna wycena usługi przekazywana jest Użytkownikowi po analizie zgłoszenia. Warunki płatności ustalane są indywidualnie w umowie.',
+      },
+      {
+        heading: '6. Prawa autorskie',
+        content: 'Wszelkie treści zamieszczone w serwisie, w tym teksty, grafiki, zdjęcia, wizualizacje i logotypy, stanowią własność intelektualną Usługodawcy i są chronione prawem autorskim. Kopiowanie, rozpowszechnianie lub wykorzystywanie tych treści bez pisemnej zgody Usługodawcy jest zabronione.',
+      },
+      {
+        heading: '7. Odpowiedzialność',
+        content: 'Usługodawca dokłada wszelkich starań, aby informacje zamieszczone w serwisie były aktualne i rzetelne. Usługodawca nie ponosi odpowiedzialności za:\n• Przerwy w dostępności serwisu wynikające z przyczyn technicznych.\n• Skutki podania przez Użytkownika nieprawdziwych lub niepełnych danych.\n• Działania osób trzecich naruszające funkcjonowanie serwisu.',
+      },
+      {
+        heading: '8. Ochrona danych osobowych',
+        content: 'Zasady przetwarzania danych osobowych użytkowników określa Polityka Prywatności dostępna w serwisie.',
+      },
+      {
+        heading: '9. Reklamacje',
+        content: 'Reklamacje dotyczące działania serwisu można zgłaszać telefonicznie. Reklamacje zostaną rozpatrzone w terminie 14 dni od ich otrzymania.',
+      },
+      {
+        heading: '10. Postanowienia końcowe',
+        content: 'Usługodawca zastrzega sobie prawo do zmiany niniejszego regulaminu. Korzystanie z serwisu po wprowadzeniu zmian oznacza ich akceptację. W sprawach nieuregulowanych niniejszym regulaminem zastosowanie mają przepisy prawa polskiego.',
+      },
+    ],
+  },
+
+  // Footer links
+  footerLinks: {
+    privacyPolicy: 'Polityka prywatności',
+    termsOfService: 'Regulamin',
+  },
+
   // Chat assistant
   chat: {
     title: 'Asystent Projekt na Cito',

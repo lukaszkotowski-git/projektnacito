@@ -1,4 +1,5 @@
 import { t } from '../i18n'
+import { Link } from 'react-router-dom'
 
 export function Footer(): JSX.Element {
   const txt = t()
@@ -11,6 +12,11 @@ export function Footer(): JSX.Element {
           <a href="tel:+48698354726" aria-label={txt.aria.callKlaudia} className="hover:text-[#7A6C58]">{txt.footer.klaudia}</a>
           <span className="hidden md:inline">|</span>
           <a href="tel:+48697909309" aria-label={txt.aria.callAngelika} className="hover:text-[#7A6C58]">{txt.footer.angelika}</a>
+        </div>
+        <div className="w-full flex items-center justify-center gap-4 pt-2">
+          <Link to="/privacy-policy" className="text-xs text-[#6B7280] hover:text-[#7A6C58]">{txt.footerLinks.privacyPolicy}</Link>
+          <span className="text-[#E5DED4]">|</span>
+          <Link to="/terms-of-service" className="text-xs text-[#6B7280] hover:text-[#7A6C58]">{txt.footerLinks.termsOfService}</Link>
         </div>
         <div className="w-full flex items-center justify-center gap-2 md:gap-2 pt-2">
           <span className="font-semibold">{txt.footer.project}</span>

@@ -7,6 +7,8 @@ import React from 'react'
 const Application = React.lazy(() => import('./pages/Application'))
 const Draft = React.lazy(() => import('./pages/Draft'))
 const Chat = React.lazy(() => import('./pages/Chat'))
+const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'))
+const TermsOfService = React.lazy(() => import('./pages/TermsOfService'))
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 
@@ -41,6 +43,8 @@ function AppContent() {
             <Route path="/application" element={<React.Suspense><Application /></React.Suspense>} />
             <Route path="/draft" element={<React.Suspense><Draft /></React.Suspense>} />
             <Route path="/chat" element={<React.Suspense><Chat /></React.Suspense>} />
+            <Route path="/privacy-policy" element={<React.Suspense><PrivacyPolicy /></React.Suspense>} />
+            <Route path="/terms-of-service" element={<React.Suspense><TermsOfService /></React.Suspense>} />
             {/* legacy view-based fallback removed; RouteSync keeps internal view in sync */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
