@@ -162,7 +162,13 @@ export function FinalStep() {
       }
 
       if (details.plumbingProject) {
-        lines.push({ name: 'Projekt instalacji wod.-kan.', qty: 1, subtotal: 0, selected: true })
+        const plumbM2 = details.plumbingM2 || 0
+        if (plumbM2 > 0) {
+          const unitPrice = PRICING.plumbingPerM2
+          lines.push({ name: 'Projekt instalacji wod.-kan.', qty: plumbM2, unitPrice, subtotal: plumbM2 * unitPrice, unit: 'm2', selected: true })
+        } else {
+          lines.push({ name: 'Projekt instalacji wod.-kan.', qty: 1, subtotal: 0, selected: true })
+        }
       }
     }
 

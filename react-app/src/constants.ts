@@ -17,7 +17,8 @@ export const PRICING = {
     "Korytarz": 500,
     "Pomieszczenie gospodarcze": 500
   } as Record<string, number>,
-  electricPerM2: 15,
+  electricPerM2: 20,
+  plumbingPerM2: 10,
   premium: {
     // basePerM2 used by Premium calculator (zł per m2)
     basePerM2: 200,

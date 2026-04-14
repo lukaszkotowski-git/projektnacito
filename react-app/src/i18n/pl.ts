@@ -70,7 +70,10 @@ export const pl = {
     furnitureProject: 'Projekt zabudowy meblowej',
     furnitureDesc: 'Opcjonalny projekt mebli na wymiar.',
     plumbingProject: 'Projekt instalacji wodno-kanalizacyjnych',
-    plumbingDesc: 'Opcjonalny projekt instalacji wodno-kanalizacyjnej.',
+    plumbingDesc: 'Określa rozmieszczenie punktów wodnych i kanalizacyjnych.',
+    plumbingAreaLabel: 'POWIERZCHNIA PROJEKTU (M²)',
+    plumbingAreaHelp: 'Wprowadź powierzchnię w m²',
+    plumbingAreaError: 'Wprowadź poprawną powierzchnię projektu (więcej niż 0 m²)',
     estimatedCost: 'Szacunkowy koszt projektu',
     // Side panel
     summaryTitle: 'Pakiet Cito — w pigułce',
@@ -84,7 +87,7 @@ export const pl = {
       { title: 'Oferty od wykonawców', desc: 'Oferta od np. stolarza, budowlańca, instalatora klimatyzacji na zastosowane w projekcie rozwiązania.' },
     ],
     summaryNote: 'Do rozpoczęcia pracy potrzebujemy rzutu/rysunku z obmiarem projektowanej przestrzeni oraz Twoich wytycznych i inspiracji do projektu.',
-    additionalWorkLabel: 'Zaznacz jakiego opracowania dodatkowego będziesz potrzebować (wyceniane na kolejnym etapie współpracy)',
+    additionalWorkLabel: '',
   },
 
   // Premium Configurator

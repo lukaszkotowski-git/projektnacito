@@ -51,13 +51,17 @@ export function CitoConfigurator() {
     setCurrentView,
     setCurrentPackage,
     furnitureProject, setFurnitureProject,
-    plumbingProject, setPlumbingProject
+    plumbingProject, setPlumbingProject,
+    plumbingM2, setPlumbingM2
   } = useAppContext()
 
   const [localElectricM2, setLocalElectricM2] = useState<string>(electricM2 ? String(electricM2) : '')
   const [touchedElectric, setTouchedElectric] = useState(false)
+  const [localPlumbingM2, setLocalPlumbingM2] = useState<string>(plumbingM2 ? String(plumbingM2) : '')
+  const [touchedPlumbing, setTouchedPlumbing] = useState(false)
 
   useEffect(() => { setLocalElectricM2(electricM2 ? String(electricM2) : '') }, [electricM2])
+  useEffect(() => { setLocalPlumbingM2(plumbingM2 ? String(plumbingM2) : '') }, [plumbingM2])
 
 
   useEffect(() => {
@@ -68,9 +72,11 @@ export function CitoConfigurator() {
     if (electricProject) {
       total += electricM2 * PRICING.electricPerM2
     }
-    // Note: furnitureProject and plumbingProject are checkboxes without extra price
+    if (plumbingProject) {
+      total += plumbingM2 * PRICING.plumbingPerM2
+    }
     setCurrentPrice(total)
-  }, [selectedRoomsCito, electricProject, electricM2, setCurrentPrice])
+  }, [selectedRoomsCito, electricProject, electricM2, plumbingProject, plumbingM2, setCurrentPrice])
 
   const toggleRoom = (room: string) => {
     const newRooms = { ...selectedRoomsCito }
@@ -99,8 +105,18 @@ export function CitoConfigurator() {
     const parsedM2 = localElectricM2 === '' ? 0 : parseFloat(localElectricM2)
     setElectricM2(parsedM2)
 
+    // Ensure plumbing m2 value is committed
+    setTouchedPlumbing(true)
+    const parsedPlumbingM2 = localPlumbingM2 === '' ? 0 : parseFloat(localPlumbingM2)
+    setPlumbingM2(parsedPlumbingM2)
+
     // If electric project selected, require a valid >0 m2
     if (electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0)) {
+      return
+    }
+
+    // If plumbing project selected, require a valid >0 m2
+    if (plumbingProject && (localPlumbingM2 === '' || Number(localPlumbingM2) <= 0)) {
       return
     }
 
@@ -156,7 +172,7 @@ export function CitoConfigurator() {
               </div>
 
               <div className="border-t border-[#E5DED4] pt-12 mt-12">
-                <div className="flex items-start gap-4 p-6 rounded-3xl bg-white border border-[#E5DED4]">
+                <div className="flex items-start gap-4 p-6 rounded-3xl bg-white border border-[#E5DED4] w-full">
                   <input 
                     type="checkbox" 
                     id="electric-project" 
@@ -204,22 +220,64 @@ export function CitoConfigurator() {
                 <div className="mt-6 mb-2">
                   <div className="text-sm text-gray-700">{txt.cito.additionalWorkLabel}</div>
                 </div>
-                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#E5DED4]">
-                    <input type="checkbox" checked={furnitureProject} onChange={(e) => setFurnitureProject(e.target.checked)} className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A]" />
-                    <div>
-                      <div className="font-semibold">{txt.cito.furnitureProject}</div>
+
+                <div className="flex items-start gap-4 p-6 rounded-3xl bg-white border border-[#E5DED4] mt-4 w-full">
+                  <input 
+                    type="checkbox" 
+                    id="plumbing-project" 
+                    checked={plumbingProject}
+                    onChange={(e) => setPlumbingProject(e.target.checked)}
+                    className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A] focus:ring-[#8C7E6A]"
+                  />
+                  <div className="flex-1">
+                    <label htmlFor="plumbing-project" className="font-semibold block">{txt.cito.plumbingProject}</label>
+                    <p className="text-sm text-gray-500 mb-4">{txt.cito.plumbingDesc}</p>
+                    {plumbingProject && (
+                      <div className="relative">
+                        <div className="animate-in duration-300 visible">
+                          <label htmlFor="plumbing-m2-input" className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">{txt.cito.plumbingAreaLabel}</label>
+                          <input
+                            id="plumbing-m2-input"
+                            type="number"
+                            value={localPlumbingM2}
+                            onChange={(e) => setLocalPlumbingM2(e.target.value)}
+                            onBlur={() => {
+                              setTouchedPlumbing(true)
+                              setPlumbingM2(localPlumbingM2 === '' ? 0 : parseFloat(localPlumbingM2))
+                            }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') { (e.target as HTMLInputElement).blur() } }}
+                            placeholder={txt.common.perM2}
+                            min="0"
+                            step="0.1"
+                            aria-label={txt.cito.plumbingAreaLabel}
+                            aria-describedby="plumbing-m2-help"
+                            aria-invalid={plumbingProject && (localPlumbingM2 === '' || Number(localPlumbingM2) <= 0)}
+                            className={`relative z-10 pointer-events-auto w-32 bg-[#FDFBF7] rounded-xl px-4 py-2 outline-none focus:border-[#8C7E6A] ${plumbingProject && (localPlumbingM2 === '' || Number(localPlumbingM2) <= 0) ? 'border border-red-500' : 'border border-[#E5DED4]'}`}
+                          />
+                          <p id="plumbing-m2-help" className="text-xs text-gray-400 mt-2">{txt.cito.plumbingAreaHelp}</p>
+                          {plumbingProject && (localPlumbingM2 === '' || Number(localPlumbingM2) <= 0) && touchedPlumbing && (
+                            <p className="text-xs text-red-500 mt-2">{txt.cito.plumbingAreaError}</p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <div className="flex items-start gap-4 p-6 rounded-3xl bg-white border border-[#E5DED4] w-full">
+                    <input 
+                      type="checkbox" 
+                      id="furniture-project" 
+                      checked={furnitureProject}
+                      onChange={(e) => setFurnitureProject(e.target.checked)}
+                      className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A] focus:ring-[#8C7E6A]"
+                    />
+                    <div className="flex-1">
+                      <label htmlFor="furniture-project" className="font-semibold block">{txt.cito.furnitureProject}</label>
                       <div className="text-sm text-gray-500">{txt.cito.furnitureDesc}</div>
                     </div>
-                  </label>
-
-                  <label className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#E5DED4]">
-                    <input type="checkbox" checked={plumbingProject} onChange={(e) => setPlumbingProject(e.target.checked)} className="mt-1.5 h-5 w-5 rounded border-gray-300 text-[#8C7E6A]" />
-                    <div>
-                      <div className="font-semibold">{txt.cito.plumbingProject}</div>
-                      <div className="text-sm text-gray-500">{txt.cito.plumbingDesc}</div>
-                    </div>
-                  </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -248,7 +306,7 @@ export function CitoConfigurator() {
                 <button 
                   onClick={goToFinalStep} 
                   disabled={
-                    currentPrice === 0 || (electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0))
+                    currentPrice === 0 || (electricProject && (localElectricM2 === '' || Number(localElectricM2) <= 0)) || (plumbingProject && (localPlumbingM2 === '' || Number(localPlumbingM2) <= 0))
                   }
                   className="btn-primary bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-widest text-xs"
                 >

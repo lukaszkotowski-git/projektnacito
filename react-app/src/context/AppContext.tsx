@@ -20,6 +20,8 @@ interface AppState {
   setFurnitureProject: (val: boolean) => void
   plumbingProject: boolean
   setPlumbingProject: (val: boolean) => void
+  plumbingM2: number
+  setPlumbingM2: (val: number) => void
 
   // Premium package measurements
   premiumTotalM2: number
@@ -58,6 +60,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [electricM2, setElectricM2] = useState(0)
   const [furnitureProject, setFurnitureProject] = useState(false)
   const [plumbingProject, setPlumbingProject] = useState(false)
+  const [plumbingM2, setPlumbingM2] = useState(0)
   const [premiumTotalM2, setPremiumTotalM2] = useState(0)
   const [premiumKitchenM2, setPremiumKitchenM2] = useState(0)
   const [premiumBathM2, setPremiumBathM2] = useState(0)
@@ -73,6 +76,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setElectricM2(0)
       setFurnitureProject(false)
       setPlumbingProject(false)
+      setPlumbingM2(0)
       setPremiumTotalM2(0)
       setPremiumKitchenM2(0)
       setPremiumBathM2(0)
@@ -90,7 +94,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     electricM2
     ,
     furnitureProject,
-    plumbingProject
+    plumbingProject,
+    plumbingM2
   })
 
   const getPremiumDetails = (): PremiumDetails => ({
@@ -115,6 +120,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       electricM2, setElectricM2,
       furnitureProject, setFurnitureProject,
       plumbingProject, setPlumbingProject,
+      plumbingM2, setPlumbingM2,
       premiumTotalM2, setPremiumTotalM2,
       premiumKitchenM2, setPremiumKitchenM2,
       premiumBathM2, setPremiumBathM2,

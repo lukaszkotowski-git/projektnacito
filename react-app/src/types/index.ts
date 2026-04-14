@@ -8,6 +8,7 @@ export interface CitoDetails {
   electricM2: number
   furnitureProject?: boolean
   plumbingProject?: boolean
+  plumbingM2?: number
 }
 
 export interface PremiumDetails {
